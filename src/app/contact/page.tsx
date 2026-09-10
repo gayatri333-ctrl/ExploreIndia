@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { Mail, PhoneCall, MapPin, Send, HelpCircle } from 'lucide-react';
+import { Mail, PhoneCall, MapPin, Send } from 'lucide-react';
 
 export const metadata = {
   title: 'Contact & Tourist Support | ExploreIndia',
@@ -74,7 +74,7 @@ export default function ContactPage() {
           {/* Contact Form */}
           <div className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-4">
             <h2 className="text-lg font-bold font-serif text-white">Send Us a Message</h2>
-            <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-4">
               <div>
                 <label className="text-xs font-semibold text-slate-400 block mb-1">Your Name</label>
                 <input type="text" placeholder="Enter your full name" className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-xs text-white focus:border-marigold-500 outline-none" />
@@ -87,7 +87,7 @@ export default function ContactPage() {
                 <label className="text-xs font-semibold text-slate-400 block mb-1">Inquiry Details</label>
                 <textarea rows={3} placeholder="How can we assist your trip?" className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-xs text-white focus:border-marigold-500 outline-none" />
               </div>
-              <button type="submit" className="w-full py-2.5 rounded-lg bg-marigold-500 hover:bg-marigold-600 text-slate-950 font-bold text-xs transition flex items-center justify-center gap-1.5">
+              <button type="button" className="w-full py-2.5 rounded-lg bg-marigold-500 hover:bg-marigold-600 text-slate-950 font-bold text-xs transition flex items-center justify-center gap-1.5">
                 <Send className="w-4 h-4" />
                 <span>Submit Inquiry</span>
               </button>
