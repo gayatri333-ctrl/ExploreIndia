@@ -26,6 +26,18 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
 
+  // Keyboard shortcut Ctrl+K / Cmd+K listener to toggle search modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setIsSearchOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   // Close mega menu when clicking outside header
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -125,7 +137,7 @@ export default function Header() {
 
             {/* Festivals & Events Direct Link */}
             <Link
-              href="/events"
+              href="/festivals-events"
               onClick={() => setActiveMegaMenu(null)}
               className="flex items-center gap-1.5 px-3.5 py-2 rounded-md hover:text-marigold-400 hover:bg-slate-800/60 transition"
             >
@@ -136,10 +148,23 @@ export default function Header() {
 
           {/* Action Buttons: Search Icon + User Menu */}
           <div className="flex items-center gap-3">
-            {/* Search Icon Trigger */}
+            {/* Desktop Pill Search Bar Trigger */}
             <button
               onClick={() => setIsSearchOpen(true)}
-              className="p-2.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-marigold-400 transition border border-slate-700/60 flex items-center justify-center"
+              className="hidden sm:flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-slate-950/80 hover:bg-slate-800 text-slate-400 hover:text-slate-200 border border-slate-700/60 text-xs transition shadow-inner"
+              title="Search Festivals, Events & Destinations (Ctrl+K)"
+            >
+              <Search className="w-3.5 h-3.5 text-marigold-400" />
+              <span className="truncate max-w-[120px] lg:max-w-[180px]">Search festivals, states...</span>
+              <kbd className="hidden lg:inline-block px-1.5 py-0.5 text-[10px] bg-slate-900 border border-slate-700 rounded text-slate-400 font-mono">
+                ⌘K
+              </kbd>
+            </button>
+
+            {/* Mobile Search Icon Trigger */}
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              className="sm:hidden p-2.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-marigold-400 transition border border-slate-700/60 flex items-center justify-center"
               title="Search Festivals & Destinations"
             >
               <Search className="w-4 h-4" />
@@ -204,7 +229,7 @@ export default function Header() {
               <span>Plan your trip</span>
             </Link>
             <Link
-              href="/events"
+              href="/festivals-events"
               onClick={() => setIsMobileMenuOpen(false)}
               className="flex items-center gap-2 p-2 rounded hover:bg-slate-800 text-white font-medium"
             >

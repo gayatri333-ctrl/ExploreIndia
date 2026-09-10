@@ -46,17 +46,18 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Column 3: Tech Stack & Supabase */}
+        {/* Column 3: Visitor Info & Legal */}
         <div>
           <h4 className="font-semibold text-white text-xs uppercase tracking-wider mb-3 text-gold-400">
-            Tech Architecture
+            About & Info
           </h4>
-          <div className="bg-royal-900/80 p-3 rounded-lg border border-white/10 text-xs space-y-1.5">
-            <div className="flex justify-between"><span className="text-slate-400">Framework:</span> <span className="text-emerald-400 font-medium">Next.js 14 App Router</span></div>
-            <div className="flex justify-between"><span className="text-slate-400">Database:</span> <span className="text-emerald-400 font-medium">Supabase (Postgres)</span></div>
-            <div className="flex justify-between"><span className="text-slate-400">Styling:</span> <span className="text-emerald-400 font-medium">Tailwind CSS</span></div>
-            <div className="flex justify-between"><span className="text-slate-400">Deployment:</span> <span className="text-emerald-400 font-medium">Vercel Ready</span></div>
-          </div>
+          <ul className="space-y-2 text-xs">
+            <li><Link href="/about" className="hover:text-white transition">About ExploreIndia</Link></li>
+            <li><Link href="/contact" className="hover:text-white transition">Contact & Support</Link></li>
+            <li><Link href="/privacy" className="hover:text-white transition">Privacy Policy</Link></li>
+            <li><Link href="/terms" className="hover:text-white transition">Terms of Service</Link></li>
+            <li><Link href="/advisory" className="hover:text-white transition">Travel Advisory & Guidelines</Link></li>
+          </ul>
         </div>
       </div>
 

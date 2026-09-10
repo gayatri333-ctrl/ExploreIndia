@@ -142,7 +142,7 @@ export const PLAN_YOUR_TRIP_LINKS = {
   ],
   exploreSite: [
     { title: 'Curated Itineraries', desc: '3-day, 7-day, & 14-day Golden Triangle & South trails', href: '/plan/itineraries' },
-    { title: 'Festivals & Events', desc: 'Live calendar of monastic, tribal & state melas', href: '/events' },
+    { title: 'Festivals & Events', desc: 'Live calendar of monastic, tribal & state melas', href: '/festivals-events' },
     { title: 'Rural Tourism', desc: 'Authentic homestays & craft villages', href: '/plan/rural-tourism' },
     { title: 'Crafts & Textiles', desc: 'Pashmina, Silk, Terracotta & Tanjore masterworks', href: '/plan/crafts' },
     { title: 'People & Culture', desc: 'Customs, etiquette & culinary traditions', href: '/plan/culture' },

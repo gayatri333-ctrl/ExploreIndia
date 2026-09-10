@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { 
-  Compass, MapPin, Calendar, Database, ShieldCheck, 
+  Compass, MapPin, Calendar, 
   Sparkles, Flame, TreePine, Landmark, HeartHandshake, 
   Utensils, Gem, Stethoscope, Palette, Home, Trees, Bike,
   ChevronRight, BookmarkCheck, ArrowRight
@@ -25,18 +25,20 @@ const parentTopics = [
 const featuredEvents = [
   {
     title: 'Pushkar Camel Fair',
-    slug: 'pushkar-camel-fair-2026',
+    slug: 'pushkar-camel-fair',
+    stateSlug: 'rajasthan',
     state: 'Rajasthan',
     zone: 'North',
     category: 'Cultural & Heritage',
     type: 'Traditional Festival',
-    dates: 'Nov 15 - Nov 23, 2026',
+    dates: 'Nov 20 - Nov 28, 2026',
     image: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=800',
     description: 'One of the world\'s largest camel fairs, featuring vibrant livestock trading, folk music, traditional dances, hot air ballooning, and holy dip in Pushkar Lake.'
   },
   {
     title: 'Rann Utsav Kutch',
-    slug: 'rann-utsav-kutch-2026',
+    slug: 'rann-utsav-kutch',
+    stateSlug: 'gujarat',
     state: 'Gujarat',
     zone: 'West',
     category: 'Arts & Culture',
@@ -47,12 +49,13 @@ const featuredEvents = [
   },
   {
     title: 'Kolkata Durga Puja Festival',
-    slug: 'kolkata-durga-puja-2026',
+    slug: 'durga-puja-kolkata',
+    stateSlug: 'west-bengal',
     state: 'West Bengal',
     zone: 'East',
     category: 'Heritage & Spiritual',
     type: 'UNESCO Cultural Heritage',
-    dates: 'Oct 15 - Oct 20, 2026',
+    dates: 'Oct 17 - Oct 21, 2026',
     image: 'https://images.unsplash.com/photo-1570535310866-9b5dbd09439f?q=80&w=800',
     description: 'A world-renowned street art installation and grand spiritual celebration transforming Kolkata into an open-air art museum.'
   }
@@ -101,19 +104,12 @@ export default function HomePage() {
             {/* CTA Buttons */}
             <div className="flex flex-wrap gap-4 pt-2">
               <Link 
-                href="/events" 
+                href="/festivals-events" 
                 className="bg-gradient-to-r from-saffron-500 via-saffron-600 to-gold-600 hover:from-saffron-600 hover:to-gold-700 text-white font-semibold px-6 py-3 rounded-xl shadow-glow-saffron transition-all hover:scale-[1.02] flex items-center gap-2 text-sm"
               >
                 <span>Browse All Festivals</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
-              <a 
-                href="#schema-inspector" 
-                className="bg-royal-800/80 hover:bg-royal-800 text-slate-200 border border-white/10 px-5 py-3 rounded-xl transition text-sm flex items-center gap-2"
-              >
-                <Database className="w-4 h-4 text-peacock-400" />
-                <span>View Schema Setup</span>
-              </a>
             </div>
           </div>
 
@@ -144,120 +140,6 @@ export default function HomePage() {
                   </p>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Phase 0 Schema & Database Setup Verification Box */}
-      <section id="schema-inspector" className="max-w-7xl mx-auto px-4 lg:px-8">
-        <div className="glass-panel p-6 sm:p-8 rounded-2xl border border-peacock-500/30 space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-peacock-500/20 text-peacock-400 border border-peacock-500/30">
-                <ShieldCheck className="w-6 h-6" />
-              </div>
-              <div>
-                <h2 className="text-lg font-bold text-white flex items-center gap-2">
-                  Phase 0 Database Schema & Setup
-                  <span className="text-xs bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-mono">
-                    Ready
-                  </span>
-                </h2>
-                <p className="text-xs text-slate-400">
-                  Postgres database tables & Supabase Client configuration
-                </p>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-2 text-xs font-mono bg-royal-950 px-3 py-1.5 rounded-lg border border-white/10 text-slate-300">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-              <span>Supabase Postgres Schema Loaded</span>
-            </div>
-          </div>
-
-          {/* Tables Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
-            <div className="bg-royal-900/80 p-4 rounded-xl border border-white/10 space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="font-bold text-saffron-400 font-mono">public.states</span>
-                <span className="text-[10px] text-slate-400">Zone Filtered</span>
-              </div>
-              <p className="text-slate-300">
-                Columns: <code className="text-amber-300">id, name, region, zone</code>
-              </p>
-              <div className="flex flex-wrap gap-1 pt-1">
-                {['North', 'North East', 'East', 'Central', 'West', 'South'].map(z => (
-                  <span key={z} className="bg-royal-950 px-1.5 py-0.5 rounded text-[10px] text-slate-400 border border-white/5">
-                    {z}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-royal-900/80 p-4 rounded-xl border border-white/10 space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="font-bold text-peacock-400 font-mono">public.cities</span>
-                <span className="text-[10px] text-slate-400">State Linked</span>
-              </div>
-              <p className="text-slate-300">
-                Columns: <code className="text-emerald-300">id, state_id, name</code>
-              </p>
-              <p className="text-[11px] text-slate-400">
-                Linked via Foreign Key to <code className="text-slate-300">states(id)</code> with cascade rules.
-              </p>
-            </div>
-
-            <div className="bg-royal-900/80 p-4 rounded-xl border border-white/10 space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="font-bold text-gold-400 font-mono">public.national_parks</span>
-                <span className="text-[10px] text-slate-400">Wildlife & Nature</span>
-              </div>
-              <p className="text-slate-300">
-                Columns: <code className="text-yellow-300">id, state_id, city_id, name</code>
-              </p>
-              <p className="text-[11px] text-slate-400">
-                Supports Tiger Reserves & Himalayan National Parks across India.
-              </p>
-            </div>
-
-            <div className="bg-royal-900/80 p-4 rounded-xl border border-white/10 space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="font-bold text-rose-400 font-mono">public.events</span>
-                <span className="text-[10px] text-slate-400">Core Festival Catalog</span>
-              </div>
-              <p className="text-slate-300">
-                Columns: <code className="text-rose-300">id, title, slug, state_id, category, type, dates, hero_image_url, is_corporate</code>
-              </p>
-              <p className="text-[11px] text-slate-400">
-                Indexed by start_date, category & state for rapid search.
-              </p>
-            </div>
-
-            <div className="bg-royal-900/80 p-4 rounded-xl border border-white/10 space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="font-bold text-purple-400 font-mono">public.experience_topics</span>
-                <span className="text-[10px] text-slate-400">Hierarchical</span>
-              </div>
-              <p className="text-slate-300">
-                Columns: <code className="text-purple-300">id, name, parent_topic</code>
-              </p>
-              <p className="text-[11px] text-slate-400">
-                11 Root topics (Wildlife, Heritage, Spiritual, etc.) with sub-items.
-              </p>
-            </div>
-
-            <div className="bg-royal-900/80 p-4 rounded-xl border border-white/10 space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="font-bold text-sky-400 font-mono">public.bookmarks</span>
-                <span className="text-[10px] text-slate-400">Supabase Auth</span>
-              </div>
-              <p className="text-slate-300">
-                Columns: <code className="text-sky-300">id, user_id, event_id</code>
-              </p>
-              <p className="text-[11px] text-slate-400">
-                Row Level Security (RLS) policies scoped to authenticated user IDs.
-              </p>
             </div>
           </div>
         </div>
@@ -324,7 +206,7 @@ export default function HomePage() {
             </p>
           </div>
           <Link 
-            href="/events"
+            href="/festivals-events"
             className="text-saffron-400 hover:text-saffron-300 text-sm font-semibold flex items-center gap-1 group"
           >
             <span>View All Events</span>
@@ -366,7 +248,9 @@ export default function HomePage() {
                   </div>
 
                   <h3 className="text-lg font-bold text-white group-hover:text-saffron-400 transition-colors font-serif">
-                    {event.title}
+                    <Link href={`/festivals-events/${event.stateSlug}/${event.slug}`}>
+                      {event.title}
+                    </Link>
                   </h3>
 
                   <p className="text-xs text-slate-300 leading-relaxed line-clamp-3">
@@ -378,9 +262,13 @@ export default function HomePage() {
                   <span className="text-[10px] bg-saffron-500/10 text-saffron-400 px-2 py-0.5 rounded border border-saffron-500/20 font-medium">
                     {event.type}
                   </span>
-                  <span className="text-slate-400 font-medium group-hover:text-white flex items-center gap-1">
-                    Details <ArrowRight className="w-3 h-3" />
-                  </span>
+                  <Link 
+                    href={`/festivals-events/${event.stateSlug}/${event.slug}`}
+                    className="text-saffron-400 hover:text-white font-medium flex items-center gap-1 transition"
+                  >
+                    <span>View Details</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </Link>
                 </div>
               </div>
             </div>

@@ -1,5 +1,5 @@
-import FestivalsEventsPage from '@/app/festivals-events/page';
+import { redirect } from 'next/navigation';
 
 export default function EventsRedirectPage() {
-  return <FestivalsEventsPage />;
+  redirect('/festivals-events');
 }

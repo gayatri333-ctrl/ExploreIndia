@@ -648,9 +648,22 @@ export const COMPREHENSIVE_EVENTS: ComprehensiveEvent[] = [
 ];
 
 export function getEventBySlug(stateSlug: string, slug: string): ComprehensiveEvent | undefined {
-  return COMPREHENSIVE_EVENTS.find(
-    (e) => e.slug === slug || (e.stateSlug.toLowerCase() === stateSlug.toLowerCase() && e.slug === slug)
-  );
+  const normState = (stateSlug || '').toLowerCase();
+  const normSlug = (slug || '').toLowerCase();
+
+  return COMPREHENSIVE_EVENTS.find((e) => {
+    const eSlug = e.slug.toLowerCase();
+    const eState = e.stateSlug.toLowerCase();
+    const eId = e.id.toLowerCase();
+    
+    return (
+      eSlug === normSlug ||
+      eId === normSlug ||
+      normSlug.includes(eSlug) ||
+      eSlug.includes(normSlug) ||
+      (eState === normState && eSlug === normSlug)
+    );
+  });
 }
 
 export function getRelatedEvents(currentEventId: string, category: EventCategoryName, region: string, limit = 4): ComprehensiveEvent[] {

@@ -24,23 +24,90 @@ import { COMPREHENSIVE_EVENTS, ComprehensiveEvent } from '@/lib/data/events-data
 import { CATEGORY_TOKENS, getCategoryToken } from '@/lib/design-tokens';
 import { STATES_BY_ZONE, ZONES } from '@/lib/data/navigation-data';
 import EventFeedSkeleton from '@/components/events/EventFeedSkeleton';
+import { createClient } from '@/lib/supabase/client';
 
 const MONTH_NAMES = [
   'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
   'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
 ];
 
-const DECADES = [
-  { label: '2021-2030', years: ['2024', '2025', '2026', '2027', '2028', '2029', '2030'] },
-  { label: '2031-2040', years: ['2031', '2032', '2033', '2034', '2035'] },
-];
+
 
 function FestivalsEventsClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Loading state for skeleton feedback
-  const [isLoading, setIsLoading] = useState(false);
+  // Loading and error state for events fetch
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [eventsList, setEventsList] = useState<ComprehensiveEvent[]>(COMPREHENSIVE_EVENTS);
+
+  useEffect(() => {
+    async function fetchEventsFromSupabase() {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const supabase = createClient();
+        const { data, error: supabaseError } = await supabase
+          .from('events')
+          .select(`
+            id,
+            title,
+            slug,
+            category,
+            type,
+            start_date,
+            end_date,
+            description,
+            hero_image_url,
+            card_image_url,
+            states (
+              name,
+              region
+            )
+          `);
+
+        if (supabaseError) {
+          console.warn('Supabase fetch error, using fallback dataset:', supabaseError.message);
+          setError(supabaseError.message);
+          setEventsList(COMPREHENSIVE_EVENTS);
+        } else if (data && data.length > 0) {
+          const mapped: ComprehensiveEvent[] = data.map((evt: any) => ({
+            id: evt.id,
+            title: evt.title,
+            slug: evt.slug,
+            stateSlug: evt.states?.name ? evt.states.name.toLowerCase().replace(/\s+/g, '-') : 'india',
+            stateName: evt.states?.name || 'India',
+            region: (evt.states?.region as any) || 'North',
+            category: evt.category || 'Cultural & Spiritual',
+            type: evt.type || 'Festival',
+            startDate: evt.start_date,
+            endDate: evt.end_date,
+            shortDescription: evt.description,
+            fullDescription: evt.description,
+            heroImage: evt.hero_image_url || 'https://images.unsplash.com/photo-1597040639497-66c91a0c4974',
+            cardImage: evt.card_image_url || 'https://images.unsplash.com/photo-1597040639497-66c91a0c4974',
+            galleryImages: [evt.hero_image_url || evt.card_image_url].filter(Boolean),
+            locationVenue: `${evt.states?.name || 'India'} Venue`,
+            entryFee: 'Free Public Access',
+            tags: [evt.category, evt.type]
+          }));
+          setEventsList(mapped);
+          setError(null);
+        } else {
+          setEventsList(COMPREHENSIVE_EVENTS);
+        }
+      } catch (err: any) {
+        console.error('Failed to fetch events:', err);
+        setError(err?.message || 'Failed to load events');
+        setEventsList(COMPREHENSIVE_EVENTS);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchEventsFromSupabase();
+  }, []);
 
   // Mobile Slide-over Drawer State
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
@@ -68,6 +135,9 @@ function FestivalsEventsClient() {
   // Accordion UI state
   const [expandedDecades, setExpandedDecades] = useState<string[]>(['2021-2030']);
 
+  // Pagination / Load More state
+  const [visibleCount, setVisibleCount] = useState(8);
+
   // Sync state to URL search params with loading trigger
   const updateURL = (
     typeVal: string,
@@ -78,6 +148,7 @@ function FestivalsEventsClient() {
     monthVal: string[]
   ) => {
     setIsLoading(true);
+    setVisibleCount(8);
     const params = new URLSearchParams();
     if (typeVal !== 'All') params.set('type', typeVal);
     if (catVal.length > 0) params.set('category', catVal.join(','));
@@ -152,6 +223,7 @@ function FestivalsEventsClient() {
 
   const handleGlobalClear = () => {
     setIsLoading(true);
+    setVisibleCount(8);
     setTypeFilter('All');
     setSelectedCategories([]);
     setSelectedRegions([]);
@@ -164,7 +236,7 @@ function FestivalsEventsClient() {
 
   // Filtered Events logic
   const filteredEvents = useMemo(() => {
-    return COMPREHENSIVE_EVENTS.filter((evt) => {
+    return eventsList.filter((evt) => {
       if (typeFilter !== 'All' && evt.type !== typeFilter) return false;
       if (selectedCategories.length > 0 && !selectedCategories.includes(evt.category)) return false;
       if (selectedRegions.length > 0 && !selectedRegions.includes(evt.region)) return false;
@@ -179,36 +251,60 @@ function FestivalsEventsClient() {
       }
       return true;
     });
-  }, [typeFilter, selectedCategories, selectedRegions, selectedStates, selectedYears, selectedMonths]);
+  }, [eventsList, typeFilter, selectedCategories, selectedRegions, selectedStates, selectedYears, selectedMonths]);
+
+  // Dynamic available years derived from loaded events table data
+  const availableYears = useMemo(() => {
+    const yearsSet = new Set<string>();
+    eventsList.forEach((evt) => {
+      if (evt.startDate) {
+        const yr = evt.startDate.split('-')[0];
+        if (yr && !isNaN(Number(yr))) {
+          yearsSet.add(yr);
+        }
+      }
+    });
+    const sorted = Array.from(yearsSet).sort();
+    return sorted.length > 0 ? sorted : ['2026', '2027'];
+  }, [eventsList]);
 
   const getEventStatusBadge = (startDateStr: string, endDateStr: string) => {
-    const today = new Date('2026-09-09');
-    const start = new Date(startDateStr);
-    const end = new Date(endDateStr);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
+    const start = new Date(startDateStr);
+    start.setHours(0, 0, 0, 0);
+
+    const end = new Date(endDateStr);
+    end.setHours(23, 59, 59, 999);
+
+    // 1. "Happening now" if today falls between start_date and end_date
     if (today >= start && today <= end) {
       return (
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full badge-live-now text-xs font-bold animate-pulse">
-          <span className="w-2 h-2 rounded-full pulse-dot-vermilion" />
-          <span>HAPPENING NOW</span>
-        </span>
-      );
-    } else if (today < start) {
-      const diffTime = Math.abs(start.getTime() - today.getTime());
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      return (
-        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-marigold-300 text-xs font-semibold">
-          <Clock className="w-3 h-3 text-marigold-400" />
-          <span>In {diffDays} Days</span>
-        </span>
-      );
-    } else {
-      return (
-        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-slate-800/80 text-slate-400 text-xs font-medium">
-          <span>Past Celebration</span>
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold animate-pulse shadow-md">
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+          <span>Happening now</span>
         </span>
       );
     }
+
+    // 2. "In N days" if the event starts within the next 60 days
+    if (today < start) {
+      const diffTime = start.getTime() - today.getTime();
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      if (diffDays <= 60 && diffDays > 0) {
+        return (
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-700 text-marigold-300 text-xs font-semibold shadow-md">
+            <Clock className="w-3.5 h-3.5 text-marigold-400" />
+            <span>In {diffDays} {diffDays === 1 ? 'day' : 'days'}</span>
+          </span>
+        );
+      }
+    }
+
+    // 3. Nothing (just the date) otherwise
+    return null;
   };
 
   const totalActiveFiltersCount =
@@ -325,30 +421,27 @@ function FestivalsEventsClient() {
       {/* 4 & 5. Decade/Year & Month */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2 border-t border-slate-800">
         <div className="space-y-2">
-          <label className="text-xs font-bold uppercase tracking-wider text-slate-400">4. Years (By Decade)</label>
-          {DECADES.map((dec) => (
-            <div key={dec.label} className="p-3 rounded bg-slate-950/50 border border-slate-800 space-y-2">
-              <div className="text-xs font-bold text-slate-300">Decade {dec.label}</div>
-              <div className="flex flex-wrap gap-1.5">
-                {dec.years.map((yr) => {
-                  const isSelected = selectedYears.includes(yr);
-                  return (
-                    <button
-                      key={yr}
-                      onClick={() => handleYearToggle(yr)}
-                      className={`px-2.5 py-1 rounded text-xs font-semibold border ${
-                        isSelected
-                          ? 'bg-marigold-500 text-primary-dark-950 border-marigold-400 font-bold'
-                          : 'bg-slate-900 border-slate-700 text-slate-300'
-                      }`}
-                    >
-                      {yr}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
+          <label className="text-xs font-bold uppercase tracking-wider text-slate-400">
+            4. Celebration Years ({availableYears.length} Available)
+          </label>
+          <div className="flex flex-wrap gap-2 pt-1">
+            {availableYears.map((yr) => {
+              const isSelected = selectedYears.includes(yr);
+              return (
+                <button
+                  key={yr}
+                  onClick={() => handleYearToggle(yr)}
+                  className={`px-3 py-1.5 rounded-md text-xs font-semibold border transition ${
+                    isSelected
+                      ? 'bg-marigold-500 text-primary-dark-950 border-marigold-400 font-bold shadow-sm'
+                      : 'bg-slate-950/60 border-slate-800 text-slate-300 hover:border-slate-700'
+                  }`}
+                >
+                  {yr}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         <div className="space-y-2">
@@ -377,6 +470,23 @@ function FestivalsEventsClient() {
     </div>
   );
 
+  if (error && eventsList.length === 0) {
+    return (
+      <div className="min-h-screen bg-primary-dark-900 text-slate-100 flex items-center justify-center p-6">
+        <div className="glass-panel p-8 rounded-lg border border-rose-500/30 text-center space-y-4 max-w-md">
+          <div className="text-rose-400 font-bold text-lg">Failed to load events</div>
+          <p className="text-xs text-slate-300">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-marigold-500 text-primary-dark-950 font-bold rounded text-xs"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-primary-dark-900 text-slate-100 font-sans pb-16">
       {/* Hero Section */}
@@ -397,6 +507,14 @@ function FestivalsEventsClient() {
           </p>
         </div>
       </section>
+
+      {error && (
+        <div className="max-w-7xl mx-auto px-4 lg:px-8 pt-4">
+          <div className="p-3 bg-amber-950/60 border border-amber-500/30 rounded text-amber-300 text-xs flex items-center justify-between">
+            <span>Notice: Could not query live Supabase events ({error}). Displaying local curated catalog.</span>
+          </div>
+        </div>
+      )}
 
       {/* Main Container */}
       <div className="max-w-7xl mx-auto px-4 lg:px-8 py-8 space-y-8">
@@ -458,7 +576,7 @@ function FestivalsEventsClient() {
               <span>Coming Up & Celebrations Around the Corner</span>
             </h2>
             <span className="text-xs text-slate-400 font-medium">
-              Showing {filteredEvents.length} events
+              Showing {Math.min(visibleCount, filteredEvents.length)} of {filteredEvents.length} events
             </span>
           </div>
 
@@ -466,7 +584,7 @@ function FestivalsEventsClient() {
             <EventFeedSkeleton />
           ) : filteredEvents.length > 0 ? (
             <div className="space-y-6">
-              {filteredEvents.map((evt, idx) => {
+              {filteredEvents.slice(0, visibleCount).map((evt, idx) => {
                 const categoryToken = getCategoryToken(evt.category);
                 const isEvenRow = idx % 2 === 0;
                 const evtDateObj = new Date(evt.startDate);
@@ -553,6 +671,18 @@ function FestivalsEventsClient() {
                   </div>
                 );
               })}
+
+              {visibleCount < filteredEvents.length && (
+                <div className="pt-6 text-center">
+                  <button
+                    onClick={() => setVisibleCount((prev) => prev + 8)}
+                    className="px-6 py-3 rounded-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-marigold-400 hover:text-white font-bold text-xs transition shadow-lg hover:scale-105 inline-flex items-center gap-2"
+                  >
+                    <span>Load More Celebrations ({filteredEvents.length - visibleCount} Remaining)</span>
+                    <ChevronDown className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
             </div>
           ) : (
             <div className="glass-panel p-12 rounded-md border border-slate-800 text-center space-y-4 my-8">
