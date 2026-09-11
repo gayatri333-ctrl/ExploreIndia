@@ -6,6 +6,13 @@ import {
   Utensils, Gem, Stethoscope, Palette, Home, Trees, Bike,
   ChevronRight, BookmarkCheck, ArrowRight
 } from 'lucide-react';
+import { HeroSection } from '@/components/HeroSection';
+import { DestinationsBucketList } from '@/components/DestinationsBucketList';
+import { AttractionsCarousel } from '@/components/AttractionsCarousel';
+import { TravelDiariesSection } from '@/components/TravelDiariesSection';
+import { ItinerariesSection } from '@/components/ItinerariesSection';
+import { RuralWondersStrip } from '@/components/RuralWondersStrip';
+import { CraftsCarousel } from '@/components/CraftsCarousel';
 
 // Sample experience topics matching the database schema
 const parentTopics = [
@@ -64,86 +71,11 @@ const featuredEvents = [
 export default function HomePage() {
   return (
     <div className="space-y-16 pb-12">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden pt-12 pb-20 px-4 lg:px-8 border-b border-white/10">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-saffron-500/15 via-peacock-600/10 to-royal-950 -z-10" />
-        
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Column Text */}
-          <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-saffron-500/10 border border-saffron-500/30 text-saffron-400 text-xs font-semibold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5 animate-pulse" />
-              <span>Explore India — Tourism & Festivals Portal</span>
-            </div>
+      {/* Hero Section with Video Background and Category Tabs */}
+      <HeroSection />
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.15]">
-              Experience the Magic of <br />
-              <span className="gold-gradient-text font-serif">India&apos;s Royal Festivals</span> & Trails
-            </h1>
-
-            <p className="text-base sm:text-lg text-slate-300 max-w-2xl font-normal leading-relaxed">
-              From the vibrant desert carnivals of Rajasthan to the serene backwaters of Kerala and UNESCO heritage trails — discover, bookmark, and plan incredible journeys.
-            </p>
-
-            {/* Quick Stats Bar */}
-            <div className="grid grid-cols-3 gap-4 pt-4 border-t border-white/10 text-center sm:text-left">
-              <div>
-                <div className="text-2xl font-extrabold text-saffron-400">28+</div>
-                <div className="text-xs text-slate-400">States & Zones</div>
-              </div>
-              <div>
-                <div className="text-2xl font-extrabold text-peacock-400">11</div>
-                <div className="text-xs text-slate-400">Experience Topics</div>
-              </div>
-              <div>
-                <div className="text-2xl font-extrabold text-gold-400">100%</div>
-                <div className="text-xs text-slate-400">Curated Events</div>
-              </div>
-            </div>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-wrap gap-4 pt-2">
-              <Link 
-                href="/festivals-events" 
-                className="bg-gradient-to-r from-saffron-500 via-saffron-600 to-gold-600 hover:from-saffron-600 hover:to-gold-700 text-white font-semibold px-6 py-3 rounded-xl shadow-glow-saffron transition-all hover:scale-[1.02] flex items-center gap-2 text-sm"
-              >
-                <span>Browse All Festivals</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
-
-          {/* Right Column Card Showcase */}
-          <div className="lg:col-span-5 relative">
-            <div className="relative rounded-2xl overflow-hidden glass-card p-2 group">
-              <div className="relative h-80 sm:h-96 rounded-xl overflow-hidden">
-                <Image 
-                  src="https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=1000" 
-                  alt="Pushkar Camel Fair India" 
-                  fill 
-                  className="object-cover group-hover:scale-105 transition-transform duration-700" 
-                  priority
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-royal-950 via-royal-950/40 to-transparent" />
-                
-                <div className="absolute top-4 left-4 bg-saffron-500 text-royal-950 text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md">
-                  Featured Destination
-                </div>
-                
-                <div className="absolute bottom-4 left-4 right-4 space-y-2">
-                  <span className="text-xs text-peacock-300 font-medium flex items-center gap-1">
-                    <MapPin className="w-3.5 h-3.5" /> Pushkar, Rajasthan • North Zone
-                  </span>
-                  <h3 className="text-xl font-bold text-white font-serif">Pushkar Camel & Cultural Fair</h3>
-                  <p className="text-xs text-slate-300 line-clamp-2">
-                    Vibrant livestock trading, desert hot-air ballooning, and holy dips at Pushkar Lake.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Destinations for Every Bucket List Carousel */}
+      <DestinationsBucketList />
 
       {/* Experience Topics Section */}
       <section className="max-w-7xl mx-auto px-4 lg:px-8 space-y-8">
@@ -193,6 +125,12 @@ export default function HomePage() {
           })}
         </div>
       </section>
+
+      {/* Attractions Worth a Thousand Stories Carousel */}
+      <AttractionsCarousel />
+
+      {/* Crafted Itineraries Section with 3-Facet Filter (Region, Interest, Trip Length) */}
+      <ItinerariesSection />
 
       {/* Featured Festivals & Events */}
       <section className="max-w-7xl mx-auto px-4 lg:px-8 space-y-8">
@@ -275,6 +213,15 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* Travel Diaries Blog Section with Interest + Region Filter */}
+      <TravelDiariesSection />
+
+      {/* Lesser Known Wonders Rural Tourism Strip */}
+      <RuralWondersStrip />
+
+      {/* Exquisite Indian Crafts Carousel */}
+      <CraftsCarousel />
     </div>
   );
 }
