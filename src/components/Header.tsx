@@ -170,6 +170,15 @@ export default function Header() {
               <Search className="w-4 h-4" />
             </button>
 
+            {/* Bookmarks Icon Action */}
+            <Link
+              href="/bookmarks"
+              className="p-2 rounded-full bg-royal-950/80 hover:bg-royal-800 text-slate-300 hover:text-saffron-400 border border-white/10 transition flex items-center justify-center"
+              title="View Saved Bookmarks"
+            >
+              <Bookmark className="w-4 h-4 text-saffron-400" />
+            </Link>
+
             {/* User Menu with Supabase Auth */}
             <div className="hidden sm:block">
               <UserMenu />
