@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { DESTINATION_CITIES } from '@/lib/data/cities-facts';
-import { MapPin, Globe, Lightbulb, ArrowRight, Sparkles, Compass } from 'lucide-react';
+import { MapPin, Globe, Lightbulb, ArrowRight, Sparkles, Compass, Filter } from 'lucide-react';
 
 export const metadata = {
   title: 'All India Destinations & City Guides | ExploreIndia',
@@ -20,7 +20,6 @@ const ZONES = [
 export default function DestinationsPage() {
   return (
     <div className="min-h-screen bg-royal-950 text-slate-100 font-sans flex flex-col selection:bg-marigold-500 selection:text-royal-950">
-
       {/* Hero Header */}
       <section className="relative pt-28 pb-16 bg-gradient-to-b from-royal-900 via-royal-950 to-royal-950 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 space-y-4">
@@ -28,34 +27,56 @@ export default function DestinationsPage() {
             <MapPin className="w-4 h-4" />
             <span>Destinations Directory & City Guides</span>
           </div>
-          <h1 className="text-3xl sm:text-5xl font-bold font-serif text-white tracking-tight">
-            Explore <span className="gold-gradient-text">India Destinations</span>
-          </h1>
-          <p className="text-slate-300 max-w-3xl text-sm sm:text-base leading-relaxed">
-            Discover destinations across 6 geographic zones, 28 states, and historical capitals with curated heritage facts and travel guides.
-          </p>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div className="space-y-2">
+              <h1 className="text-3xl sm:text-5xl font-bold font-serif text-white tracking-tight">
+                Explore <span className="gold-gradient-text">India Destinations</span>
+              </h1>
+              <p className="text-slate-300 max-w-3xl text-sm sm:text-base leading-relaxed">
+                Discover destinations across 6 geographic zones, 28 states, and historical capitals with curated heritage facts and travel guides.
+              </p>
+            </div>
+            <Link
+              href="/explore"
+              className="px-5 py-3 rounded-xl bg-saffron-500 hover:bg-saffron-400 text-royal-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition shrink-0"
+            >
+              <Filter className="w-4 h-4" />
+              <span>Launch Multi-Tag Explorer</span>
+            </Link>
+          </div>
         </div>
       </section>
 
       <main className="max-w-7xl mx-auto px-4 lg:px-8 py-12 space-y-16 flex-1 w-full">
         {/* Zones Grid */}
         <section className="space-y-6">
-          <h2 className="text-2xl font-bold text-white font-serif flex items-center gap-2">
-            <Globe className="w-5 h-5 text-peacock-400" />
-            <span>6 Travel Zones</span>
-          </h2>
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl font-bold text-white font-serif flex items-center gap-2">
+              <Globe className="w-5 h-5 text-peacock-400" />
+              <span>6 Travel Zones</span>
+            </h2>
+            <Link href="/explore" className="text-xs font-semibold text-saffron-400 hover:text-white flex items-center gap-1">
+              <span>Filter Places by Zone</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {ZONES.map((zone) => (
-              <div key={zone.name} className="glass-card rounded-xl p-6 space-y-3 border border-white/10">
+              <Link
+                key={zone.name}
+                href={`/explore?zone=${encodeURIComponent(zone.name)}`}
+                className="glass-card rounded-xl p-6 space-y-3 border border-white/10 hover:border-saffron-500/40 transition-all duration-300 hover:-translate-y-1 block group"
+              >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-peacock-400 uppercase tracking-widest bg-peacock-500/10 px-2.5 py-1 rounded border border-peacock-500/20">
+                  <span className="text-xs font-bold text-peacock-400 uppercase tracking-widest bg-peacock-500/10 px-2.5 py-1 rounded border border-peacock-500/20 group-hover:bg-saffron-500/20 group-hover:text-saffron-300 group-hover:border-saffron-500/30 transition">
                     {zone.name} Zone
                   </span>
+                  <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-saffron-400 transition" />
                 </div>
-                <h3 className="text-xl font-bold text-white font-serif">{zone.name} India</h3>
+                <h3 className="text-xl font-bold text-white font-serif group-hover:text-saffron-400 transition">{zone.name} India</h3>
                 <p className="text-xs text-slate-300 leading-relaxed">{zone.desc}</p>
-              </div>
+              </Link>
             ))}
           </div>
         </section>
