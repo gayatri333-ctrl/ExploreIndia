@@ -9,11 +9,7 @@ import {
 import { HeroSection } from '@/components/HeroSection';
 import { DestinationsBucketList } from '@/components/DestinationsBucketList';
 import { AttractionsCarousel } from '@/components/AttractionsCarousel';
-import { TravelDiariesSection } from '@/components/TravelDiariesSection';
 import { ItinerariesSection } from '@/components/ItinerariesSection';
-import { RuralWondersStrip } from '@/components/RuralWondersStrip';
-import { CraftsCarousel } from '@/components/CraftsCarousel';
-import { TravelTools } from '@/components/TravelTools';
 
 // Sample experience topics matching the database schema
 const parentTopics = [
@@ -215,17 +211,41 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Travel Diaries Blog Section with Interest + Region Filter */}
-      <TravelDiariesSection />
+      {/* AI & Custom Trip Planner CTA Banner */}
+      <section className="max-w-7xl mx-auto px-4 lg:px-8">
+        <div className="glass-panel p-8 sm:p-12 rounded-3xl border border-saffron-500/30 bg-gradient-to-r from-royal-950 via-royal-900 to-royal-950 shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="absolute top-0 right-0 -mt-8 -mr-8 w-64 h-64 bg-saffron-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="space-y-4 max-w-2xl relative z-10">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-saffron-500/10 border border-saffron-500/30 text-saffron-400 text-xs font-semibold uppercase tracking-wider">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Smart Travel Toolkit & Planner</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold text-white font-serif tracking-tight">
+              Ready to Craft Your <span className="gold-gradient-text">Custom Indian Odyssey?</span>
+            </h2>
+            <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+              Use our live weather estimator, FX currency converter, emergency directory, and day-by-day itineraries toolkit to customize your journey down to every detail.
+            </p>
+          </div>
 
-      {/* Lesser Known Wonders Rural Tourism Strip */}
-      <RuralWondersStrip />
-
-      {/* Plan Your Trip Practical Toolkit Section */}
-      <TravelTools />
-
-      {/* Exquisite Indian Crafts Carousel */}
-      <CraftsCarousel />
+          <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto relative z-10 shrink-0">
+            <Link
+              href="/plan-your-trip"
+              className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-saffron-500 to-marigold-500 hover:from-saffron-600 hover:to-marigold-600 text-royal-950 font-bold text-sm shadow-glow-saffron transition-all hover:scale-105 flex items-center justify-center gap-2"
+            >
+              <Compass className="w-4 h-4" />
+              <span>Open Travel Toolkit</span>
+            </Link>
+            <Link
+              href="/itineraries"
+              className="px-6 py-3.5 rounded-xl bg-royal-900/90 hover:bg-royal-800 text-white font-semibold text-sm border border-white/10 backdrop-blur-md transition-all hover:scale-105 flex items-center justify-center gap-2"
+            >
+              <span>Explore Itineraries</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

@@ -28,6 +28,8 @@ import {
 
 import { ZONES, STATES_DATA, CITIES_DATA, ATTRACTIONS_DATA } from '@/data/dataset';
 import { Zone } from '@/data/schema';
+import { COMPREHENSIVE_EVENTS } from '@/lib/data/events-data';
+import { SAMPLE_ITINERARIES } from '@/lib/data/itineraries';
 
 // Categories / Themes list
 const THEMES = [
@@ -46,10 +48,11 @@ const THEMES = [
 interface CardItem {
   id: string;
   title: string;
-  itemType: 'Destination City' | 'Attraction';
+  itemType: 'Destination City' | 'Attraction' | 'Festival' | 'Itinerary';
+  typeKey: 'destinations' | 'attractions' | 'festivals' | 'itineraries';
   stateName: string;
   stateSlug: string;
-  zone: Zone;
+  zone: string;
   theme: string;
   image: string;
   tagline: string;
@@ -113,6 +116,7 @@ function ExploreContent() {
         id: `city-${city.id}`,
         title: city.name,
         itemType: 'Destination City',
+        typeKey: 'destinations',
         stateName,
         stateSlug: city.stateId,
         zone,
@@ -139,6 +143,7 @@ function ExploreContent() {
         id: `attr-${attraction.id}`,
         title: attraction.name,
         itemType: 'Attraction',
+        typeKey: 'attractions',
         stateName,
         stateSlug,
         zone,
@@ -147,6 +152,42 @@ function ExploreContent() {
         tagline: attraction.historicalSignificance,
         fact: attraction.didYouKnowFacts[0] || attraction.historicalSignificance,
         link: `/destinations/${stateSlug}/${attraction.cityId}`,
+      });
+    });
+
+    // 3. Add Festivals & Events
+    COMPREHENSIVE_EVENTS.forEach((evt) => {
+      items.push({
+        id: `evt-${evt.id}`,
+        title: evt.title,
+        itemType: 'Festival',
+        typeKey: 'festivals',
+        stateName: evt.stateName,
+        stateSlug: evt.stateSlug,
+        zone: evt.region,
+        theme: evt.category,
+        image: evt.cardImage || evt.heroImage,
+        tagline: evt.shortDescription,
+        fact: `Dates: ${evt.startDate} to ${evt.endDate}`,
+        link: `/festivals-events/${evt.stateSlug}/${evt.slug}`,
+      });
+    });
+
+    // 4. Add Curated Itineraries
+    SAMPLE_ITINERARIES.forEach((it) => {
+      items.push({
+        id: `it-${it.id}`,
+        title: it.title,
+        itemType: 'Itinerary',
+        typeKey: 'itineraries',
+        stateName: `${it.region} Region`,
+        stateSlug: it.slug,
+        zone: it.region,
+        theme: it.interest,
+        image: it.coverImage || 'https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=800',
+        tagline: it.shortDescription,
+        fact: `Duration: ${it.durationBadge}`,
+        link: `/itineraries/${it.slug}`,
       });
     });
 
@@ -170,10 +211,17 @@ function ExploreContent() {
         }
       }
 
-      // 3. Entity Type filter (City vs Attraction)
+      // 3. Entity Type filter (destinations, attractions, festivals, itineraries)
       if (selectedType !== 'All') {
-        if (selectedType === 'cities' && item.itemType !== 'Destination City') return false;
-        if (selectedType === 'attractions' && item.itemType !== 'Attraction') return false;
+        if (selectedType === 'cities' || selectedType === 'destinations') {
+          if (item.itemType !== 'Destination City') return false;
+        } else if (selectedType === 'attractions') {
+          if (item.itemType !== 'Attraction') return false;
+        } else if (selectedType === 'festivals') {
+          if (item.itemType !== 'Festival') return false;
+        } else if (selectedType === 'itineraries') {
+          if (item.itemType !== 'Itinerary') return false;
+        }
       }
 
       // 4. Live Text Search filter
@@ -185,8 +233,9 @@ function ExploreContent() {
         const matchTagline = item.tagline.toLowerCase().includes(q);
         const matchFact = item.fact.toLowerCase().includes(q);
         const matchTheme = item.theme.toLowerCase().includes(q);
+        const matchType = item.itemType.toLowerCase().includes(q);
 
-        if (!matchTitle && !matchState && !matchZone && !matchTagline && !matchFact && !matchTheme) {
+        if (!matchTitle && !matchState && !matchZone && !matchTagline && !matchFact && !matchTheme && !matchType) {
           return false;
         }
       }
@@ -212,13 +261,13 @@ function ExploreContent() {
         <div className="max-w-7xl mx-auto px-4 lg:px-8 space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-saffron-500/10 border border-saffron-500/30 text-saffron-400 text-xs font-semibold uppercase tracking-wider">
             <Compass className="w-4 h-4" />
-            <span>Interactive Multi-Tag Discovery Explorer</span>
+            <span>Real-time Multi-Entity Search Engine</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold font-serif text-white tracking-tight">
-            Explore <span className="gold-gradient-text">India Destinations & Attractions</span>
+            Search <span className="gold-gradient-text">Destinations, Attractions, Festivals & Itineraries</span>
           </h1>
           <p className="text-slate-300 max-w-3xl text-sm sm:text-base leading-relaxed">
-            Filter by geographic zones, cultural experience themes, or search across heritage fortresses, ancient temples, backwaters, and natural wonders.
+            Filter by geographic zones, experience themes, or search across heritage fortresses, ancient temples, backwaters, festivals, and day-by-day travel guides.
           </p>
         </div>
       </section>
@@ -233,7 +282,7 @@ function ExploreContent() {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <input
                 type="text"
-                placeholder="Search by city, fort name, state, theme, or heritage fact..."
+                placeholder="Search by city, fort, festival, itinerary, state, or experience theme..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-11 pr-10 py-3 rounded-xl bg-royal-950 border border-white/10 text-white placeholder-slate-400 text-sm focus:border-saffron-500 outline-none transition"
@@ -248,17 +297,19 @@ function ExploreContent() {
               )}
             </div>
 
-            {/* Type Selector (All, Cities, Attractions) */}
-            <div className="flex items-center gap-1.5 bg-royal-950 p-1.5 rounded-xl border border-white/10 w-full md:w-auto shrink-0">
+            {/* Type Selector (All, Cities, Attractions, Festivals, Itineraries) */}
+            <div className="flex items-center gap-1.5 bg-royal-950 p-1.5 rounded-xl border border-white/10 w-full md:w-auto shrink-0 flex-wrap sm:flex-nowrap">
               {[
-                { id: 'All', label: 'All Places' },
-                { id: 'cities', label: 'Cities Only' },
-                { id: 'attractions', label: 'Attractions Only' },
+                { id: 'All', label: 'All Entities' },
+                { id: 'cities', label: 'Destinations' },
+                { id: 'attractions', label: 'Attractions' },
+                { id: 'festivals', label: 'Festivals' },
+                { id: 'itineraries', label: 'Itineraries' },
               ].map((t) => (
                 <button
                   key={t.id}
                   onClick={() => setSelectedType(t.id)}
-                  className={`flex-1 md:flex-none px-3.5 py-1.5 rounded-lg text-xs font-semibold transition ${
+                  className={`flex-1 md:flex-none px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
                     selectedType === t.id
                       ? 'bg-saffron-500 text-royal-950 font-bold shadow-md'
                       : 'text-slate-300 hover:text-white'

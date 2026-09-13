@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { PLAN_YOUR_TRIP_HUB } from '@/lib/data/incredible-india-data';
 import { SAMPLE_ITINERARIES } from '@/lib/data/itineraries';
 import { TravelTools } from '@/components/TravelTools';
-import { Compass, Plane, ArrowRight } from 'lucide-react';
+import { CraftsCarousel } from '@/components/CraftsCarousel';
+import { Compass, Plane, ArrowRight, Sparkles } from 'lucide-react';
 
 export default function PlanYourTripPage() {
   return (
@@ -30,13 +31,18 @@ export default function PlanYourTripPage() {
         {/* Interactive Travel Tools Component */}
         <TravelTools />
 
+        {/* Exquisite Indian Crafts Showcase */}
+        <div className="pt-4 border-t border-white/10">
+          <CraftsCarousel />
+        </div>
+
         {/* Curated Itineraries Preview */}
         <section id="itineraries" className="space-y-6 pt-4 border-t border-white/10">
           <div className="flex items-center justify-between border-b border-white/10 pb-4">
             <div className="space-y-1">
               <div className="flex items-center gap-2 text-xs font-bold text-emerald-400 uppercase tracking-wider">
                 <Plane className="w-4 h-4" />
-                <span>Pillar 4: Day-by-Day Travel Guides</span>
+                <span>Day-by-Day Travel Guides</span>
               </div>
               <h2 className="text-2xl font-bold text-white font-serif">Handcrafted Itineraries</h2>
             </div>
