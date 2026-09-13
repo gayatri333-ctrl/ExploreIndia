@@ -1,4 +1,5 @@
 import { Zone, StateUT, DestinationCity, AttractionPOI, FestivalEvent } from './schema';
+import { PEXELS_CANONICAL_DESTINATION_MAP } from '@/lib/pexels';
 
 export const ZONES: Zone[] = [
   'North',
@@ -16,15 +17,23 @@ export const STATES_DATA: StateUT[] = [
     name: 'Himachal Pradesh',
     zone: 'North',
     capital: 'Shimla',
-    heroImage: 'https://images.unsplash.com/photo-1597074866923-dc0589150358?q=80&w=1200',
+    heroImage: PEXELS_CANONICAL_DESTINATION_MAP.shimla.imageUrl,
     description: 'Devbhoomi — Land of Himalayan summits, evergreen cedar valleys, colonial hill architecture, and Tibetan Buddhist sanctuaries.',
+  },
+  {
+    id: 'uttar-pradesh',
+    name: 'Uttar Pradesh',
+    zone: 'North',
+    capital: 'Lucknow',
+    heroImage: PEXELS_CANONICAL_DESTINATION_MAP.varanasi.imageUrl,
+    description: 'Spiritual heart of India spanning the sacred riverbanks of Varanasi, Mughal monuments of Agra, and Nawabi food culture.',
   },
   {
     id: 'west-bengal',
     name: 'West Bengal',
     zone: 'East',
     capital: 'Kolkata',
-    heroImage: 'https://images.unsplash.com/photo-1570535310866-9b5dbd09439f?q=80&w=1200',
+    heroImage: PEXELS_CANONICAL_DESTINATION_MAP.kolkata.imageUrl,
     description: 'Cultural heartbeat of East India celebrating literature, UNESCO Durga Puja art carnivals, Darjeeling tea valleys, and Royal Bengal tiger mangroves.',
   },
   {
@@ -32,7 +41,7 @@ export const STATES_DATA: StateUT[] = [
     name: 'Rajasthan',
     zone: 'West',
     capital: 'Jaipur',
-    heroImage: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=1200',
+    heroImage: PEXELS_CANONICAL_DESTINATION_MAP.jaipur.imageUrl,
     description: 'Land of Kings boasting desert Maharajah fortresses, golden Thar sand dunes, lacquer handcrafts, and vibrant camel carnivals.',
   },
   {
@@ -40,7 +49,7 @@ export const STATES_DATA: StateUT[] = [
     name: 'Kerala',
     zone: 'South',
     capital: 'Thiruvananthapuram',
-    heroImage: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=1200',
+    heroImage: PEXELS_CANONICAL_DESTINATION_MAP.alleppey.imageUrl,
     description: 'God’s Own Country — Famed for tranquil backwater houseboat lagoons, Ayurvedic wellness resorts, Kathakali dance, and tea spice slopes.',
   },
   {
@@ -48,7 +57,7 @@ export const STATES_DATA: StateUT[] = [
     name: 'Madhya Pradesh',
     zone: 'Central',
     capital: 'Bhopal',
-    heroImage: 'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?q=80&w=1200',
+    heroImage: PEXELS_CANONICAL_DESTINATION_MAP.khajuraho.imageUrl,
     description: 'The green heartland of India boasting highest Royal Bengal tiger density, Khajuraho UNESCO stone sculptures, and medieval fortresses.',
   },
   {
@@ -56,7 +65,7 @@ export const STATES_DATA: StateUT[] = [
     name: 'Meghalaya',
     zone: 'North-East',
     capital: 'Shillong',
-    heroImage: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=1200',
+    heroImage: PEXELS_CANONICAL_DESTINATION_MAP.shillong.imageUrl,
     description: 'Abode of Clouds — Celebrated for bio-engineered living root bridges, crystal clear rivers, and Asia\'s cleanest eco-villages.',
   }
 ];
@@ -73,7 +82,7 @@ export const CITIES_DATA: DestinationCity[] = [
       'Connected by the UNESCO Kalka-Shimla Toy Train featuring 102 historic tunnels built in 1903.',
       'Home to the Viceregal Lodge where historic pre-independence summits were convened.'
     ],
-    image: 'https://images.unsplash.com/photo-1597074866923-dc0589150358?q=80&w=800',
+    image: PEXELS_CANONICAL_DESTINATION_MAP.shimla.imageUrl,
     tagline: 'Colonial Hill Capital & Pine Valleys'
   },
   {
@@ -86,11 +95,26 @@ export const CITIES_DATA: DestinationCity[] = [
       'Starting point of the legendary Manali-Leh mountain highway.',
       'Home to the 500-year-old wooden Hadimba Temple built in 1553 AD.'
     ],
-    image: 'https://images.unsplash.com/photo-1605649487212-47bdab064df7?q=80&w=800',
+    image: PEXELS_CANONICAL_DESTINATION_MAP.manali.imageUrl,
     tagline: 'Solang Adventure & High Mountain Passes'
   },
 
-  // 2. West Bengal (East)
+  // 2. Uttar Pradesh (North)
+  {
+    id: 'varanasi',
+    name: 'Varanasi',
+    stateId: 'uttar-pradesh',
+    overview: 'Spiritual capital of India and one of the oldest continuously inhabited cities on Earth along the sacred Ganges riverbanks.',
+    bestTimeToVisit: 'October to March',
+    quickFacts: [
+      'Considered the spiritual heart of Hinduism, standing on the banks of River Ganges for over 3,000 years.',
+      'Dashashwamedh Ghat hosts the world-famous evening Ganga Aarti brass lamp ceremony daily.'
+    ],
+    image: PEXELS_CANONICAL_DESTINATION_MAP.varanasi.imageUrl,
+    tagline: 'Spiritual Riverfront & Sacred Ganga Ghats'
+  },
+
+  // 3. West Bengal (East)
   {
     id: 'kolkata',
     name: 'Kolkata',
@@ -101,7 +125,7 @@ export const CITIES_DATA: DestinationCity[] = [
       'Former capital of British India until 1911, famous for yellow cabs and cantilever Howrah Bridge.',
       'Host to UNESCO Intangible Cultural Heritage Durga Puja carnival.'
     ],
-    image: 'https://images.unsplash.com/photo-1570535310866-9b5dbd09439f?q=80&w=800',
+    image: PEXELS_CANONICAL_DESTINATION_MAP.kolkata.imageUrl,
     tagline: 'City of Joy & UNESCO Heritage Art'
   },
   {
@@ -114,11 +138,11 @@ export const CITIES_DATA: DestinationCity[] = [
       'Home to the UNESCO Darjeeling Himalayan Railway (Toy Train) built in 1881.',
       'Produces single-origin Champagne of Teas across 80+ hill estates.'
     ],
-    image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=800',
+    image: PEXELS_CANONICAL_DESTINATION_MAP.darjeeling.imageUrl,
     tagline: 'Kanchenjunga Panorama & Tea Gardens'
   },
 
-  // 3. Rajasthan (West)
+  // 4. Rajasthan (West)
   {
     id: 'jaipur',
     name: 'Jaipur',
@@ -129,8 +153,21 @@ export const CITIES_DATA: DestinationCity[] = [
       'India\'s first planned city founded in 1727, painted pink in 1876 to welcome Prince Albert.',
       'Hawa Mahal features 953 honeycombed sandstone windows for royal breezes.'
     ],
-    image: 'https://images.unsplash.com/photo-1477587458883-47145ed94245?q=80&w=800',
+    image: PEXELS_CANONICAL_DESTINATION_MAP.jaipur.imageUrl,
     tagline: 'The Pink City & Amber Fort Ramparts'
+  },
+  {
+    id: 'udaipur',
+    name: 'Udaipur',
+    stateId: 'rajasthan',
+    overview: 'City of Lakes & Venetian Palaces, renowned for white marble architecture floating on tranquil Lake Pichola.',
+    bestTimeToVisit: 'October to March',
+    quickFacts: [
+      'Its interconnecting lake system was engineered centuries ago to create microclimates.',
+      'The iconic Lake Palace appears to float seamlessly in the middle of Lake Pichola.'
+    ],
+    image: PEXELS_CANONICAL_DESTINATION_MAP.udaipur.imageUrl,
+    tagline: 'City of Lakes & Floating Palaces'
   },
   {
     id: 'jaisalmer',
@@ -142,7 +179,7 @@ export const CITIES_DATA: DestinationCity[] = [
       'Home to Sonar Qila, one of the world\'s few living fortresses housing 4,000 residents inside.',
       'Carved from yellow sandstone that glows gold under desert sunsets.'
     ],
-    image: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=800',
+    image: PEXELS_CANONICAL_DESTINATION_MAP.jaisalmer.imageUrl,
     tagline: 'Golden Fort & Thar Sand Dunes'
   },
 
@@ -157,7 +194,7 @@ export const CITIES_DATA: DestinationCity[] = [
       'Features a network of 900 km of interconnected brackish backwater canals.',
       'Host to the annual world-famous Nehru Trophy Snake Boat Race.'
     ],
-    image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=800',
+    image: PEXELS_CANONICAL_DESTINATION_MAP.alleppey.imageUrl,
     tagline: 'Luxury Houseboats & Lagoon Waterways'
   },
   {
@@ -170,7 +207,7 @@ export const CITIES_DATA: DestinationCity[] = [
       'Located at 1,600m elevation at the confluence of three mountain streams.',
       'Home to rare Neelakurinji wild blue flowers blooming once every 12 years.'
     ],
-    image: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=800',
+    image: PEXELS_CANONICAL_DESTINATION_MAP.munnar.imageUrl,
     tagline: 'Tea Estate Trails & Cloud Valleys'
   },
 
@@ -185,7 +222,7 @@ export const CITIES_DATA: DestinationCity[] = [
       'Built by the Chandela dynasty between 950 and 1050 AD in nagara architectural style.',
       'Only 25 of the original 85 medieval sandstone temples survive today.'
     ],
-    image: 'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?q=80&w=800',
+    image: PEXELS_CANONICAL_DESTINATION_MAP.khajuraho.imageUrl,
     tagline: 'UNESCO Erotic & Classical Temples'
   },
 
@@ -200,7 +237,7 @@ export const CITIES_DATA: DestinationCity[] = [
       'Ficus elastica tree roots are trained over 150 years to form indestructible living river bridges.',
       'Mawlynnong eco-village was awarded Asia\'s Cleanest Village.'
     ],
-    image: 'https://images.unsplash.com/photo-1506461883276-594a12b11db3?q=80&w=800',
+    image: PEXELS_CANONICAL_DESTINATION_MAP.cherrapunji.imageUrl,
     tagline: 'Living Root Bridges & Crystal Rivers'
   }
 ];

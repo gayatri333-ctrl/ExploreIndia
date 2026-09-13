@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { fetchPexelsDestinationImage, getDestinationCacheAuditInfo } from '@/lib/services/pexelsService';
+import { getPexelsPhotoForDestination } from '@/lib/pexels';
 
 export const dynamic = 'force-dynamic';
 
@@ -9,15 +9,7 @@ export async function GET(request: NextRequest) {
     const slug = searchParams.get('slug') || searchParams.get('q') || '';
     const name = searchParams.get('name') || undefined;
     const state = searchParams.get('state') || undefined;
-    const category = searchParams.get('category') || undefined;
     const refresh = searchParams.get('refresh') === 'true';
-    const audit = searchParams.get('audit') === 'true';
-
-    // Development/Admin Audit endpoint (secured)
-    if (audit) {
-      const auditInfo = getDestinationCacheAuditInfo();
-      return NextResponse.json({ success: true, audit: auditInfo });
-    }
 
     if (!slug) {
       return NextResponse.json(
@@ -26,13 +18,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const imageResult = await fetchPexelsDestinationImage({
-      slug,
-      name,
-      state,
-      category,
-      forceRefresh: refresh,
-    });
+    const imageResult = await getPexelsPhotoForDestination(slug, name, state, refresh);
 
     return NextResponse.json({
       success: true,
@@ -49,3 +35,4 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+

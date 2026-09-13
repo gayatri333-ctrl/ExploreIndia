@@ -4,6 +4,7 @@ import { DestinationCityClient, DetailedCityInfo } from '@/components/destinatio
 import { ZONES_DATA } from '@/lib/data/incredible-india-data';
 import { getCityById, getAttractionsByCity, getFestivalsByCity, getStateById } from '@/data/store';
 import { CITIES_DATA, ATTRACTIONS_DATA, FESTIVALS_DATA } from '@/data/dataset';
+import { getCanonicalDestinationImage } from '@/lib/pexels';
 
 interface CityPageProps {
   params: {
@@ -19,6 +20,7 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
   const city = state?.cities.find((c) => c.citySlug.toLowerCase() === params.city.toLowerCase());
 
   const storeCity = getCityById(params.city);
+  const canonical = getCanonicalDestinationImage(params.city);
 
   const cityName = city ? city.cityName : storeCity ? storeCity.name : params.city.replace(/-/g, ' ').toUpperCase();
   const stateName = state ? state.stateName : params.state.replace(/-/g, ' ').toUpperCase();
@@ -32,7 +34,7 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
     openGraph: {
       title,
       description,
-      images: [city?.image || storeCity?.image || 'https://images.unsplash.com/photo-1597074866923-dc0589150358?q=80&w=1200'],
+      images: [city?.image || storeCity?.image || canonical.imageUrl],
     },
   };
 }
@@ -49,11 +51,13 @@ export default function IncredibleIndiaCityPage({ params }: CityPageProps) {
   const stateObj = zoneObj?.states.find((s) => s.stateSlug.toLowerCase() === params.state.toLowerCase());
   const incCityObj = stateObj?.cities.find((c) => c.citySlug.toLowerCase() === params.city.toLowerCase());
 
+  const canonical = getCanonicalDestinationImage(params.city);
+
   const cityName = storeCity?.name || incCityObj?.cityName || params.city.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
   const stateName = storeState?.name || incCityObj?.stateName || params.state.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
   const zoneName = storeState?.zone || incCityObj?.zoneName || params.zone.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
 
-  const heroImage = storeCity?.image || incCityObj?.image || 'https://images.unsplash.com/photo-1597074866923-dc0589150358?q=80&w=1200';
+  const heroImage = storeCity?.image || incCityObj?.image || canonical.imageUrl;
   const tagline = storeCity?.tagline || incCityObj?.tagline || 'Historical Heritage & Cultural Destination';
   const overview = storeCity?.overview || incCityObj?.tagline || `Discover the ancient history, majestic architecture, sacred spiritual traditions, and vibrant culture of ${cityName}.`;
   const bestTimeToVisit = storeCity?.bestTimeToVisit || incCityObj?.bestSeason || 'October to March';

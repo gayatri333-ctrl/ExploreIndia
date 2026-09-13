@@ -1,12 +1,6 @@
-/**
- * Incredible India Information Architecture & Data Model
- * 
- * Provides mock data for:
- * 1. 7 Geographic Zones: North, South, East, West, Central, North-East, Union Territories
- * 2. 7 Experience Categories: Heritage, Spiritual, Wildlife, Adventure, Gastronomy, Wellness, Rural
- * 3. Comprehensive State & City Destination mappings for App Router paths `/destinations/[zone]/[state]/[city]`
- * 4. Plan Your Trip essentials (Weather, Currency, Help, Itineraries)
- */
+import { PEXELS_CANONICAL_DESTINATION_MAP, getCanonicalDestinationImage } from '@/lib/pexels';
+
+const getImg = (slug: string) => getCanonicalDestinationImage(slug).imageUrl;
 
 export interface CityData {
   citySlug: string;
@@ -78,7 +72,7 @@ export const ZONES_DATA: ZoneData[] = [
     zoneSlug: 'north',
     zoneName: 'North India',
     tagline: 'Himalayan Peaks, Colonial Hill Stations & Sacred Riverbanks',
-    heroImage: 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?q=80&w=1200',
+    heroImage: getImg('srinagar'),
     description: 'Home to snow-capped mountain ranges, pine-covered valleys, ancient pilgrim paths, and majestic colonial summer capitals.',
     states: [
       {
@@ -87,7 +81,7 @@ export const ZONES_DATA: ZoneData[] = [
         zoneSlug: 'north',
         zoneName: 'North India',
         capital: 'Shimla',
-        heroImage: 'https://images.unsplash.com/photo-1597074866923-dc0589150358?q=80&w=800',
+        heroImage: getImg('shimla'),
         description: 'Land of Gods featuring towering Himalayan crests, Buddhist monasteries, and evergreen deodar forests.',
         cities: [
           {
@@ -98,7 +92,7 @@ export const ZONES_DATA: ZoneData[] = [
             zoneSlug: 'north',
             zoneName: 'North India',
             tagline: 'Queen of Hills & Former British Summer Capital',
-            image: 'https://images.unsplash.com/photo-1597074866923-dc0589150358?q=80&w=800',
+            image: getImg('shimla'),
             facts: [
               'Connected by the UNESCO Kalka-Shimla Toy Train featuring 102 historic tunnels built in 1903.',
               'Home to the iconic Viceregal Lodge where major pre-independence historic summits took place.'
@@ -115,7 +109,7 @@ export const ZONES_DATA: ZoneData[] = [
             zoneSlug: 'north',
             zoneName: 'North India',
             tagline: 'Gateway to Solang Valley & High Altitude Himalayan Passes',
-            image: 'https://images.unsplash.com/photo-1605649487212-47bdab064df7?q=80&w=800',
+            image: getImg('manali'),
             facts: [
               'Starting point of the legendary Manali-Leh Highway across Rohtang Pass.',
               'Home to the 500-year-old wooden Hadimba Devi Temple set in dense cedar forests.'
@@ -132,7 +126,7 @@ export const ZONES_DATA: ZoneData[] = [
         zoneSlug: 'north',
         zoneName: 'North India',
         capital: 'Dehradun',
-        heroImage: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?q=80&w=800',
+        heroImage: getImg('rishikesh'),
         description: 'Devbhoomi — Land of Sacred Rivers, Yoga Shalas, and High Mountain Sanctuaries.',
         cities: [
           {
@@ -143,7 +137,7 @@ export const ZONES_DATA: ZoneData[] = [
             zoneSlug: 'north',
             zoneName: 'North India',
             tagline: 'Yoga Capital of the World & White Water Gorges',
-            image: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?q=80&w=800',
+            image: getImg('rishikesh'),
             facts: [
               'Global birthplace of modern yoga retreats where The Beatles stayed in 1968.',
               'Renowned for Grade III & IV white-water rafting expeditions down Ganges mountain rapids.'
@@ -160,7 +154,7 @@ export const ZONES_DATA: ZoneData[] = [
     zoneSlug: 'south',
     zoneName: 'South India',
     tagline: 'Dravidian Gopurams, Palm Lagoons & Spice Hill Plantations',
-    heroImage: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=1200',
+    heroImage: getImg('alleppey'),
     description: 'Immerse in ancient temple architecture, tranquil backwater houseboats, Ayurvedic healing retreats, and aromatic coffee slopes.',
     states: [
       {
@@ -169,7 +163,7 @@ export const ZONES_DATA: ZoneData[] = [
         zoneSlug: 'south',
         zoneName: 'South India',
         capital: 'Thiruvananthapuram',
-        heroImage: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=800',
+        heroImage: getImg('alleppey'),
         description: 'God’s Own Country — Famed for tranquil backwaters, Kathakali dance, and Ayurvedic wellness.',
         cities: [
           {
@@ -180,7 +174,7 @@ export const ZONES_DATA: ZoneData[] = [
             zoneSlug: 'south',
             zoneName: 'South India',
             tagline: 'Venice of the East & Luxury Backwater Houseboat Haven',
-            image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=800',
+            image: getImg('alleppey'),
             facts: [
               'Famous for its network of 900 km of interconnected brackish backwater canals and Vembanad Lake.',
               'Host of the world-famous annual Nehru Trophy Snake Boat Race.'
@@ -197,7 +191,7 @@ export const ZONES_DATA: ZoneData[] = [
             zoneSlug: 'south',
             zoneName: 'South India',
             tagline: 'Rolling Tea Valleys & Endangered Nilgiri Tahr Sanctuary',
-            image: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=800',
+            image: getImg('munnar'),
             facts: [
               'Situated at 1,600 meters elevation at the confluence of three mountain streams.',
               'Home to Neelakurinji flowers which bloom once every 12 years covering hills in purple.'
@@ -214,7 +208,7 @@ export const ZONES_DATA: ZoneData[] = [
         zoneSlug: 'south',
         zoneName: 'South India',
         capital: 'Chennai',
-        heroImage: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=800',
+        heroImage: getImg('madurai'),
         description: 'Cradle of Dravidian temple architecture, classical Bharatanatyam, and coastal UNESCO monuments.',
         cities: [
           {
@@ -225,7 +219,7 @@ export const ZONES_DATA: ZoneData[] = [
             zoneSlug: 'south',
             zoneName: 'South India',
             tagline: 'City of 14 Towering Gopurams & Meenakshi Amman Temple',
-            image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=800',
+            image: getImg('madurai'),
             facts: [
               'One of the oldest continuously inhabited cities in the world dating back over 2,500 years.',
               'Meenakshi Amman Temple features 14 monumental gopuram gateways with 33,000 sculpted figures.'
@@ -242,7 +236,7 @@ export const ZONES_DATA: ZoneData[] = [
     zoneSlug: 'east',
     zoneName: 'East India',
     tagline: 'Cultural Capitals, Sacred Stupas & Mangrove Tiger Swamps',
-    heroImage: 'https://images.unsplash.com/photo-1570535310866-9b5dbd09439f?q=80&w=1200',
+    heroImage: getImg('kolkata'),
     description: 'Discover colonial intellectual heritage, coastal sun temples, Buddhist enlightenment trails, and Bengal tiger reserves.',
     states: [
       {
@@ -251,7 +245,7 @@ export const ZONES_DATA: ZoneData[] = [
         zoneSlug: 'east',
         zoneName: 'East India',
         capital: 'Kolkata',
-        heroImage: 'https://images.unsplash.com/photo-1570535310866-9b5dbd09439f?q=80&w=800',
+        heroImage: getImg('kolkata'),
         description: 'Cultural heartbeat of East India celebrating literature, art installations, tea gardens, and river delta forests.',
         cities: [
           {
@@ -262,7 +256,7 @@ export const ZONES_DATA: ZoneData[] = [
             zoneSlug: 'east',
             zoneName: 'East India',
             tagline: 'Queen of the Hills & Kanchenjunga Sunrise Panorama',
-            image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=800',
+            image: getImg('darjeeling'),
             facts: [
               'Home to the UNESCO Darjeeling Himalayan Railway (Toy Train) built in 1881.',
               'Famous worldwide for producing single-origin Champagne of Teas.'
@@ -279,7 +273,7 @@ export const ZONES_DATA: ZoneData[] = [
             zoneSlug: 'east',
             zoneName: 'East India',
             tagline: 'City of Joy & UNESCO Durga Puja Street Art Carnival',
-            image: 'https://images.unsplash.com/photo-1570535310866-9b5dbd09439f?q=80&w=800',
+            image: getImg('kolkata'),
             facts: [
               'Former capital of British India until 1911, famed for yellow taxis and grand colonial architecture.',
               'Host to UNESCO Intangible Cultural Heritage Durga Puja transforming the city into an open-air gallery.'
@@ -296,7 +290,7 @@ export const ZONES_DATA: ZoneData[] = [
     zoneSlug: 'west',
     zoneName: 'West India',
     tagline: 'Thar Salt Deserts, Royal Fortresses & Sunlit Coastal Beaches',
-    heroImage: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=1200',
+    heroImage: getImg('jaipur'),
     description: 'Experience royal Maharajah fortresses, white salt desert full moon carnivals, Portuguese beach quarters, and cave temples.',
     states: [
       {
@@ -305,7 +299,7 @@ export const ZONES_DATA: ZoneData[] = [
         zoneSlug: 'west',
         zoneName: 'West India',
         capital: 'Jaipur',
-        heroImage: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=800',
+        heroImage: getImg('jaipur'),
         description: 'Land of Kings featuring desert forts, lacquered crafts, folk music, and grand camel carnivals.',
         cities: [
           {
@@ -316,7 +310,7 @@ export const ZONES_DATA: ZoneData[] = [
             zoneSlug: 'west',
             zoneName: 'West India',
             tagline: 'The Pink City, Amber Fort Ramparts & Hawa Mahal',
-            image: 'https://images.unsplash.com/photo-1477587458883-47145ed94245?q=80&w=800',
+            image: getImg('jaipur'),
             facts: [
               'India\'s first planned city founded in 1727, painted pink in 1876 to welcome the Prince of Wales.',
               'Hawa Mahal (Palace of Winds) has 953 intricate honeycombed sandstone casement windows.'
@@ -326,6 +320,23 @@ export const ZONES_DATA: ZoneData[] = [
             experiences: ['Heritage', 'Arts', 'Gastronomy']
           },
           {
+            citySlug: 'udaipur',
+            cityName: 'Udaipur',
+            stateSlug: 'rajasthan',
+            stateName: 'Rajasthan',
+            zoneSlug: 'west',
+            zoneName: 'West India',
+            tagline: 'City of Lakes, Marble Palaces & Lake Pichola',
+            image: getImg('udaipur'),
+            facts: [
+              'Its interconnecting lake system was engineered centuries ago to create microclimates and provide water.',
+              'The iconic Lake Palace appears to float seamlessly in the middle of Lake Pichola, crafted entirely from white marble.'
+            ],
+            highlights: ['City Palace Complex', 'Lake Pichola Boat Cruise', 'Jag Mandir Palace', 'Saheliyon Ki Bari'],
+            bestSeason: 'October to March',
+            experiences: ['Heritage', 'Nature', 'Gastronomy']
+          },
+          {
             citySlug: 'jaisalmer',
             cityName: 'Jaisalmer',
             stateSlug: 'rajasthan',
@@ -333,7 +344,7 @@ export const ZONES_DATA: ZoneData[] = [
             zoneSlug: 'west',
             zoneName: 'West India',
             tagline: 'The Golden Citadel & Thar Desert Sand Dunes',
-            image: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=800',
+            image: getImg('jaisalmer'),
             facts: [
               'Home to Sonar Qila, one of the world\'s few living fortresses housing 4,000 residents inside.',
               'Carved from yellow sandstone that glows like molten gold under sunset rays.'
@@ -350,7 +361,7 @@ export const ZONES_DATA: ZoneData[] = [
         zoneSlug: 'west',
         zoneName: 'West India',
         capital: 'Gandhinagar',
-        heroImage: 'https://images.unsplash.com/photo-1609137144813-7d9921338f24?q=80&w=800',
+        heroImage: getImg('jaisalmer'),
         description: 'Land of White Salt Deserts, Asiatic Lions, Handloom Ikat Weaves, and Heritage Cities.',
         cities: [
           {
@@ -361,7 +372,7 @@ export const ZONES_DATA: ZoneData[] = [
             zoneSlug: 'west',
             zoneName: 'West India',
             tagline: 'Endless White Salt Desert & Moonlit Rann Utsav Carnival',
-            image: 'https://images.unsplash.com/photo-1609137144813-7d9921338f24?q=80&w=800',
+            image: getImg('jaisalmer'),
             facts: [
               'One of the largest salt deserts in the world spanning over 7,500 square kilometers.',
               'Transforms into a white moonlit salt plain hosting the 4-month-long Rann Utsav cultural festival.'
@@ -378,7 +389,7 @@ export const ZONES_DATA: ZoneData[] = [
     zoneSlug: 'central',
     zoneName: 'Central India',
     tagline: 'Heart of India, Sculpted Temples & Tiger Reserves',
-    heroImage: 'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?q=80&w=1200',
+    heroImage: getImg('khajuraho'),
     description: 'The green heartland of India featuring dense teak forests, high tiger density reserves, and ancient UNESCO stone sculptures.',
     states: [
       {
@@ -387,7 +398,7 @@ export const ZONES_DATA: ZoneData[] = [
         zoneSlug: 'central',
         zoneName: 'Central India',
         capital: 'Bhopal',
-        heroImage: 'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?q=80&w=800',
+        heroImage: getImg('khajuraho'),
         description: 'Tiger State of India boasting Kanha, Bandhavgarh, and Khajuraho heritage.',
         cities: [
           {
@@ -398,7 +409,7 @@ export const ZONES_DATA: ZoneData[] = [
             zoneSlug: 'central',
             zoneName: 'Central India',
             tagline: 'UNESCO World Heritage Erotic & Classical Sculpted Temples',
-            image: 'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?q=80&w=800',
+            image: getImg('khajuraho'),
             facts: [
               'Built by the Chandela dynasty between 950 and 1050 AD featuring intricate nagara architecture.',
               'Only 25 of the original 85 medieval sandstone temples survive today.'
@@ -415,7 +426,7 @@ export const ZONES_DATA: ZoneData[] = [
         zoneSlug: 'central',
         zoneName: 'Central India',
         capital: 'Lucknow',
-        heroImage: 'https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=800',
+        heroImage: getImg('varanasi'),
         description: 'Cradle of Indian spiritual heritage spanning the sacred Ganges, Taj Mahal, and Nawabi food capital.',
         cities: [
           {
@@ -426,7 +437,7 @@ export const ZONES_DATA: ZoneData[] = [
             zoneSlug: 'central',
             zoneName: 'Central India',
             tagline: 'Spiritual Capital of India & Sacred Ganges Ghats',
-            image: 'https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=800',
+            image: getImg('varanasi'),
             facts: [
               'Considered the spiritual heart of Hinduism, standing on the banks of River Ganges for over 3,000 years.',
               'Dashashwamedh Ghat hosts the world-famous evening Ganga Aarti brass lamp ceremony daily.'
@@ -443,7 +454,7 @@ export const ZONES_DATA: ZoneData[] = [
     zoneSlug: 'north-east',
     zoneName: 'North-East India',
     tagline: 'Living Root Bridges, Monasteries & Hornbill Festivals',
-    heroImage: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=1200',
+    heroImage: getImg('cherrapunji'),
     description: 'Unexplored wilderness of 8 Sister States boasting living root bridges, tea valleys, and rhino safaris.',
     states: [
       {
@@ -452,7 +463,7 @@ export const ZONES_DATA: ZoneData[] = [
         zoneSlug: 'north-east',
         zoneName: 'North-East India',
         capital: 'Shillong',
-        heroImage: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=800',
+        heroImage: getImg('cherrapunji'),
         description: 'Abode of Clouds — Famed for bio-engineered living root bridges and crystal rivers.',
         cities: [
           {
@@ -463,7 +474,7 @@ export const ZONES_DATA: ZoneData[] = [
             zoneSlug: 'north-east',
             zoneName: 'North-East India',
             tagline: 'Asia’s Cleanest Village & Bio-Engineered Root Bridges',
-            image: 'https://images.unsplash.com/photo-1506461883276-594a12b11db3?q=80&w=800',
+            image: getImg('cherrapunji'),
             facts: [
               'Ficus elastica tree roots are trained across rivers over 150 years to form indestructible living bridges.',
               'Mawlynnong eco-village was awarded Asia\'s Cleanest Village by Discover India.'
@@ -480,7 +491,7 @@ export const ZONES_DATA: ZoneData[] = [
         zoneSlug: 'north-east',
         zoneName: 'North-East India',
         capital: 'Dispur',
-        heroImage: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=800',
+        heroImage: getImg('shillong'),
         description: 'Land of the Mighty Brahmaputra, One-Horned Rhinos, and Shimmering Muga Silk.',
         cities: [
           {
@@ -491,7 +502,7 @@ export const ZONES_DATA: ZoneData[] = [
             zoneSlug: 'north-east',
             zoneName: 'North-East India',
             tagline: 'UNESCO Sanctuary Sanctuary of Great One-Horned Rhinos',
-            image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=800',
+            image: getImg('shillong'),
             facts: [
               'Hosts two-thirds of the entire world population of Great One-Horned Rhinoceroses.',
               'Boasts the highest density of Royal Bengal Tigers among protected reserves globally.'
@@ -508,7 +519,7 @@ export const ZONES_DATA: ZoneData[] = [
     zoneSlug: 'union-territories',
     zoneName: 'Union Territories',
     tagline: 'Himalayan Crown, Coral Atolls & French Promenade Quarters',
-    heroImage: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200',
+    heroImage: getImg('srinagar'),
     description: 'Explore India\'s 8 Union Territories spanning high-altitude cold deserts, coral island paradises, and French heritage seaside towns.',
     states: [
       {
@@ -518,7 +529,7 @@ export const ZONES_DATA: ZoneData[] = [
         zoneName: 'Union Territories',
         capital: 'Leh',
         isUT: true,
-        heroImage: 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?q=80&w=800',
+        heroImage: getImg('srinagar'),
         description: 'Land of High Passes — Cold desert valleys, Tibetan Buddhist gompas, and turquoise lakes.',
         cities: [
           {
@@ -529,7 +540,7 @@ export const ZONES_DATA: ZoneData[] = [
             zoneSlug: 'union-territories',
             zoneName: 'Union Territories',
             tagline: 'High Himalayan Monasteries & Pangong Tso Lake',
-            image: 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?q=80&w=800',
+            image: getImg('srinagar'),
             facts: [
               'Leh sits at 3,500 meters altitude surrounded by snow-capped Stok Kangri range.',
               'Pangong Tso is an endorheic salt lake changing color from emerald green to deep azure blue.'
@@ -547,7 +558,7 @@ export const ZONES_DATA: ZoneData[] = [
         zoneName: 'Union Territories',
         capital: 'Puducherry',
         isUT: true,
-        heroImage: 'https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?q=80&w=800',
+        heroImage: getImg('pondicherry'),
         description: 'French Riviera of the East — Pastel mustard villas, ocean promenades, and Auroville.',
         cities: [
           {
@@ -558,7 +569,7 @@ export const ZONES_DATA: ZoneData[] = [
             zoneSlug: 'union-territories',
             zoneName: 'Union Territories',
             tagline: 'French Colonial Promenade & Auroville Eco-Township',
-            image: 'https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?q=80&w=800',
+            image: getImg('pondicherry'),
             facts: [
               'Preserves authentic French colonial architecture with street names written in French.',
               'Home to Auroville experimental township and Sri Aurobindo Ashram.'
@@ -583,18 +594,18 @@ export const EXPERIENCES_DATA: ExperienceCategoryData[] = [
     name: 'Heritage',
     slug: 'heritage',
     tagline: 'Walk Through Royal Forts, Ancient Rock Caves & UNESCO Monuments',
-    heroImage: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200',
+    heroImage: getImg('jaipur'),
     description: 'India is a living museum with 42 UNESCO World Heritage Sites, centuries-old Mughal fortresses, Rajput desert citadels, Chola granite monoliths, and ancient cave temples.',
     subThemes: ['UNESCO Monuments', 'Royal Palaces & Forts', 'Ancient Cave Art', 'Colonial Architecture', 'Heritage Haveli Walks'],
     keyLandmarks: [
-      { name: 'Taj Mahal', location: 'Agra, Uttar Pradesh', image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?q=80&w=800' },
-      { name: 'Amber Fort', location: 'Jaipur, Rajasthan', image: 'https://images.unsplash.com/photo-1477587458883-47145ed94245?q=80&w=800' },
-      { name: 'Meenakshi Temple', location: 'Madurai, Tamil Nadu', image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=800' }
+      { name: 'Taj Mahal', location: 'Agra, Uttar Pradesh', image: getImg('agra') },
+      { name: 'Amber Fort', location: 'Jaipur, Rajasthan', image: getImg('jaipur') },
+      { name: 'Meenakshi Temple', location: 'Madurai, Tamil Nadu', image: getImg('madurai') }
     ],
     featuredCities: [
-      { cityName: 'Jaipur', stateName: 'Rajasthan', zoneSlug: 'west', stateSlug: 'rajasthan', citySlug: 'jaipur', image: 'https://images.unsplash.com/photo-1477587458883-47145ed94245?q=80&w=800', snippet: 'Explore hilltop Amber Fort and mirror palace halls.' },
-      { cityName: 'Varanasi', stateName: 'Uttar Pradesh', zoneSlug: 'central', stateSlug: 'uttar-pradesh', citySlug: 'varanasi', image: 'https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=800', snippet: 'Walk through 3,000-year-old riverfront ghat alleys.' },
-      { cityName: 'Darjeeling', stateName: 'West Bengal', zoneSlug: 'east', stateSlug: 'west-bengal', citySlug: 'darjeeling', image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=800', snippet: 'Ride the 1881 UNESCO Himalayan Toy Train.' }
+      { cityName: 'Jaipur', stateName: 'Rajasthan', zoneSlug: 'west', stateSlug: 'rajasthan', citySlug: 'jaipur', image: getImg('jaipur'), snippet: 'Explore hilltop Amber Fort and mirror palace halls.' },
+      { cityName: 'Varanasi', stateName: 'Uttar Pradesh', zoneSlug: 'central', stateSlug: 'uttar-pradesh', citySlug: 'varanasi', image: getImg('varanasi'), snippet: 'Walk through 3,000-year-old riverfront ghat alleys.' },
+      { cityName: 'Darjeeling', stateName: 'West Bengal', zoneSlug: 'east', stateSlug: 'west-bengal', citySlug: 'darjeeling', image: getImg('darjeeling'), snippet: 'Ride the 1881 UNESCO Himalayan Toy Train.' }
     ],
     suggestedItineraries: [
       { title: 'Golden Triangle Royal Heritage Circuit', duration: '6 Days / 5 Nights', slug: 'golden-triangle-royal-heritage-circuit' },
@@ -606,18 +617,18 @@ export const EXPERIENCES_DATA: ExperienceCategoryData[] = [
     name: 'Spiritual',
     slug: 'spiritual',
     tagline: 'Experience Sacred Ganga Aarti, Himalayan Monasteries & Temple Trails',
-    heroImage: 'https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=1200',
+    heroImage: getImg('varanasi'),
     description: 'Immerse your senses in centuries of living spiritual traditions, from oil-lamp riverfront chants along the Ganges to serene Tibetan Buddhist gompas and Dravidian temple festivals.',
     subThemes: ['Ganga Aarti Rituals', 'Temple Gopuram Walks', 'Monastic Prayer Ceremonies', 'Sufi Dargah Qawwalis', 'Yoga & Meditation'],
     keyLandmarks: [
-      { name: 'Dashashwamedh Ghat', location: 'Varanasi', image: 'https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=800' },
-      { name: 'Thiksey Gompa', location: 'Ladakh', image: 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?q=80&w=800' },
-      { name: 'Golden Temple', location: 'Amritsar', image: 'https://images.unsplash.com/photo-1514222134-b57cbb8ce073?q=80&w=800' }
+      { name: 'Dashashwamedh Ghat', location: 'Varanasi', image: getImg('varanasi') },
+      { name: 'Thiksey Gompa', location: 'Ladakh', image: getImg('srinagar') },
+      { name: 'Golden Temple', location: 'Amritsar', image: getImg('amritsar') }
     ],
     featuredCities: [
-      { cityName: 'Varanasi', stateName: 'Uttar Pradesh', zoneSlug: 'central', stateSlug: 'uttar-pradesh', citySlug: 'varanasi', image: 'https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=800', snippet: 'Witness evening brass lamp Aarti rituals on River Ganges.' },
-      { cityName: 'Madurai', stateName: 'Tamil Nadu', zoneSlug: 'south', stateSlug: 'tamil-nadu', citySlug: 'madurai', image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=800', snippet: 'Tour 14 colorfully sculpted Dravidian gopuram towers.' },
-      { cityName: 'Rishikesh', stateName: 'Uttarakhand', zoneSlug: 'north', stateSlug: 'uttarakhand', citySlug: 'rishikesh', image: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?q=80&w=800', snippet: 'Practice yoga shalas overlooking Himalayan gorges.' }
+      { cityName: 'Varanasi', stateName: 'Uttar Pradesh', zoneSlug: 'central', stateSlug: 'uttar-pradesh', citySlug: 'varanasi', image: getImg('varanasi'), snippet: 'Witness evening brass lamp Aarti rituals on River Ganges.' },
+      { cityName: 'Madurai', stateName: 'Tamil Nadu', zoneSlug: 'south', stateSlug: 'tamil-nadu', citySlug: 'madurai', image: getImg('madurai'), snippet: 'Tour 14 colorfully sculpted Dravidian gopuram towers.' },
+      { cityName: 'Rishikesh', stateName: 'Uttarakhand', zoneSlug: 'north', stateSlug: 'uttarakhand', citySlug: 'rishikesh', image: getImg('rishikesh'), snippet: 'Practice yoga shalas overlooking Himalayan gorges.' }
     ],
     suggestedItineraries: [
       { title: 'Spiritual Trail of Varanasi Ghats & Sarnath', duration: '3 Days / 2 Nights', slug: 'spiritual-varanasi-ghats-sarnath' },
@@ -629,17 +640,17 @@ export const EXPERIENCES_DATA: ExperienceCategoryData[] = [
     name: 'Wildlife',
     slug: 'wildlife',
     tagline: 'Track Royal Bengal Tigers, One-Horned Rhinos & Asiatic Lions',
-    heroImage: 'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?q=80&w=1200',
+    heroImage: getImg('munnar'),
     description: 'India shelters over 75% of the world’s wild tiger population, sole Asiatic lion natural habitats, one-horned rhinos in tea floodplains, and pristine bird sanctuaries.',
     subThemes: ['Tiger Safaris', 'One-Horned Rhino Expeditions', 'Asiatic Lion Safaris', 'Elephant Sanctuaries', 'Mangrove Biospheres'],
     keyLandmarks: [
-      { name: 'Kaziranga National Park', location: 'Assam', image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=800' },
-      { name: 'Ranthambore Tiger Reserve', location: 'Rajasthan', image: 'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?q=80&w=800' },
-      { name: 'Jim Corbett Reserve', location: 'Uttarakhand', image: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?q=80&w=800' }
+      { name: 'Kaziranga National Park', location: 'Assam', image: getImg('shillong') },
+      { name: 'Ranthambore Tiger Reserve', location: 'Rajasthan', image: getImg('jaipur') },
+      { name: 'Jim Corbett Reserve', location: 'Uttarakhand', image: getImg('rishikesh') }
     ],
     featuredCities: [
-      { cityName: 'Kaziranga', stateName: 'Assam', zoneSlug: 'north-east', stateSlug: 'assam', citySlug: 'kaziranga', image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=800', snippet: 'Spot Great One-Horned Rhinos in grasslands.' },
-      { cityName: 'Munnar', stateName: 'Kerala', zoneSlug: 'south', stateSlug: 'kerala', citySlug: 'munnar', image: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=800', snippet: 'Observe endangered Nilgiri Tahr mountain goats.' }
+      { cityName: 'Kaziranga', stateName: 'Assam', zoneSlug: 'north-east', stateSlug: 'assam', citySlug: 'kaziranga', image: getImg('shillong'), snippet: 'Spot Great One-Horned Rhinos in grasslands.' },
+      { cityName: 'Munnar', stateName: 'Kerala', zoneSlug: 'south', stateSlug: 'kerala', citySlug: 'munnar', image: getImg('munnar'), snippet: 'Observe endangered Nilgiri Tahr mountain goats.' }
     ],
     suggestedItineraries: [
       { title: 'Ranthambore Royal Tiger Safari Expedition', duration: '4 Days / 3 Nights', slug: 'ranthambore-royal-tiger-safari' },
@@ -651,17 +662,17 @@ export const EXPERIENCES_DATA: ExperienceCategoryData[] = [
     name: 'Adventure',
     slug: 'adventure',
     tagline: 'Conquer Himalayan Passes, Ganges Gorges & Desert Dunes',
-    heroImage: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?q=80&w=1200',
+    heroImage: getImg('rishikesh'),
     description: 'Thrill-seekers can embark on high-altitude Himalayan treks, white-water river rafting through mountain gorges, Thar desert dune bashing, and tropical scuba diving.',
     subThemes: ['White Water Rafting', 'High Altitude Trekking', 'Thar Desert Dune Bashing', 'Coral Atoll Scuba Diving', 'Paragliding & Ziplining'],
     keyLandmarks: [
-      { name: 'Solang Valley', location: 'Manali, Himachal', image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=800' },
-      { name: 'Marine Drive Rapids', location: 'Rishikesh', image: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?q=80&w=800' },
-      { name: 'Sam Sand Dunes', location: 'Jaisalmer', image: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=800' }
+      { name: 'Solang Valley', location: 'Manali, Himachal', image: getImg('manali') },
+      { name: 'Marine Drive Rapids', location: 'Rishikesh', image: getImg('rishikesh') },
+      { name: 'Sam Sand Dunes', location: 'Jaisalmer', image: getImg('jaisalmer') }
     ],
     featuredCities: [
-      { cityName: 'Rishikesh', stateName: 'Uttarakhand', zoneSlug: 'north', stateSlug: 'uttarakhand', citySlug: 'rishikesh', image: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?q=80&w=800', snippet: 'Challenge 16 km white water Ganges river rapids.' },
-      { cityName: 'Leh & Nubra Valley', stateName: 'Ladakh', zoneSlug: 'union-territories', stateSlug: 'ladakh', citySlug: 'leh', image: 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?q=80&w=800', snippet: 'Cross Khardung La motorable pass at 17,580 ft.' }
+      { cityName: 'Rishikesh', stateName: 'Uttarakhand', zoneSlug: 'north', stateSlug: 'uttarakhand', citySlug: 'rishikesh', image: getImg('rishikesh'), snippet: 'Challenge 16 km white water Ganges river rapids.' },
+      { cityName: 'Leh & Nubra Valley', stateName: 'Ladakh', zoneSlug: 'union-territories', stateSlug: 'ladakh', citySlug: 'leh', image: getImg('srinagar'), snippet: 'Cross Khardung La motorable pass at 17,580 ft.' }
     ],
     suggestedItineraries: [
       { title: 'Rishikesh Himalayan Rafting & Yoga Retreat', duration: '3 Days / 2 Nights', slug: 'rishikesh-himalayan-rafting-yoga' },
@@ -673,16 +684,16 @@ export const EXPERIENCES_DATA: ExperienceCategoryData[] = [
     name: 'Gastronomy',
     slug: 'gastronomy',
     tagline: 'Savor Royal Nawabi Biryanis, Street Food Bazaars & Spice Trails',
-    heroImage: 'https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=1200',
+    heroImage: getImg('kolkata'),
     description: 'Explore India\'s rich culinary diversity, from Old Delhi street chaat and Awadhi dum biryanis to coastal Kerala coconut fish curry and Gujarati thalis.',
     subThemes: ['Old City Street Food Crawls', 'Royal Rajput & Nawabi Thalis', 'Spice Estate Plantations', 'Coastal Seafood Dining', 'Organic Farm Masterclasses'],
     keyLandmarks: [
-      { name: 'Chandni Chowk', location: 'Old Delhi', image: 'https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=800' },
-      { name: 'Fort Kochi Spice Market', location: 'Kerala', image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=800' }
+      { name: 'Chandni Chowk', location: 'Old Delhi', image: getImg('delhi') },
+      { name: 'Fort Kochi Spice Market', location: 'Kerala', image: getImg('kochi') }
     ],
     featuredCities: [
-      { cityName: 'Kolkata', stateName: 'West Bengal', zoneSlug: 'east', stateSlug: 'west-bengal', citySlug: 'kolkata', image: 'https://images.unsplash.com/photo-1570535310866-9b5dbd09439f?q=80&w=800', snippet: 'Savor kathi rolls, rasgullas, and authentic fish curry.' },
-      { cityName: 'Jaipur', stateName: 'Rajasthan', zoneSlug: 'west', stateSlug: 'rajasthan', citySlug: 'jaipur', image: 'https://images.unsplash.com/photo-1477587458883-47145ed94245?q=80&w=800', snippet: 'Feast on Dal Baati Churma and Ghewar sweets.' }
+      { cityName: 'Kolkata', stateName: 'West Bengal', zoneSlug: 'east', stateSlug: 'west-bengal', citySlug: 'kolkata', image: getImg('kolkata'), snippet: 'Savor kathi rolls, rasgullas, and authentic fish curry.' },
+      { cityName: 'Jaipur', stateName: 'Rajasthan', zoneSlug: 'west', stateSlug: 'rajasthan', citySlug: 'jaipur', image: getImg('jaipur'), snippet: 'Feast on Dal Baati Churma and Ghewar sweets.' }
     ],
     suggestedItineraries: [
       { title: 'The Ultimate Golden Triangle & Kerala Backwaters Trail', duration: '14 Days / 13 Nights', slug: 'golden-triangle-kerala' }
@@ -693,16 +704,16 @@ export const EXPERIENCES_DATA: ExperienceCategoryData[] = [
     name: 'Wellness',
     slug: 'wellness',
     tagline: 'Rejuvenate with Authentic Ayurveda, Yoga Shalas & Spas',
-    heroImage: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=1200',
+    heroImage: getImg('alleppey'),
     description: 'Immerse yourself in authentic 5,000-year-old Panchakarma Ayurvedic treatments, sunrise yoga shalas overlooking Himalayan valleys, and Sattvic organic living.',
     subThemes: ['Ayurvedic Panchakarma Therapy', 'Himalayan Yoga Retreats', 'Oceanfront Sound Healing', 'Herbal Steam & Spas', 'Sattvic Organic Culinary'],
     keyLandmarks: [
-      { name: 'Kovalam Ayurvedic Shala', location: 'Kerala', image: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=800' },
-      { name: 'Ananda in Himalayas', location: 'Rishikesh', image: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?q=80&w=800' }
+      { name: 'Kovalam Ayurvedic Shala', location: 'Kerala', image: getImg('alleppey') },
+      { name: 'Ananda in Himalayas', location: 'Rishikesh', image: getImg('rishikesh') }
     ],
     featuredCities: [
-      { cityName: 'Alleppey', stateName: 'Kerala', zoneSlug: 'south', stateSlug: 'kerala', citySlug: 'alleppey', image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=800', snippet: 'Experience Abhyanga oil massage in lagoon resorts.' },
-      { cityName: 'Puducherry Town', stateName: 'Puducherry', zoneSlug: 'union-territories', stateSlug: 'puducherry', citySlug: 'puducherry-town', image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=800', snippet: 'Meditate at Sri Aurobindo Ashram & Matrimandir.' }
+      { cityName: 'Alleppey', stateName: 'Kerala', zoneSlug: 'south', stateSlug: 'kerala', citySlug: 'alleppey', image: getImg('alleppey'), snippet: 'Experience Abhyanga oil massage in lagoon resorts.' },
+      { cityName: 'Puducherry Town', stateName: 'Puducherry', zoneSlug: 'union-territories', stateSlug: 'puducherry', citySlug: 'puducherry-town', image: getImg('pondicherry'), snippet: 'Meditate at Sri Aurobindo Ashram & Matrimandir.' }
     ],
     suggestedItineraries: [
       { title: 'Grand Malabar Coast Culinary & Wellness Voyage', duration: '14 Days / 13 Nights', slug: 'grand-malabar-coast-culinary-wellness-voyage' }
@@ -713,16 +724,16 @@ export const EXPERIENCES_DATA: ExperienceCategoryData[] = [
     name: 'Rural',
     slug: 'rural',
     tagline: 'Discover Bio-Engineered Root Bridges, Homestays & Craft Enclaves',
-    heroImage: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=1200',
+    heroImage: getImg('cherrapunji'),
     description: 'Step off the beaten path to experience eco-villages, living root bridge pathways, organic farming, Bhunga clay huts, and handloom artisan workshops.',
     subThemes: ['Living Root Village Pathways', 'Tribal Eco-Homestays', 'Handloom Weaving Villages', 'Bhunga Clay Enclaves', 'Organic Farm-to-Table'],
     keyLandmarks: [
-      { name: 'Mawlynnong Eco Village', location: 'Meghalaya', image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=800' },
-      { name: 'Hodka Craft Village', location: 'Gujarat', image: 'https://images.unsplash.com/photo-1609137144813-7d9921338f24?q=80&w=800' }
+      { name: 'Mawlynnong Eco Village', location: 'Meghalaya', image: getImg('cherrapunji') },
+      { name: 'Hodka Craft Village', location: 'Gujarat', image: getImg('jaisalmer') }
     ],
     featuredCities: [
-      { cityName: 'Cherrapunji & Mawlynnong', stateName: 'Meghalaya', zoneSlug: 'north-east', stateSlug: 'meghalaya', citySlug: 'cherrapunji', image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=800', snippet: 'Trek across living root bridges in Asia\'s cleanest village.' },
-      { cityName: 'Rann of Kutch', stateName: 'Gujarat', zoneSlug: 'west', stateSlug: 'gujarat', citySlug: 'rann-of-kutch', image: 'https://images.unsplash.com/photo-1609137144813-7d9921338f24?q=80&w=800', snippet: 'Stay in traditional Bhunga mud huts in Hodka enclave.' }
+      { cityName: 'Cherrapunji & Mawlynnong', stateName: 'Meghalaya', zoneSlug: 'north-east', stateSlug: 'meghalaya', citySlug: 'cherrapunji', image: getImg('cherrapunji'), snippet: 'Trek across living root bridges in Asia\'s cleanest village.' },
+      { cityName: 'Rann of Kutch', stateName: 'Gujarat', zoneSlug: 'west', stateSlug: 'gujarat', citySlug: 'rann-of-kutch', image: getImg('jaisalmer'), snippet: 'Stay in traditional Bhunga mud huts in Hodka enclave.' }
     ],
     suggestedItineraries: [
       { title: 'North East Living Root Bridges & Tea Valleys', duration: '8 Days / 7 Nights', slug: 'north-east-living-root-bridges-tea-valleys' }
