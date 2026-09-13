@@ -1,61 +1,98 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { Palette, Compass, ArrowRight, Sparkles } from 'lucide-react';
+import { HANDICRAFTS } from '@/lib/data/crafts';
+import { Palette, Compass, ArrowRight, Sparkles, MapPin } from 'lucide-react';
 
 export const metadata = {
-  title: 'Crafts & Textiles of India | ExploreIndia',
-  description: 'Explore Indian handlooms, Pashmina shawls, Kanjeevaram silk, Terracotta art, Tanjore paintings & artisan heritage.',
+  title: 'Exquisite Handicrafts & Textiles of India | ExploreIndia',
+  description: 'Explore 17+ Indian handlooms, Pashmina shawls, Kanjeevaram silk, Terracotta art, Tanjore gold leaf paintings & artisan heritage.',
 };
 
 export default function CraftsPage() {
-  const crafts = [
-    { title: 'Kashmiri Pashmina & Carpets', region: 'Srinagar, Jammu & Kashmir', desc: 'Hand-spun fine Cashmere wool shawls and silk hand-knotted Persian carpets.' },
-    { title: 'Kanjeevaram & Banarasi Silk', region: 'Tamil Nadu & Uttar Pradesh', desc: 'Pure mulberry silk sarees woven with gold and silver zari threads.' },
-    { title: 'Jaipur Block Printing & Blue Pottery', region: 'Rajasthan', desc: 'Natural vegetable dye wooden block prints (Bagru/Sanganer) and quartz pottery.' },
-    { title: 'Tanjore Paintings & Bronze Idols', region: 'Thanjavur, Tamil Nadu', desc: 'Classical South Indian paintings adorned with gold leaf and precious stones.' },
-  ];
-
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans flex flex-col selection:bg-marigold-500 selection:text-slate-950">
+    <div className="min-h-screen bg-royal-950 text-slate-100 font-sans flex flex-col selection:bg-marigold-500 selection:text-royal-950">
       <Header />
 
-      <section className="relative pt-28 pb-16 bg-gradient-to-b from-slate-900 via-primary-dark-950 to-slate-950 border-b border-slate-800">
+      {/* Hero Section */}
+      <section className="relative pt-28 pb-16 bg-gradient-to-b from-royal-900 via-royal-950 to-royal-950 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-fuchsia-500/10 border border-fuchsia-500/30 text-fuchsia-400 text-xs font-semibold uppercase tracking-wider">
             <Palette className="w-4 h-4" />
             <span>Masterwork Artisan Traditions</span>
           </div>
-          <h1 className="text-3xl md:text-5xl font-bold font-serif text-white tracking-tight">
-            Crafts & Textiles of <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 via-marigold-300 to-amber-400">India</span>
+          <h1 className="text-3xl sm:text-5xl font-bold font-serif text-white tracking-tight">
+            Exquisite Crafts & <span className="gold-gradient-text">Textiles of India</span>
           </h1>
-          <p className="text-slate-300 max-w-3xl text-sm md:text-base leading-relaxed">
-            India is home to thousands of years of living craft traditions, from handloom weaves and embroidery to metalwork and pottery.
+          <p className="text-slate-300 max-w-3xl text-sm sm:text-base leading-relaxed">
+            India is home to thousands of years of living craft traditions, from royal handloom silk weaves and gold leaf painting to lost-wax metal casting and glazed pottery.
           </p>
         </div>
       </section>
 
       <main className="max-w-7xl mx-auto px-4 lg:px-8 py-12 space-y-12 flex-1 w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {crafts.map((c, idx) => (
-            <div key={idx} className="p-6 rounded-xl bg-slate-900/60 border border-slate-800 space-y-3 shadow-xl">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-fuchsia-400">{c.region}</span>
-                <Sparkles className="w-5 h-5 text-fuchsia-400" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {HANDICRAFTS.map((craft) => (
+            <article
+              key={craft.id}
+              className="glass-card rounded-2xl overflow-hidden flex flex-col group border border-white/10 hover:border-fuchsia-500/40 shadow-xl transition-all duration-300 hover:-translate-y-1"
+            >
+              <div className="relative h-48 w-full overflow-hidden">
+                <Image
+                  src={craft.image}
+                  alt={craft.name}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-royal-950 via-royal-950/20 to-transparent" />
+                <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
+                  <span className="bg-fuchsia-500 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-md shadow">
+                    {craft.category}
+                  </span>
+                  <span className="bg-royal-950/80 backdrop-blur-md text-peacock-300 border border-white/10 text-[10px] font-semibold px-2 py-0.5 rounded-md">
+                    {craft.state}
+                  </span>
+                </div>
               </div>
-              <h2 className="text-lg font-bold text-white font-serif">{c.title}</h2>
-              <p className="text-xs text-slate-400 leading-relaxed">{c.desc}</p>
-            </div>
+
+              <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-1.5 text-xs text-fuchsia-400 font-semibold">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>{craft.state} Heritage Craft</span>
+                  </div>
+
+                  <h2 className="text-xl font-bold text-white font-serif group-hover:text-fuchsia-400 transition-colors">
+                    {craft.name}
+                  </h2>
+
+                  <p className="text-xs text-slate-300 leading-relaxed font-normal">
+                    {craft.description}
+                  </p>
+                </div>
+
+                <div className="pt-3 border-t border-white/5 flex items-center justify-between text-xs font-semibold">
+                  <Link
+                    href={`/state/${craft.stateSlug}`}
+                    className="text-fuchsia-400 hover:text-white flex items-center gap-1 transition-colors"
+                  >
+                    <span>Explore {craft.state}</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              </div>
+            </article>
           ))}
         </div>
 
-        <div className="pt-8 border-t border-slate-800 flex justify-between items-center text-xs">
-          <Link href="/plan/info-centres" className="text-marigold-400 hover:text-marigold-300 font-bold flex items-center gap-1.5">
+        <div className="pt-8 border-t border-white/10 flex justify-between items-center text-xs">
+          <Link href="/plan/rural-tourism" className="text-saffron-400 hover:text-saffron-300 font-bold flex items-center gap-1.5">
             <Compass className="w-4 h-4" />
-            <span>Return to Info Centres & Directory</span>
+            <span>Discover Rural Tourism Villages</span>
           </Link>
-          <Link href="/plan/culture" className="text-cyan-400 hover:text-cyan-300 font-bold flex items-center gap-1.5">
-            <span>Explore People & Culture</span>
+          <Link href="/destinations" className="text-peacock-400 hover:text-peacock-300 font-bold flex items-center gap-1.5">
+            <span>View All Destinations</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
