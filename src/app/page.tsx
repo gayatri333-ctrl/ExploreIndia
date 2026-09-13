@@ -13,6 +13,7 @@ import { TravelDiariesSection } from '@/components/TravelDiariesSection';
 import { ItinerariesSection } from '@/components/ItinerariesSection';
 import { RuralWondersStrip } from '@/components/RuralWondersStrip';
 import { CraftsCarousel } from '@/components/CraftsCarousel';
+import { TravelTools } from '@/components/TravelTools';
 
 // Sample experience topics matching the database schema
 const parentTopics = [
@@ -219,6 +220,9 @@ export default function HomePage() {
 
       {/* Lesser Known Wonders Rural Tourism Strip */}
       <RuralWondersStrip />
+
+      {/* Plan Your Trip Practical Toolkit Section */}
+      <TravelTools />
 
       {/* Exquisite Indian Crafts Carousel */}
       <CraftsCarousel />
