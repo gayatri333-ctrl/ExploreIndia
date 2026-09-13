@@ -57,73 +57,78 @@ export function DestinationsBucketList() {
         ref={scrollContainerRef}
         className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-none py-2 px-1 -mx-1"
       >
-        {DESTINATION_CITIES.map((city) => (
-          <div
-            key={city.id}
-            className="w-[300px] sm:w-[340px] shrink-0 snap-start glass-card rounded-2xl overflow-hidden flex flex-col group border border-white/10 hover:border-saffron-500/40 shadow-xl transition-all duration-300 hover:-translate-y-1"
-          >
-            {/* Hero Image Container */}
-            <div className="relative h-48 w-full overflow-hidden">
-              <Image
-                src={city.image}
-                alt={city.name}
-                fill
-                sizes="(max-width: 640px) 300px, 340px"
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-royal-950 via-royal-950/30 to-transparent" />
+        {DESTINATION_CITIES.map((city) => {
+          const zoneSlug = city.zone.toLowerCase().replace(/\s+/g, '-');
+          return (
+            <div
+              key={city.id}
+              className="w-[300px] sm:w-[340px] shrink-0 snap-start glass-card rounded-2xl overflow-hidden flex flex-col group border border-white/10 hover:border-saffron-500/40 shadow-xl transition-all duration-300 hover:-translate-y-1"
+            >
+              {/* Hero Image Container */}
+              <div className="relative h-48 w-full overflow-hidden">
+                <Image
+                  src={city.image}
+                  alt={city.name}
+                  fill
+                  sizes="(max-width: 640px) 300px, 340px"
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-royal-950 via-royal-950/30 to-transparent" />
 
-              {/* State & Zone Badge */}
-              <div className="absolute top-3 left-3 bg-royal-950/80 backdrop-blur-md text-saffron-400 text-[11px] font-semibold px-2.5 py-1 rounded-md border border-white/10 flex items-center gap-1">
-                <MapPin className="w-3 h-3" />
-                <span>{city.state} • {city.zone}</span>
-              </div>
-            </div>
-
-            {/* Card Content Body */}
-            <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-              <div className="space-y-2">
-                <div className="flex items-baseline justify-between">
-                  <h3 className="text-xl font-bold text-white font-serif group-hover:text-saffron-400 transition-colors">
-                    {city.name}
-                  </h3>
+                {/* State & Zone Badge */}
+                <div className="absolute top-3 left-3 bg-royal-950/80 backdrop-blur-md text-saffron-400 text-[11px] font-semibold px-2.5 py-1 rounded-md border border-white/10 flex items-center gap-1">
+                  <MapPin className="w-3 h-3" />
+                  <span>{city.state} • {city.zone}</span>
                 </div>
-                <p className="text-xs text-slate-400 italic line-clamp-1">
-                  {city.tagline}
-                </p>
+              </div>
 
-                {/* Did You Know Bullet Facts */}
-                <div className="bg-royal-950/80 p-3.5 rounded-xl border border-white/5 space-y-2 mt-3">
-                  <div className="flex items-center gap-1.5 text-[11px] font-bold text-saffron-400 uppercase tracking-wider">
-                    <Lightbulb className="w-3.5 h-3.5" />
-                    <span>Did You Know?</span>
+              {/* Card Content Body */}
+              <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+                <div className="space-y-2">
+                  <div className="flex items-baseline justify-between">
+                    <h3 className="text-xl font-bold text-white font-serif group-hover:text-saffron-400 transition-colors">
+                      <Link href={`/destinations/${zoneSlug}/${city.stateSlug}/${city.citySlug}`}>
+                        {city.name}
+                      </Link>
+                    </h3>
                   </div>
+                  <p className="text-xs text-slate-400 italic line-clamp-1">
+                    {city.tagline}
+                  </p>
 
-                  <ul className="space-y-1.5 text-xs text-slate-300">
-                    {city.facts.map((fact, idx) => (
-                      <li key={idx} className="flex items-start gap-2 leading-relaxed">
-                        <span className="text-saffron-500 font-bold shrink-0 mt-0.5">•</span>
-                        <span className="line-clamp-2">{fact}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  {/* Did You Know Bullet Facts */}
+                  <div className="bg-royal-950/80 p-3.5 rounded-xl border border-white/5 space-y-2 mt-3">
+                    <div className="flex items-center gap-1.5 text-[11px] font-bold text-saffron-400 uppercase tracking-wider">
+                      <Lightbulb className="w-3.5 h-3.5" />
+                      <span>Did You Know?</span>
+                    </div>
+
+                    <ul className="space-y-1.5 text-xs text-slate-300">
+                      {city.facts.map((fact, idx) => (
+                        <li key={idx} className="flex items-start gap-2 leading-relaxed">
+                          <span className="text-saffron-500 font-bold shrink-0 mt-0.5">•</span>
+                          <span className="line-clamp-2">{fact}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Discover More CTA Link */}
+                <div className="pt-3 border-t border-white/5 flex items-center justify-between text-xs font-semibold">
+                  <span className="text-[11px] text-slate-400">City Bucket Guide</span>
+                  <Link
+                    href={`/destinations/${zoneSlug}/${city.stateSlug}/${city.citySlug}`}
+                    className="text-saffron-400 hover:text-white flex items-center gap-1.5 group/link transition-colors"
+                  >
+                    <span>Discover More</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
+                  </Link>
                 </div>
               </div>
-
-              {/* Discover More CTA Link */}
-              <div className="pt-3 border-t border-white/5 flex items-center justify-between text-xs font-semibold">
-                <span className="text-[11px] text-slate-400">City Bucket Guide</span>
-                <Link
-                  href={`/destinations/${city.stateSlug}/${city.citySlug}`}
-                  className="text-saffron-400 hover:text-white flex items-center gap-1.5 group/link transition-colors"
-                >
-                  <span>Discover More</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
-                </Link>
-              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

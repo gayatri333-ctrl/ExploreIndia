@@ -95,7 +95,7 @@ export function AttractionsCarousel() {
               <div className="pt-3 border-t border-white/10 flex items-center justify-between">
                 <span className="text-xs text-slate-400 font-medium">Spotlight Landmark</span>
                 <Link
-                  href={`/destinations/${item.stateSlug}/${item.citySlug}`}
+                  href="/destinations"
                   className="bg-saffron-500/10 hover:bg-saffron-500 text-saffron-400 hover:text-royal-950 font-bold px-3.5 py-1.5 rounded-lg border border-saffron-500/30 text-xs flex items-center gap-1.5 transition-all"
                 >
                   <span>Explore</span>

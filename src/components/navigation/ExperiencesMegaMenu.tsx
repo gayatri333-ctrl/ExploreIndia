@@ -1,271 +1,154 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Sparkles, Check, ChevronDown, ChevronRight, RotateCcw, Filter, X, ArrowRight } from 'lucide-react';
-import { EXPERIENCE_TOPICS, ZONES } from '@/lib/data/navigation-data';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Sparkles, ArrowRight, Compass, Shield, Flame, TreePine, Mountain, Utensils, Stethoscope, Home } from 'lucide-react';
+import { EXPERIENCES_DATA, ExperienceCategoryData } from '@/lib/data/incredible-india-data';
 
 interface ExperiencesMegaMenuProps {
   onClose: () => void;
 }
 
+const CATEGORY_ICONS: Record<string, any> = {
+  heritage: Shield,
+  spiritual: Flame,
+  wildlife: TreePine,
+  adventure: Mountain,
+  gastronomy: Utensils,
+  wellness: Stethoscope,
+  rural: Home,
+};
+
 export default function ExperiencesMegaMenu({ onClose }: ExperiencesMegaMenuProps) {
-  const router = useRouter();
-  
-  // Active selected main topics and subtopics
-  const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
-  const [selectedSubTopics, setSelectedSubTopics] = useState<string[]>([]);
-  const [expandedTopics, setExpandedTopics] = useState<string[]>(['wildlife', 'heritage']);
-  
-  // Selected region zones
-  const [selectedZones, setSelectedZones] = useState<string[]>([]);
+  const [activeSlug, setActiveSlug] = useState<string>('heritage');
 
-  const toggleExpanded = (id: string) => {
-    if (expandedTopics.includes(id)) {
-      setExpandedTopics(expandedTopics.filter(t => t !== id));
-    } else {
-      setExpandedTopics([...expandedTopics, id]);
-    }
-  };
-
-  const toggleTopic = (topicName: string) => {
-    if (selectedTopics.includes(topicName)) {
-      setSelectedTopics(selectedTopics.filter(t => t !== topicName));
-    } else {
-      setSelectedTopics([...selectedTopics, topicName]);
-    }
-  };
-
-  const toggleSubTopic = (subTopicName: string) => {
-    if (selectedSubTopics.includes(subTopicName)) {
-      setSelectedSubTopics(selectedSubTopics.filter(s => s !== subTopicName));
-    } else {
-      setSelectedSubTopics([...selectedSubTopics, subTopicName]);
-    }
-  };
-
-  const toggleZone = (zoneId: string) => {
-    if (selectedZones.includes(zoneId)) {
-      setSelectedZones(selectedZones.filter(z => z !== zoneId));
-    } else {
-      setSelectedZones([...selectedZones, zoneId]);
-    }
-  };
-
-  const handleClearAll = () => {
-    setSelectedTopics([]);
-    setSelectedSubTopics([]);
-    setSelectedZones([]);
-  };
-
-  const handleApply = () => {
-    const params = new URLSearchParams();
-    if (selectedTopics.length > 0) params.set('topics', selectedTopics.join(','));
-    if (selectedSubTopics.length > 0) params.set('subtopics', selectedSubTopics.join(','));
-    if (selectedZones.length > 0) params.set('zones', selectedZones.join(','));
-
-    router.push(`/experiences?${params.toString()}`);
-    onClose();
-  };
-
-  const activeChips = [
-    ...selectedTopics.map(t => ({ label: t, type: 'topic' as const })),
-    ...selectedSubTopics.map(s => ({ label: s, type: 'subtopic' as const })),
-    ...selectedZones.map(z => ({ label: `${z} Zone`, type: 'zone' as const })),
-  ];
+  const activeExp = EXPERIENCES_DATA.find((e) => e.slug === activeSlug) || EXPERIENCES_DATA[0];
 
   return (
-    <div className="w-full bg-primary-dark-900/98 backdrop-blur-xl border-b border-slate-700/60 shadow-2xl text-slate-200 animate-fadeIn font-sans">
+    <div className="w-full bg-royal-950/98 backdrop-blur-xl border-b border-white/10 shadow-2xl text-slate-200 animate-fadeIn font-sans">
       <div className="max-w-7xl mx-auto px-4 lg:px-8 py-6 space-y-6">
-        {/* Top Header & Active Filter Chips Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4">
+        {/* Header */}
+        <div className="flex items-center justify-between border-b border-white/10 pb-4">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-md bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-marigold-400">
+            <div className="w-9 h-9 rounded-md bg-saffron-500/10 border border-saffron-500/30 flex items-center justify-center text-saffron-400">
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
               <h2 className="text-base font-bold text-white font-serif tracking-wide">
-                Experience Discovery Engine
+                Explore Travel Experiences
               </h2>
               <p className="text-xs text-slate-400">
-                Filter by 11 Curated Topics, Sub-Interests & Regional Indian Zones
+                Categorized by 7 core experience themes across India
               </p>
             </div>
           </div>
 
-          {/* Active Chips & "Clear All" */}
-          {activeChips.length > 0 && (
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-xs text-slate-400 font-medium">Active Filters ({activeChips.length}):</span>
-              {activeChips.map((chip, idx) => (
-                <span
-                  key={idx}
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-marigold-500/15 border border-marigold-500/30 text-marigold-300 text-xs"
+          <Link
+            href="/experiences"
+            onClick={onClose}
+            className="text-xs font-semibold text-saffron-400 hover:text-white flex items-center gap-1 transition"
+          >
+            <span>All Experience Themes</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
+        {/* 7 Experience Category Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          {/* Category Selector Buttons */}
+          <div className="space-y-1 md:border-r border-white/10 md:pr-4">
+            <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">
+              7 Core Categories
+            </div>
+            {EXPERIENCES_DATA.map((exp) => {
+              const Icon = CATEGORY_ICONS[exp.slug] || Sparkles;
+              const isActive = exp.slug === activeSlug;
+              return (
+                <button
+                  key={exp.slug}
+                  onClick={() => setActiveSlug(exp.slug)}
+                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition ${
+                    isActive
+                      ? 'bg-saffron-500 text-royal-950 font-bold shadow-md'
+                      : 'text-slate-300 hover:bg-royal-900/80 hover:text-white'
+                  }`}
                 >
-                  <span>{chip.label}</span>
-                  <button
-                    onClick={() => {
-                      if (chip.type === 'topic') toggleTopic(chip.label);
-                      else if (chip.type === 'subtopic') toggleSubTopic(chip.label);
-                      else toggleZone(chip.label.replace(' Zone', ''));
-                    }}
-                    className="hover:text-white"
-                  >
-                    <X className="w-3 h-3" />
-                  </button>
-                </span>
-              ))}
+                  <span className="flex items-center gap-2">
+                    <Icon className="w-4 h-4" />
+                    <span>{exp.name}</span>
+                  </span>
+                  <ArrowRight className={`w-3.5 h-3.5 ${isActive ? 'text-royal-950' : 'text-slate-500'}`} />
+                </button>
+              );
+            })}
+          </div>
 
-              <button
-                onClick={handleClearAll}
-                className="text-xs text-rose-400 hover:text-rose-300 font-semibold underline flex items-center gap-1 ml-2"
+          {/* Active Category Display (3 Columns) */}
+          <div className="md:col-span-3 space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/5 pb-2">
+              <div>
+                <h3 className="text-lg font-bold text-white font-serif">{activeExp.name} Experiences</h3>
+                <p className="text-xs text-saffron-300 italic font-serif">{activeExp.tagline}</p>
+              </div>
+              <Link
+                href={`/experiences/${activeExp.slug}`}
+                onClick={onClose}
+                className="px-4 py-1.5 rounded-lg bg-saffron-500 hover:bg-saffron-600 text-royal-950 font-bold text-xs shadow-glow-saffron transition flex items-center gap-1 self-start sm:self-auto"
               >
-                <RotateCcw className="w-3 h-3" />
-                <span>Clear All</span>
-              </button>
+                <span>View {activeExp.name} Category Page</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
-          )}
-        </div>
 
-        {/* Mega Menu Grid Content */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
-          {/* Left Column (8 cols): 11 Topic Checkboxes + Expandable Sub-items */}
-          <div className="md:col-span-8 space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-marigold-400 flex items-center gap-2 mb-2">
-              <Filter className="w-3.5 h-3.5" />
-              <span>Select Experience Topics & Sub-Interests (11 Categories)</span>
-            </h3>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[50vh] overflow-y-auto pr-2">
-              {EXPERIENCE_TOPICS.map((topic) => {
-                const isExpanded = expandedTopics.includes(topic.id);
-                const isChecked = selectedTopics.includes(topic.name);
-
-                return (
-                  <div
-                    key={topic.id}
-                    className={`p-3 rounded-md border transition-all ${
-                      isChecked
-                        ? 'bg-slate-950/90 border-marigold-500/50 shadow-md'
-                        : 'bg-slate-950/40 border-slate-800 hover:border-slate-700'
-                    }`}
-                  >
-                    {/* Main Topic Row */}
-                    <div className="flex items-center justify-between">
-                      <label className="flex items-center gap-2.5 cursor-pointer flex-1">
-                        <input
-                          type="checkbox"
-                          checked={isChecked}
-                          onChange={() => toggleTopic(topic.name)}
-                          className="w-4 h-4 rounded border-slate-700 bg-slate-900 text-marigold-500 focus:ring-marigold-500"
-                        />
-                        <span className={`text-sm font-semibold ${isChecked ? 'text-marigold-300' : 'text-white'}`}>
-                          {topic.name}
-                        </span>
-                      </label>
-
-                      <button
-                        onClick={() => toggleExpanded(topic.id)}
-                        className="p-1 text-slate-400 hover:text-white rounded hover:bg-slate-800 transition"
-                        title="Toggle Sub-items"
-                      >
-                        {isExpanded ? (
-                          <ChevronDown className="w-4 h-4 text-marigold-400" />
-                        ) : (
-                          <ChevronRight className="w-4 h-4" />
-                        )}
-                      </button>
-                    </div>
-
-                    {/* Expandable Sub-items */}
-                    {isExpanded && (
-                      <div className="mt-3 pt-2 border-t border-slate-800/80 space-y-1.5 pl-6">
-                        {topic.subTopics.map((sub, sIdx) => {
-                          const isSubChecked = selectedSubTopics.includes(sub);
-
-                          return (
-                            <label
-                              key={sIdx}
-                              className="flex items-center gap-2 text-xs cursor-pointer hover:text-white transition"
-                            >
-                              <input
-                                type="checkbox"
-                                checked={isSubChecked}
-                                onChange={() => toggleSubTopic(sub)}
-                                className="w-3.5 h-3.5 rounded border-slate-700 bg-slate-900 text-cyan-500 focus:ring-cyan-500"
-                              />
-                              <span className={isSubChecked ? 'text-cyan-300 font-semibold' : 'text-slate-300'}>
-                                {sub}
-                              </span>
-                            </label>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Right Column (4 cols): Region Zone Filter */}
-          <div className="md:col-span-4 space-y-3 border-l border-slate-800 pl-0 md:pl-8">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-cyan-400 flex items-center gap-2 mb-2">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Region Filter (6 Zones)</span>
-            </h3>
-
-            <div className="space-y-2">
-              {ZONES.map((zone) => {
-                const isZoneChecked = selectedZones.includes(zone.id);
-
-                return (
-                  <label
-                    key={zone.id}
-                    className={`flex items-start gap-3 p-3 rounded-md border cursor-pointer transition ${
-                      isZoneChecked
-                        ? 'bg-cyan-500/10 border-cyan-500/40 text-white'
-                        : 'bg-slate-950/40 border-slate-800 hover:border-slate-700 text-slate-300'
-                    }`}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={isZoneChecked}
-                      onChange={() => toggleZone(zone.id)}
-                      className="w-4 h-4 mt-0.5 rounded border-slate-700 bg-slate-900 text-cyan-500 focus:ring-cyan-500"
+            {/* Sub-themes & Featured Cities */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {activeExp.featuredCities.map((city) => (
+                <Link
+                  key={city.citySlug}
+                  href={`/destinations/${city.zoneSlug}/${city.stateSlug}/${city.citySlug}`}
+                  onClick={onClose}
+                  className="glass-card rounded-xl overflow-hidden group border border-white/10 hover:border-saffron-500/40 transition"
+                >
+                  <div className="relative h-28 w-full overflow-hidden">
+                    <Image
+                      src={city.image}
+                      alt={city.cityName}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div>
-                      <div className="text-xs font-bold text-white flex items-center gap-2">
-                        <span>{zone.name}</span>
-                      </div>
-                      <div className="text-[11px] text-slate-400 mt-0.5">
-                        {zone.desc}
-                      </div>
-                    </div>
-                  </label>
-                );
-              })}
+                    <div className="absolute inset-0 bg-gradient-to-t from-royal-950 via-royal-950/20 to-transparent" />
+                    <span className="absolute top-2 left-2 text-[10px] bg-royal-950/80 text-saffron-300 px-2 py-0.5 rounded border border-white/10 font-semibold">
+                      {city.stateName}
+                    </span>
+                  </div>
+                  <div className="p-3 space-y-1">
+                    <h4 className="text-xs font-bold text-white group-hover:text-saffron-400 transition-colors font-serif">
+                      {city.cityName}
+                    </h4>
+                    <p className="text-[10px] text-slate-400 line-clamp-2">{city.snippet}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+
+            {/* Sub-Themes Chips */}
+            <div className="pt-2 border-t border-white/5 space-y-2">
+              <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                Popular Sub-Themes:
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {activeExp.subThemes.map((st) => (
+                  <span
+                    key={st}
+                    className="text-[11px] bg-royal-900/90 text-slate-300 px-2.5 py-1 rounded-md border border-white/10"
+                  >
+                    {st}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-
-        {/* Bottom Actions: "Apply" and "Clear" */}
-        <div className="flex items-center justify-between border-t border-slate-800 pt-4">
-          <button
-            onClick={handleClearAll}
-            className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-white px-4 py-2 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 transition"
-          >
-            <RotateCcw className="w-3.5 h-3.5" />
-            <span>Clear Filters</span>
-          </button>
-
-          <button
-            onClick={handleApply}
-            className="flex items-center gap-2 px-6 py-2.5 rounded bg-marigold-500 hover:bg-marigold-600 text-primary-dark-950 font-bold text-xs shadow-lg transition"
-          >
-            <span>Apply Selected Filters ({activeChips.length})</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
         </div>
       </div>
     </div>
