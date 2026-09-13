@@ -1,7 +1,5 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { HANDICRAFTS } from '@/lib/data/crafts';
 import { Palette, Compass, ArrowRight, Sparkles, MapPin } from 'lucide-react';
 
@@ -13,7 +11,6 @@ export const metadata = {
 export default function CraftsPage() {
   return (
     <div className="min-h-screen bg-royal-950 text-slate-100 font-sans flex flex-col selection:bg-marigold-500 selection:text-royal-950">
-      <Header />
 
       {/* Hero Section */}
       <section className="relative pt-28 pb-16 bg-gradient-to-b from-royal-900 via-royal-950 to-royal-950 border-b border-white/10">
@@ -97,8 +94,6 @@ export default function CraftsPage() {
           </Link>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

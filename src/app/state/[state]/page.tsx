@@ -1,6 +1,4 @@
 import Link from 'next/link';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { STATES_BY_ZONE, StateData } from '@/lib/data/navigation-data';
 import { MapPin, Compass, ArrowRight, Sparkles, Building2, CalendarDays, ChevronRight } from 'lucide-react';
 import { notFound } from 'next/navigation';
@@ -40,7 +38,6 @@ export default function StateDetailPage({ params }: { params: { state: string } 
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans flex flex-col selection:bg-marigold-500 selection:text-slate-950">
-      <Header />
 
       {/* Hero */}
       <section className="relative pt-28 pb-16 bg-gradient-to-b from-slate-900 via-primary-dark-950 to-slate-950 border-b border-slate-800">
@@ -120,8 +117,6 @@ export default function StateDetailPage({ params }: { params: { state: string } 
           </Link>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

@@ -1,7 +1,5 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { DESTINATION_CITIES } from '@/lib/data/cities-facts';
 import { MapPin, Globe, Lightbulb, ArrowRight, Sparkles, Compass } from 'lucide-react';
 
@@ -22,7 +20,6 @@ const ZONES = [
 export default function DestinationsPage() {
   return (
     <div className="min-h-screen bg-royal-950 text-slate-100 font-sans flex flex-col selection:bg-marigold-500 selection:text-royal-950">
-      <Header />
 
       {/* Hero Header */}
       <section className="relative pt-28 pb-16 bg-gradient-to-b from-royal-900 via-royal-950 to-royal-950 border-b border-white/10">
@@ -131,8 +128,6 @@ export default function DestinationsPage() {
           </div>
         </section>
       </main>
-
-      <Footer />
     </div>
   );
 }

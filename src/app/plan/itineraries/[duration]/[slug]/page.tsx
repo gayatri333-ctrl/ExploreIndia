@@ -1,6 +1,4 @@
 import Link from 'next/link';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { ITINERARIES_DATA } from '@/app/plan/itineraries/page';
 import { Map, MapPin, Clock, ArrowRight, ArrowLeft, Sparkles, CheckCircle2 } from 'lucide-react';
 import { notFound } from 'next/navigation';
@@ -21,7 +19,6 @@ export default function ItineraryDetailPage({ params }: { params: { duration: st
     // Return fallback sample itinerary if slug is dynamic
     return (
       <div className="min-h-screen bg-slate-950 text-slate-100 font-sans flex flex-col">
-        <Header />
         <main className="max-w-4xl mx-auto px-4 py-28 space-y-6 flex-1 text-center">
           <h1 className="text-2xl font-bold font-serif text-white">Custom Curated Itinerary</h1>
           <p className="text-sm text-slate-400">Duration: {params.duration} | Route: {params.slug}</p>
@@ -30,14 +27,12 @@ export default function ItineraryDetailPage({ params }: { params: { duration: st
             <span>Back to All Itineraries</span>
           </Link>
         </main>
-        <Footer />
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans flex flex-col selection:bg-marigold-500 selection:text-slate-950">
-      <Header />
 
       <section className="relative pt-28 pb-16 bg-gradient-to-b from-slate-900 via-primary-dark-950 to-slate-950 border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 space-y-4">
@@ -117,8 +112,6 @@ export default function ItineraryDetailPage({ params }: { params: { duration: st
           </Link>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

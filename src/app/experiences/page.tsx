@@ -1,6 +1,4 @@
 import Link from 'next/link';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { Sparkles, MapPin, Filter, ArrowRight, Trees, Landmark, Heart, Compass, Utensils, Award, Shield, Palette, Mountain } from 'lucide-react';
 import { EXPERIENCE_TOPICS, ZONES } from '@/lib/data/navigation-data';
 
@@ -33,7 +31,6 @@ export default function ExperiencesPage({
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans flex flex-col selection:bg-marigold-500 selection:text-slate-950">
-      <Header />
 
       {/* Hero */}
       <section className="relative pt-28 pb-16 bg-gradient-to-b from-slate-900 via-primary-dark-950 to-slate-950 border-b border-slate-800">
@@ -125,8 +122,6 @@ export default function ExperiencesPage({
           })}
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

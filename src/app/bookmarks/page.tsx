@@ -3,8 +3,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { Bookmark, MapPin, Calendar, ArrowRight, Trash2, Sparkles, LogIn } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { COMPREHENSIVE_EVENTS, ComprehensiveEvent } from '@/lib/data/events-data';
@@ -96,7 +94,6 @@ export default function BookmarksPage() {
 
   return (
     <div className="min-h-screen bg-royal-950 text-slate-100 font-sans flex flex-col selection:bg-saffron-500 selection:text-royal-950">
-      <Header />
 
       {/* Hero Header */}
       <section className="relative pt-28 pb-16 bg-gradient-to-b from-royal-950 via-royal-900 to-royal-950 border-b border-white/10">
@@ -231,8 +228,6 @@ export default function BookmarksPage() {
           </div>
         )}
       </main>
-
-      <Footer />
     </div>
   );
 }

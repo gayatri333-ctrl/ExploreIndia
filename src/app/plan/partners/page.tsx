@@ -1,6 +1,4 @@
 import Link from 'next/link';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { Users, ShieldCheck, Award, PhoneCall, Compass, ArrowRight } from 'lucide-react';
 
 export const metadata = {
@@ -18,7 +16,6 @@ export default function PartnersPage() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans flex flex-col selection:bg-marigold-500 selection:text-slate-950">
-      <Header />
 
       <section className="relative pt-28 pb-16 bg-gradient-to-b from-slate-900 via-primary-dark-950 to-slate-950 border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 space-y-4">
@@ -62,8 +59,6 @@ export default function PartnersPage() {
           </Link>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

@@ -1,7 +1,5 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { TRAVEL_DIARIES } from '@/lib/data/travel-diaries';
 import { BookOpen, MapPin, Clock, ArrowRight, User, Calendar, Sparkles } from 'lucide-react';
 
@@ -13,7 +11,6 @@ export const metadata = {
 export default function TravelStoriesPage() {
   return (
     <div className="min-h-screen bg-royal-950 text-slate-100 font-sans flex flex-col selection:bg-marigold-500 selection:text-royal-950">
-      <Header />
 
       {/* Hero Banner */}
       <section className="relative pt-28 pb-16 bg-gradient-to-b from-royal-900 via-royal-950 to-royal-950 border-b border-white/10">
@@ -98,8 +95,6 @@ export default function TravelStoriesPage() {
           ))}
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

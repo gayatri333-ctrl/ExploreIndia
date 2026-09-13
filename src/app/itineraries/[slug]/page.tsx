@@ -1,7 +1,5 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { SAMPLE_ITINERARIES } from '@/lib/data/itineraries';
 import { MapPin, Clock, Calendar, ArrowLeft, Sparkles, Check, Compass, Map } from 'lucide-react';
 
@@ -42,7 +40,6 @@ export default function ItineraryDetailPage({ params }: { params: { slug: string
 
   return (
     <div className="min-h-screen bg-royal-950 text-slate-100 font-sans flex flex-col selection:bg-marigold-500 selection:text-royal-950">
-      <Header />
 
       {/* Hero Banner Header */}
       <section className="relative pt-28 pb-16 overflow-hidden border-b border-white/10">
@@ -161,8 +158,6 @@ export default function ItineraryDetailPage({ params }: { params: { slug: string
           </Link>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }
