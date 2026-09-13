@@ -113,6 +113,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
             cardImage: evt.card_image_url || 'https://images.unsplash.com/photo-1597040639497-66c91a0c4974',
             galleryImages: [],
             locationVenue: '',
+            entryFee: evt.entry_fee || 'Free Access',
             tags: [evt.category, evt.type]
           }));
           setMatchingEvents(mappedEvents);

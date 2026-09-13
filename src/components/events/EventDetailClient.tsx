@@ -22,6 +22,7 @@ import {
 import { ComprehensiveEvent, getRelatedEvents } from '@/lib/data/events-data';
 import { getCategoryToken } from '@/lib/design-tokens';
 import { createClient } from '@/lib/supabase/client';
+import { FestivalGallery } from '@/components/festivals/FestivalGallery';
 
 interface EventDetailClientProps {
   eventData: ComprehensiveEvent;
@@ -31,7 +32,6 @@ export default function EventDetailClient({ eventData }: EventDetailClientProps)
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [bookmarkLoading, setBookmarkLoading] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [activeGalleryImage, setActiveGalleryImage] = useState<string>(eventData.heroImage);
 
   useEffect(() => {
     if (eventData.id) {
@@ -135,7 +135,7 @@ export default function EventDetailClient({ eventData }: EventDetailClientProps)
       {/* Hero Image */}
       <section className="relative w-full h-[55vh] min-h-[400px] overflow-hidden">
         <Image
-          src={activeGalleryImage || eventData.heroImage}
+          src={eventData.heroImage}
           alt={eventData.title}
           fill
           className="object-cover transition-all duration-700"
@@ -201,28 +201,7 @@ export default function EventDetailClient({ eventData }: EventDetailClientProps)
           </div>
 
           {/* Photo Gallery */}
-          {eventData.galleryImages && eventData.galleryImages.length > 0 && (
-            <div className="space-y-4">
-              <h3 className="text-lg font-bold font-serif text-white flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-marigold-400" />
-                <span>Visual Photo Gallery ({eventData.galleryImages.length} Shots)</span>
-              </h3>
-
-              <div className="grid grid-cols-3 gap-3">
-                {eventData.galleryImages.map((imgUrl, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setActiveGalleryImage(imgUrl)}
-                    className={`relative h-28 sm:h-36 rounded-md overflow-hidden border transition ${
-                      activeGalleryImage === imgUrl ? 'border-marigold-500 ring-2 ring-marigold-500/50' : 'border-slate-800 hover:border-slate-600'
-                    }`}
-                  >
-                    <Image src={imgUrl} alt="Gallery image" fill className="object-cover" unoptimized />
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
+          <FestivalGallery images={eventData.galleryImages} title={eventData.title} />
         </div>
 
         {/* Sidebar */}

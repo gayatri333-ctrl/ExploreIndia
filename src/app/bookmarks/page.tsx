@@ -70,6 +70,7 @@ export default function BookmarksPage() {
                 galleryImages: [],
                 locationVenue: `${evt.states?.name || 'India'} Venue`,
                 entryFee: 'Free Access',
+                organizer: evt.organizer || 'State Tourism Board',
                 tags: [evt.category]
               };
             });
