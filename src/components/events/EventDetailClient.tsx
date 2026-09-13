@@ -23,71 +23,28 @@ import { ComprehensiveEvent, getRelatedEvents } from '@/lib/data/events-data';
 import { getCategoryToken } from '@/lib/design-tokens';
 import { createClient } from '@/lib/supabase/client';
 import { FestivalGallery } from '@/components/festivals/FestivalGallery';
+import { useBookmarks } from '@/context/BookmarkContext';
 
 interface EventDetailClientProps {
   eventData: ComprehensiveEvent;
 }
 
 export default function EventDetailClient({ eventData }: EventDetailClientProps) {
-  const [isBookmarked, setIsBookmarked] = useState(false);
-  const [bookmarkLoading, setBookmarkLoading] = useState(false);
+  const { isBookmarked, toggleBookmark } = useBookmarks();
   const [copied, setCopied] = useState(false);
 
-  useEffect(() => {
-    if (eventData.id) {
-      checkBookmarkStatus(eventData.id);
-    }
-  }, [eventData.id]);
+  const bookmarked = isBookmarked(eventData.id);
 
-  const checkBookmarkStatus = async (eventId: string) => {
-    try {
-      const supabase = createClient();
-      const { data: userData } = await supabase.auth.getUser();
-      if (userData.user) {
-        const { data } = await supabase
-          .from('bookmarks')
-          .select('id')
-          .eq('user_id', userData.user.id)
-          .eq('event_id', eventId)
-          .single();
-        if (data) setIsBookmarked(true);
-      }
-    } catch {
-      // Ignored
-    }
-  };
-
-  const handleBookmarkToggle = async () => {
-    setBookmarkLoading(true);
-    try {
-      const supabase = createClient();
-      const { data: userData } = await supabase.auth.getUser();
-
-      if (!userData.user) {
-        alert('Please sign in using the top-right User Menu to bookmark events!');
-        setBookmarkLoading(false);
-        return;
-      }
-
-      if (isBookmarked) {
-        await supabase
-          .from('bookmarks')
-          .delete()
-          .eq('user_id', userData.user.id)
-          .eq('event_id', eventData.id);
-        setIsBookmarked(false);
-      } else {
-        await (supabase.from('bookmarks') as any).insert({
-          user_id: userData.user.id,
-          event_id: eventData.id,
-        });
-        setIsBookmarked(true);
-      }
-    } catch {
-      setIsBookmarked(!isBookmarked);
-    } finally {
-      setBookmarkLoading(false);
-    }
+  const handleBookmarkToggle = () => {
+    toggleBookmark({
+      id: eventData.id,
+      title: eventData.title,
+      type: 'festival',
+      link: `/festivals-events/${eventData.stateSlug}/${eventData.slug}`,
+      image: eventData.heroImage || eventData.cardImage,
+      subtitle: `${eventData.stateName} • ${eventData.startDate}`,
+      badge: eventData.category,
+    });
   };
 
   const handleCopyShareLink = () => {
@@ -213,15 +170,14 @@ export default function EventDetailClient({ eventData }: EventDetailClientProps)
 
             <button
               onClick={handleBookmarkToggle}
-              disabled={bookmarkLoading}
               className={`w-full py-3 px-4 rounded font-bold text-xs transition flex items-center justify-center gap-2 shadow-md ${
-                isBookmarked
+                bookmarked
                   ? 'bg-rose-600 hover:bg-rose-700 text-white'
                   : 'bg-marigold-500 hover:bg-marigold-600 text-primary-dark-950'
               }`}
             >
-              <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-current' : ''}`} />
-              <span>{isBookmarked ? 'Event Saved in Bookmarks' : 'Bookmark This Festival'}</span>
+              <Bookmark className={`w-4 h-4 ${bookmarked ? 'fill-current' : ''}`} />
+              <span>{bookmarked ? 'Event Saved in Bookmarks' : 'Bookmark This Festival'}</span>
             </button>
 
             <div className="space-y-3 pt-2 border-t border-slate-800">

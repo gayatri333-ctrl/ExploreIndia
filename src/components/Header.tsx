@@ -21,8 +21,10 @@ import PlanYourTripMegaMenu from '@/components/navigation/PlanYourTripMegaMenu';
 import SearchModal from '@/components/navigation/SearchModal';
 import UserMenu from '@/components/navigation/UserMenu';
 import CurrencyLanguageModal from '@/components/navigation/CurrencyLanguageModal';
+import { useBookmarks } from '@/context/BookmarkContext';
 
 export default function Header() {
+  const { bookmarkCount } = useBookmarks();
   const [activeMegaMenu, setActiveMegaMenu] = useState<'destinations' | 'experiences' | 'plan' | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isCurrencyModalOpen, setIsCurrencyModalOpen] = useState(false);
@@ -190,10 +192,15 @@ export default function Header() {
             {/* Bookmarks Icon */}
             <Link
               href="/bookmarks"
-              className="p-2 rounded-full bg-royal-950/80 hover:bg-royal-800 text-slate-300 hover:text-saffron-400 border border-white/10 transition flex items-center justify-center"
+              className="relative p-2 rounded-full bg-royal-950/80 hover:bg-royal-800 text-slate-300 hover:text-saffron-400 border border-white/10 transition flex items-center justify-center"
               title="View Saved Bookmarks"
             >
               <Bookmark className="w-4 h-4 text-saffron-400" />
+              {bookmarkCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-saffron-500 text-royal-950 rounded-full text-[10px] font-extrabold flex items-center justify-center shadow-md animate-pulse">
+                  {bookmarkCount}
+                </span>
+              )}
             </Link>
 
             {/* User Menu */}

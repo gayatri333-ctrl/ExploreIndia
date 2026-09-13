@@ -22,6 +22,7 @@ import {
   Compass,
 } from 'lucide-react';
 import { AttractionPOI, FestivalEvent } from '@/data/schema';
+import { useBookmarks } from '@/context/BookmarkContext';
 
 export interface DetailedCityInfo {
   cityName: string;
@@ -45,42 +46,23 @@ export function DestinationCityClient({ city }: { city: DetailedCityInfo }) {
   // Modal / Lightbox State for Attractions
   const [selectedAttraction, setSelectedAttraction] = useState<AttractionPOI | null>(null);
 
-  // Bookmark State & LocalStorage Sync
-  const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
+  // Bookmark State & LocalStorage Sync via Context
+  const { isBookmarked, toggleBookmark } = useBookmarks();
   const [showShareToast, setShowShareToast] = useState<boolean>(false);
 
-  useEffect(() => {
-    // Check if city is bookmarked in localStorage
-    try {
-      const saved = localStorage.getItem('exploreindia_city_bookmarks');
-      if (saved) {
-        const list: string[] = JSON.parse(saved);
-        setIsBookmarked(list.includes(city.citySlug));
-      }
-    } catch (err) {
-      console.error('Failed to read bookmarks:', err);
-    }
-  }, [city.citySlug]);
+  const cityIdKey = city.citySlug;
+  const bookmarked = isBookmarked(cityIdKey);
 
-  const toggleBookmark = () => {
-    try {
-      const saved = localStorage.getItem('exploreindia_city_bookmarks');
-      let list: string[] = saved ? JSON.parse(saved) : [];
-      let nextState = false;
-
-      if (list.includes(city.citySlug)) {
-        list = list.filter((id) => id !== city.citySlug);
-        nextState = false;
-      } else {
-        list.push(city.citySlug);
-        nextState = true;
-      }
-
-      localStorage.setItem('exploreindia_city_bookmarks', JSON.stringify(list));
-      setIsBookmarked(nextState);
-    } catch (err) {
-      console.error('Failed to update bookmark:', err);
-    }
+  const handleBookmarkToggle = () => {
+    toggleBookmark({
+      id: cityIdKey,
+      title: city.cityName,
+      type: 'destination',
+      link: `/destinations/${city.stateSlug}/${city.citySlug}`,
+      image: city.heroImage,
+      subtitle: `${city.stateName} • ${city.zoneName} Zone`,
+      badge: 'Destination City',
+    });
   };
 
   const handleShare = () => {
@@ -143,15 +125,15 @@ export function DestinationCityClient({ city }: { city: DetailedCityInfo }) {
             {/* Quick Actions: Bookmark & Share */}
             <div className="flex items-center gap-3 shrink-0">
               <button
-                onClick={toggleBookmark}
+                onClick={handleBookmarkToggle}
                 className={`px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-2 border shadow-lg ${
-                  isBookmarked
+                  bookmarked
                     ? 'bg-saffron-500 text-royal-950 border-saffron-400'
                     : 'bg-royal-900/80 text-slate-200 border-white/10 hover:border-saffron-500/40'
                 }`}
               >
-                {isBookmarked ? <BookmarkCheck className="w-4 h-4" /> : <Bookmark className="w-4 h-4" />}
-                <span>{isBookmarked ? 'Bookmarked' : 'Save Bookmark'}</span>
+                {bookmarked ? <BookmarkCheck className="w-4 h-4" /> : <Bookmark className="w-4 h-4" />}
+                <span>{bookmarked ? 'Bookmarked' : 'Save Bookmark'}</span>
               </button>
 
               <button
