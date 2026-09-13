@@ -2,6 +2,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ZONES_DATA } from '@/lib/data/incredible-india-data';
 import { MapPin, ArrowLeft, ArrowRight, Lightbulb, Compass, Globe } from 'lucide-react';
+import IncredibleIndiaCityPage from '@/app/destinations/[zone]/[state]/[city]/page';
+import { getCityById, getStateById } from '@/data/store';
 
 interface StatePageProps {
   params: {
@@ -11,20 +13,57 @@ interface StatePageProps {
 }
 
 export async function generateMetadata({ params }: StatePageProps) {
-  const zone = ZONES_DATA.find((z) => z.zoneSlug === params.zone);
-  const state = zone?.states.find((s) => s.stateSlug === params.state);
+  // Disambiguation check: Is params.zone actually a state, and params.state a city?
+  const isCityMatch = getCityById(params.state) || ZONES_DATA.some((z) =>
+    z.states.some((s) => s.stateSlug.toLowerCase() === params.zone.toLowerCase() && s.cities.some((c) => c.citySlug.toLowerCase() === params.state.toLowerCase()))
+  );
 
+  if (isCityMatch) {
+    const cityName = params.state.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
+    const stateName = params.zone.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
+    return {
+      title: `${cityName}, ${stateName} Travel Guide & Attractions | ExploreIndia`,
+      description: `Explore top heritage monuments, climate facts, travel essentials, and cultural festivals in ${cityName}, ${stateName}.`,
+    };
+  }
+
+  const zone = ZONES_DATA.find((z) => z.zoneSlug.toLowerCase() === params.zone.toLowerCase());
+  const state = zone?.states.find((s) => s.stateSlug.toLowerCase() === params.state.toLowerCase());
   const stateName = state ? state.stateName : params.state.replace(/-/g, ' ').toUpperCase();
 
   return {
-    title: `${stateName} Destinations & Travel Guide | Incredible India`,
+    title: `${stateName} Destinations & Travel Guide | ExploreIndia`,
     description: state ? state.description : `Explore ${stateName} state destinations and cultural highlights.`,
   };
 }
 
-export default function IncredibleIndiaStatePage({ params }: StatePageProps) {
-  const zone = ZONES_DATA.find((z) => z.zoneSlug === params.zone);
-  const state = zone?.states.find((s) => s.stateSlug === params.state);
+export default function DynamicStateOrCityPage({ params }: StatePageProps) {
+  // Disambiguation check: Is params.zone a state slug or params.state a city slug?
+  const cityMatch = getCityById(params.state);
+  const incZoneMatch = ZONES_DATA.find((z) =>
+    z.states.some((s) => s.stateSlug.toLowerCase() === params.zone.toLowerCase())
+  );
+  const isCityMatch = Boolean(cityMatch) || Boolean(incZoneMatch);
+
+  if (isCityMatch) {
+    // Determine inferred zone slug
+    const stateObj = getStateById(params.zone);
+    const inferredZone = stateObj ? stateObj.zone.toLowerCase() : incZoneMatch ? incZoneMatch.zoneSlug : 'north';
+
+    return (
+      <IncredibleIndiaCityPage
+        params={{
+          zone: inferredZone,
+          state: params.zone,
+          city: params.state,
+        }}
+      />
+    );
+  }
+
+  // Standard State Page Rendering
+  const zone = ZONES_DATA.find((z) => z.zoneSlug.toLowerCase() === params.zone.toLowerCase());
+  const state = zone?.states.find((s) => s.stateSlug.toLowerCase() === params.state.toLowerCase());
 
   const activeState = state || {
     stateSlug: params.state,
@@ -110,7 +149,7 @@ export default function IncredibleIndiaStatePage({ params }: StatePageProps) {
                 <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                   <div className="space-y-2">
                     <h3 className="text-xl font-bold text-white font-serif group-hover:text-saffron-400 transition-colors">
-                      <Link href={`/destinations/${activeState.zoneSlug}/${activeState.stateSlug}/${city.citySlug}`}>
+                      <Link href={`/destinations/${activeState.stateSlug}/${city.citySlug}`}>
                         {city.cityName}
                       </Link>
                     </h3>
@@ -132,7 +171,7 @@ export default function IncredibleIndiaStatePage({ params }: StatePageProps) {
                   <div className="pt-3 border-t border-white/5 flex items-center justify-between text-xs font-semibold">
                     <span className="text-slate-400 text-[11px]">{activeState.stateName}</span>
                     <Link
-                      href={`/destinations/${activeState.zoneSlug}/${activeState.stateSlug}/${city.citySlug}`}
+                      href={`/destinations/${activeState.stateSlug}/${city.citySlug}`}
                       className="text-saffron-400 hover:text-white flex items-center gap-1 transition-colors"
                     >
                       <span>View City Guide</span>

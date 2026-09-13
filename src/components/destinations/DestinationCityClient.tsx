@@ -309,8 +309,15 @@ export function DestinationCityClient({ city }: { city: DetailedCityInfo }) {
                   </div>
 
                   <div className="pt-3 border-t border-white/5 flex items-center justify-between text-xs font-semibold text-saffron-400">
-                    <span>View Map & Highlights</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    <span onClick={() => setSelectedAttraction(attraction)} className="hover:underline">Quick Preview</span>
+                    <Link
+                      href={`/attractions/${city.stateSlug}/${attraction.id}`}
+                      onClick={(e) => e.stopPropagation()}
+                      className="text-saffron-400 hover:text-white flex items-center gap-1 transition-colors"
+                    >
+                      <span>Full Landmark Guide</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    </Link>
                   </div>
                 </div>
               </div>
