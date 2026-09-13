@@ -3,6 +3,7 @@ import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { siteConfig } from "@/config/site";
 
 const fontSerif = Playfair_Display({
   subsets: ["latin"],
@@ -17,14 +18,31 @@ const fontSans = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "ExploreIndia — Discover Festivals, Events & Destinations across India",
-  description: "Comprehensive festival & events discovery platform for Indian tourism featuring cultural heritage, spiritual trails, national parks, wildlife safaris, and luxury destination experiences.",
-  keywords: ["India tourism", "Indian festivals", "Pushkar Camel Fair", "Durga Puja", "Kerala Onam", "Rann Utsav", "Tiger Safaris India", "Destination Weddings India"],
+  title: siteConfig.title,
+  description: siteConfig.description,
+  keywords: [
+    "India tourism",
+    "ExploreIndia",
+    "28 States and 8 Union Territories",
+    "Indian festivals",
+    "Heritage Forts",
+    "Spiritual Trails",
+    "Wildlife Safaris",
+    "Incredible India travel portal",
+  ],
   openGraph: {
-    title: "ExploreIndia — Festivals & Tourism Portal",
-    description: "Discover festivals, events, national parks, and heritage destinations across India.",
-    url: "https://exploreindia.vercel.app",
-    siteName: "ExploreIndia",
+    title: siteConfig.title,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    images: [
+      {
+        url: siteConfig.ogImage,
+        width: 1200,
+        height: 630,
+        alt: siteConfig.title,
+      },
+    ],
     locale: "en_IN",
     type: "website",
   },
@@ -47,4 +65,3 @@ export default function RootLayout({
     </html>
   );
 }
-

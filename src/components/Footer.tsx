@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { Compass, Heart } from 'lucide-react';
+import { Compass } from 'lucide-react';
+import { siteConfig } from '@/config/site';
 
 export default function Footer() {
   return (
@@ -11,24 +12,25 @@ export default function Footer() {
             <div className="w-8 h-8 rounded-lg bg-saffron-500 flex items-center justify-center text-royal-900 font-bold">
               <Compass className="w-5 h-5 text-royal-950" />
             </div>
-            <span className="font-bold text-lg text-white">ExploreIndia</span>
+            <span className="font-bold text-lg text-white">{siteConfig.name}</span>
           </div>
           <p className="text-xs text-slate-400 leading-relaxed">
-            Discover vibrant cultural heritage, royal festivals, spiritual trails, national parks, and destination experiences across India.
+            {siteConfig.description}
           </p>
         </div>
 
         {/* Column 1: Zones & Regions */}
         <div>
           <h4 className="font-semibold text-white text-xs uppercase tracking-wider mb-3 text-saffron-400">
-            Zones & Regions
+            6 Tourism Zones
           </h4>
           <ul className="space-y-2 text-xs">
             <li><Link href="/destinations?zone=North" className="hover:text-white transition">North India (Himalaya & Heritage)</Link></li>
             <li><Link href="/destinations?zone=South" className="hover:text-white transition">South India (Temples & Backwaters)</Link></li>
             <li><Link href="/destinations?zone=West" className="hover:text-white transition">West India (Deserts & Beaches)</Link></li>
             <li><Link href="/destinations?zone=East" className="hover:text-white transition">East India (Culture & Nature)</Link></li>
-            <li><Link href="/destinations?zone=North+East" className="hover:text-white transition">North East (Unexplored Paradises)</Link></li>
+            <li><Link href="/destinations?zone=Central" className="hover:text-white transition">Central India (Heart & Wildlife)</Link></li>
+            <li><Link href="/destinations?zone=North+East" className="hover:text-white transition">North East (Wilderness & Roots)</Link></li>
           </ul>
         </div>
 
@@ -48,7 +50,7 @@ export default function Footer() {
 
         {/* Column 3: Visitor Info & Legal */}
         <div>
-          <h4 className="font-semibold text-white text-xs uppercase tracking-wider mb-3 text-gold-400">
+          <h4 className="font-semibold text-white text-xs uppercase tracking-wider mb-3 text-amber-400">
             About & Info
           </h4>
           <ul className="space-y-2 text-xs">
@@ -62,9 +64,9 @@ export default function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 lg:px-8 border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500">
-        <p>© {new Date().getFullYear()} ExploreIndia Tourism Portal. All rights reserved.</p>
-        <p className="flex items-center gap-1 mt-2 sm:mt-0">
-          Crafted with <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" /> for Indian Tourism
+        <p>© {siteConfig.copyrightYear} {siteConfig.title}. All rights reserved.</p>
+        <p className="flex items-center gap-1 mt-2 sm:mt-0 font-medium text-slate-300">
+          {siteConfig.footerCredit}
         </p>
       </div>
     </footer>

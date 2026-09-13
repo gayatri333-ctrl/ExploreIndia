@@ -31,7 +31,7 @@ export const DESTINATION_CITIES: DestinationCity[] = [
     state: 'Rajasthan',
     stateSlug: 'rajasthan',
     citySlug: 'jaipur',
-    zone: 'North',
+    zone: 'West',
     image: 'https://images.unsplash.com/photo-1477587458883-47145ed94245?q=80&w=800',
     tagline: 'The Pink City of Forts & Palaces',
     facts: [
@@ -59,7 +59,7 @@ export const DESTINATION_CITIES: DestinationCity[] = [
     state: 'Rajasthan',
     stateSlug: 'rajasthan',
     citySlug: 'udaipur',
-    zone: 'North',
+    zone: 'West',
     image: 'https://images.unsplash.com/photo-1615836245337-f5b9b2303f1c?q=80&w=800',
     tagline: 'City of Lakes & Marble Palaces',
     facts: [

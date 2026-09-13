@@ -133,7 +133,7 @@ export default function ItineraryDetailPage({ params }: { params: { slug: string
                 </div>
 
                 <span className="px-3 py-1 rounded bg-royal-950 text-peacock-300 border border-white/5 text-[11px] font-semibold shrink-0 self-start md:self-auto">
-                  Confirmed Schedule
+                  Suggested Schedule
                 </span>
               </div>
             ))}

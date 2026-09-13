@@ -203,8 +203,8 @@ export function HeroSection() {
           {/* Quick Stats Bar */}
           <div className="grid grid-cols-3 gap-4 py-4 border-y border-white/15 text-left max-w-lg bg-royal-950/40 backdrop-blur-sm px-4 rounded-xl">
             <div>
-              <div className="text-2xl font-extrabold text-saffron-400">28+</div>
-              <div className="text-xs text-slate-300 font-medium">States & Zones</div>
+              <div className="text-2xl font-extrabold text-saffron-400">28</div>
+              <div className="text-xs text-slate-300 font-medium">States & 8 UTs</div>
             </div>
             <div>
               <div className="text-2xl font-extrabold text-peacock-400">11</div>

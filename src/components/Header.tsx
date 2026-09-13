@@ -81,7 +81,7 @@ export default function Header() {
                 Explore<span className="text-white font-sans">India</span>
               </span>
               <span className="text-[9px] tracking-widest text-slate-400 font-semibold uppercase -mt-1">
-                Incredible Tourism Portal
+                India Tourism & Travel Portal
               </span>
             </div>
           </Link>

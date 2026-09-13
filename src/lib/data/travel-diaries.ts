@@ -26,7 +26,7 @@ export const TRAVEL_DIARIES: TravelDiary[] = [
     coverImage: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=800',
     excerpt: 'Drifting along palm-lined canals while monsoon rain taps gently on wooden houseboat roofs is pure meditation. As morning mist clears over Vembanad Lake, local villagers glide past in narrow wooden canoes delivering fresh coconut water.',
     fullStory: 'Drifting along palm-lined canals while monsoon rain taps gently on wooden houseboat roofs is pure meditation. As morning mist clears over Vembanad Lake, local villagers glide past in narrow wooden canoes delivering fresh coconut water. Life along Kerala\'s backwaters moves at a peaceful rhythmic cadence that invites you to unplug and breathe.',
-    author: 'Ananya Sharma',
+    author: 'ExploreIndia Editorial Desk',
     readTime: '4 min read',
     publishedDate: 'Sep 02, 2026'
   },
@@ -41,7 +41,7 @@ export const TRAVEL_DIARIES: TravelDiary[] = [
     coverImage: 'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?q=80&w=800',
     excerpt: 'The open safari gipsy engine cut out as our guide raised a silent hand toward a dry riverbed. Seconds later, a majestic tigress stepped out from behind ancient fort ruins, her amber coat catching the golden morning light.',
     fullStory: 'The open safari gipsy engine cut out as our guide raised a silent hand toward a dry riverbed. Seconds later, a majestic tigress stepped out from behind ancient fort ruins, her amber coat catching the golden morning light. Observing these apex predators in their natural sanctuary surrounded by 10th-century citadel walls is an unforgettable wilderness experience.',
-    author: 'Vikramaditya Singh',
+    author: 'ExploreIndia Editorial Desk',
     readTime: '6 min read',
     publishedDate: 'Aug 28, 2026'
   },
@@ -56,7 +56,7 @@ export const TRAVEL_DIARIES: TravelDiary[] = [
     coverImage: 'https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=800',
     excerpt: 'As dusk settles over Dashashwamedh Ghat, priests synchronize brass oil lamps to rhythmic Sanskrit chants echoing across the Ganges. Small marigold boats carrying flickering candles float down the river like a constellation of prayers.',
     fullStory: 'As dusk settles over Dashashwamedh Ghat, priests synchronize brass oil lamps to rhythmic Sanskrit chants echoing across the Ganges. Small marigold boats carrying flickering candles float down the river like a constellation of prayers. Experiencing the spiritual energy of this ancient city leaves a deep lasting impression on every traveler.',
-    author: 'Priya Iyer',
+    author: 'ExploreIndia Editorial Desk',
     readTime: '5 min read',
     publishedDate: 'Aug 20, 2026'
   },
@@ -71,7 +71,7 @@ export const TRAVEL_DIARIES: TravelDiary[] = [
     coverImage: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?q=80&w=800',
     excerpt: 'Plunging through Grade IV rapids like Roller Coaster and Golf Course delivers an exhilarating rush surrounded by Himalayan cliffs. Camping on white sandy beaches under starry mountain skies makes Rishikesh the ultimate outdoor escape.',
     fullStory: 'Plunging through Grade IV rapids like Roller Coaster and Golf Course delivers an exhilarating rush surrounded by Himalayan cliffs. Camping on white sandy beaches under starry mountain skies makes Rishikesh the ultimate outdoor escape. From sunrise cliff jumping to evening riverside campfires, adventure awaits at every turn.',
-    author: 'Rohan Mehta',
+    author: 'ExploreIndia Editorial Desk',
     readTime: '5 min read',
     publishedDate: 'Aug 15, 2026'
   },
@@ -86,7 +86,7 @@ export const TRAVEL_DIARIES: TravelDiary[] = [
     coverImage: 'https://images.unsplash.com/photo-1609137144813-7d9921338f24?q=80&w=800',
     excerpt: 'Under full moon nights, the endless white salt desert glows like a sheet of pure silver stretching into the horizon. Local Kutchi musicians play soul-stirring folk instruments beside bonfire circles while weavers demonstrate mirror-work embroidery.',
     fullStory: 'Under full moon nights, the endless white salt desert glows like a sheet of pure silver stretching into the horizon. Local Kutchi musicians play soul-stirring folk instruments beside bonfire circles while weavers demonstrate mirror-work embroidery. The desert carnival combines natural vastness with rich tribal craftsmanship.',
-    author: 'Kavita Patel',
+    author: 'ExploreIndia Editorial Desk',
     readTime: '4 min read',
     publishedDate: 'Aug 10, 2026'
   },
@@ -101,7 +101,7 @@ export const TRAVEL_DIARIES: TravelDiary[] = [
     coverImage: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=800',
     excerpt: 'Navigating narrow cobblestone alleys filled with the aroma of sizzling parathas, slow-cooked Nihari, and hot jalebis is a sensory awakening. Centuries-old sweet shops still craft recipes perfected during imperial Mughal court reigns.',
     fullStory: 'Navigating narrow cobblestone alleys filled with the aroma of sizzling parathas, slow-cooked Nihari, and hot jalebis is a sensory awakening. Centuries-old sweet shops still craft recipes perfected during imperial Mughal court reigns. Every bite in Chandni Chowk carries layers of living culinary history.',
-    author: 'Kabir Kapoor',
+    author: 'ExploreIndia Editorial Desk',
     readTime: '5 min read',
     publishedDate: 'Jul 29, 2026'
   },
@@ -116,7 +116,7 @@ export const TRAVEL_DIARIES: TravelDiary[] = [
     coverImage: 'https://images.unsplash.com/photo-1600100397608-f010e423b971?q=80&w=800',
     excerpt: 'Climbing Matanga Hill for sunrise reveals a surreal landscape of giant granite boulders shielding 15th-century Vijayanagara palace ruins. Coracle boat rides across the Tungabhadra river lead to hidden cave shrines and carved stone monolithic chariots.',
     fullStory: 'Climbing Matanga Hill for sunrise reveals a surreal landscape of giant granite boulders shielding 15th-century Vijayanagara palace ruins. Coracle boat rides across the Tungabhadra river lead to hidden cave shrines and carved stone monolithic chariots. Hampi feels like walking through an open-air historical fantasy realm.',
-    author: 'Shruti Nair',
+    author: 'ExploreIndia Editorial Desk',
     readTime: '6 min read',
     publishedDate: 'Jul 22, 2026'
   },
@@ -131,7 +131,7 @@ export const TRAVEL_DIARIES: TravelDiary[] = [
     coverImage: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=800',
     excerpt: 'Waking up to first light illuminating the snow-capped peak of Kanchenjunga while sipping freshly brewed First Flush tea is magic. Walking through misty high-altitude estate trails reveals tea pluckers hand-harvesting delicate tea leaves.',
     fullStory: 'Waking up to first light illuminating the snow-capped peak of Kanchenjunga while sipping freshly brewed First Flush tea is magic. Walking through misty high-altitude estate trails reveals tea pluckers hand-harvesting delicate tea leaves. The crisp mountain air and colonial heritage heritage make Darjeeling unforgettable.',
-    author: 'Debasis Banerjee',
+    author: 'ExploreIndia Editorial Desk',
     readTime: '4 min read',
     publishedDate: 'Jul 15, 2026'
   },
@@ -146,7 +146,7 @@ export const TRAVEL_DIARIES: TravelDiary[] = [
     coverImage: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=800',
     excerpt: 'Descending thousands of stone steps through lush rainforests leads to double-decker bio-engineered root bridges grown across roaring mountain streams. Swimming in crystal-clear turquoise natural pools beneath cascading waterfalls rewards every step of the trek.',
     fullStory: 'Descending thousands of stone steps through lush rainforests leads to double-decker bio-engineered root bridges grown across roaring mountain streams. Swimming in crystal-clear turquoise natural pools beneath cascading waterfalls rewards every step of the trek. Meghalaya\'s untouched wilderness feels truly sacred.',
-    author: 'Marthang Sangma',
+    author: 'ExploreIndia Editorial Desk',
     readTime: '6 min read',
     publishedDate: 'Jul 08, 2026'
   },
@@ -161,7 +161,7 @@ export const TRAVEL_DIARIES: TravelDiary[] = [
     coverImage: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=800',
     excerpt: 'Surrounding yourself with herbal oil therapies, oceanfront yoga sessions, and farm-to-table organic meals restores mind and body completely. Gentle cliffside breezes and Ayurvedic wellness traditions clear away modern stress.',
     fullStory: 'Surrounding yourself with herbal oil therapies, oceanfront yoga sessions, and farm-to-table organic meals restores mind and body completely. Gentle cliffside breezes and Ayurvedic wellness traditions clear away modern stress. It is a holistic retreat designed for deep personal renewal.',
-    author: 'Dr. Sunita Varma',
+    author: 'ExploreIndia Editorial Desk',
     readTime: '4 min read',
     publishedDate: 'Jun 30, 2026'
   },
@@ -176,7 +176,7 @@ export const TRAVEL_DIARIES: TravelDiary[] = [
     coverImage: 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?q=80&w=800',
     excerpt: 'Lamas dressed in vibrant silk brocades and hand-carved wooden deity masks perform sacred Cham dances to long horns and cymbals. Set against stark desert mountain peaks, the courtyard of Hemis Monastery vibrates with ancient spiritual energy.',
     fullStory: 'Lamas dressed in vibrant silk brocades and hand-carved wooden deity masks perform sacred Cham dances to long horns and cymbals. Set against stark desert mountain peaks, the courtyard of Hemis Monastery vibrates with ancient spiritual energy. The sacred celebration symbolizes the triumph of good over evil.',
-    author: 'Tenzin Norbu',
+    author: 'ExploreIndia Editorial Desk',
     readTime: '5 min read',
     publishedDate: 'Jun 21, 2026'
   },
@@ -191,7 +191,7 @@ export const TRAVEL_DIARIES: TravelDiary[] = [
     coverImage: 'https://images.unsplash.com/photo-1477587458883-47145ed94245?q=80&w=800',
     excerpt: 'Watching sunset cast a warm amber glow across Nahargarh Fort while looking down upon Jaipur\'s pink city grid is magical. Artisans in bustling bazaars still hand-block print textiles and forge enamel jewelry using royal guild techniques.',
     fullStory: 'Watching sunset cast a warm amber glow across Nahargarh Fort while looking down upon Jaipur\'s pink city grid is magical. Artisans in bustling bazaars still hand-block print textiles and forge enamel jewelry using royal guild techniques. Royal majesty lives on in every corner of the Pink City.',
-    author: 'Rajeshwar Rathore',
+    author: 'ExploreIndia Editorial Desk',
     readTime: '4 min read',
     publishedDate: 'Jun 12, 2026'
   },
@@ -206,7 +206,7 @@ export const TRAVEL_DIARIES: TravelDiary[] = [
     coverImage: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=800',
     excerpt: 'Gliding underwater alongside sea turtles, rays, and vibrant clownfish in crystal-clear turquoise ocean waters reveals an untouched marine world. White powdery beaches lined with dense rainforests make Havelock Island an island paradise.',
     fullStory: 'Gliding underwater alongside sea turtles, rays, and vibrant clownfish in crystal-clear turquoise ocean waters reveals an untouched marine world. White powdery beaches lined with dense rainforests make Havelock Island an island paradise. The aquatic biodiversity is among the richest in Asia.',
-    author: 'Capt. Neil D\'Souza',
+    author: 'ExploreIndia Editorial Desk',
     readTime: '5 min read',
     publishedDate: 'Jun 05, 2026'
   },
@@ -221,7 +221,7 @@ export const TRAVEL_DIARIES: TravelDiary[] = [
     coverImage: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=800',
     excerpt: 'Hiking pine-scented mountain trails to Elephant Falls and Nohkalikai Falls while clouds drift through green canyons is pure tranquility. Local cafes buzz with acoustic guitar performances, giving Shillong its famous music-loving spirit.',
     fullStory: 'Hiking pine-scented mountain trails to Elephant Falls and Nohkalikai Falls while clouds drift through green canyons is pure tranquility. Local cafes buzz with acoustic guitar performances, giving Shillong its famous music-loving spirit. Nature and melody blend seamlessly in the Scotland of the East.',
-    author: 'Wanrilang Lyndem',
+    author: 'ExploreIndia Editorial Desk',
     readTime: '4 min read',
     publishedDate: 'May 28, 2026'
   },
@@ -236,7 +236,7 @@ export const TRAVEL_DIARIES: TravelDiary[] = [
     coverImage: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=800',
     excerpt: 'Master artisans hand-carve translucent leather puppets depicting Ramayana legends, illuminated behind silk screen lamps. Attending village performances under banyan trees keeps centuries of Dravidian oral storytelling alive.',
     fullStory: 'Master artisans hand-carve translucent leather puppets depicting Ramayana legends, illuminated behind silk screen lamps. Attending village performances under banyan trees keeps centuries of Dravidian oral storytelling alive. It is a rare living folk tradition preserved with immense devotion.',
-    author: 'Meenakshi Sundaram',
+    author: 'ExploreIndia Editorial Desk',
     readTime: '5 min read',
     publishedDate: 'May 19, 2026'
   },
@@ -251,7 +251,7 @@ export const TRAVEL_DIARIES: TravelDiary[] = [
     coverImage: 'https://images.unsplash.com/photo-1570535310866-9b5dbd09439f?q=80&w=800',
     excerpt: 'Tasting steaming Kathi rolls, spicy Phuchkas, and clay-pot Mishti Doi while riding yellow vintage cabs past heritage mansions is unforgettable. Kolkata\'s passion for food, art, and intellectual adda sessions fills every neighborhood street.',
     fullStory: 'Tasting steaming Kathi rolls, spicy Phuchkas, and clay-pot Mishti Doi while riding yellow vintage cabs past heritage mansions is unforgettable. Kolkata\'s passion for food, art, and intellectual adda sessions fills every neighborhood street. Culinary exploration here is a deeply emotional experience.',
-    author: 'Aritra Sen',
+    author: 'ExploreIndia Editorial Desk',
     readTime: '4 min read',
     publishedDate: 'May 10, 2026'
   }
