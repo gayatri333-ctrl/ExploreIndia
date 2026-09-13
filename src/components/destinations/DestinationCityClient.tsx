@@ -49,9 +49,39 @@ export function DestinationCityClient({ city }: { city: DetailedCityInfo }) {
   // Bookmark State & LocalStorage Sync via Context
   const { isBookmarked, toggleBookmark } = useBookmarks();
   const [showShareToast, setShowShareToast] = useState<boolean>(false);
+  const [heroImgSrc, setHeroImgSrc] = useState<string>(city.heroImage);
+  const [photographer, setPhotographer] = useState<{ name: string; url?: string } | null>(null);
 
   const cityIdKey = city.citySlug;
   const bookmarked = isBookmarked(cityIdKey);
+
+  useEffect(() => {
+    let isMounted = true;
+    async function loadPexelsHero() {
+      try {
+        const queryParams = new URLSearchParams({
+          slug: city.citySlug,
+          name: city.cityName,
+          state: city.stateName,
+        });
+        const res = await fetch(`/api/destination-image?${queryParams.toString()}`);
+        if (!res.ok) return;
+        const data = await res.json();
+        if (isMounted && data.success && data.data?.imageUrl) {
+          setHeroImgSrc(data.data.imageUrl);
+          if (data.data.photographerName) {
+            setPhotographer({ name: data.data.photographerName, url: data.data.photographerUrl });
+          }
+        }
+      } catch (err) {
+        // Fall back to pre-resolved city.heroImage
+      }
+    }
+    loadPexelsHero();
+    return () => {
+      isMounted = false;
+    };
+  }, [city.citySlug, city.cityName, city.stateName]);
 
   const handleBookmarkToggle = () => {
     toggleBookmark({
@@ -79,10 +109,11 @@ export function DestinationCityClient({ city }: { city: DetailedCityInfo }) {
       <section className="relative pt-24 pb-16 overflow-hidden border-b border-white/10">
         <div className="absolute inset-0 -z-10 bg-royal-950">
           <Image
-            src={city.heroImage}
-            alt={city.cityName}
+            src={heroImgSrc}
+            alt={`${city.cityName} tourism landmarks and riverfront view in ${city.stateName}, India`}
             fill
             priority
+            onError={() => setHeroImgSrc('https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200')}
             className="object-cover opacity-30 scale-105 transition-transform duration-1000"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-royal-950 via-royal-950/80 to-transparent" />

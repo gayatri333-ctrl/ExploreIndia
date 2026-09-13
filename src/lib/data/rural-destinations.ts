@@ -13,7 +13,7 @@ export const RURAL_DESTINATIONS: RuralDestination[] = [
     name: 'Mawlynnong Village',
     state: 'Meghalaya',
     stateSlug: 'meghalaya',
-    image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1506461883276-594a12b11db3?q=80&w=800',
     tagline: 'Asia\'s cleanest eco-village featuring living root pathways, floral gardens, and bamboo skywalks.'
   },
   {
@@ -21,7 +21,7 @@ export const RURAL_DESTINATIONS: RuralDestination[] = [
     name: 'Kibber High Village',
     state: 'Himachal Pradesh',
     stateSlug: 'himachal-pradesh',
-    image: 'https://images.unsplash.com/photo-1597074866923-dc0589150358?q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1605649487212-47bdab064df7?q=80&w=800',
     tagline: 'High-altitude Himalayan hamlet surrounded by ancient monasteries, snow leopard reserves, and fossil beds.'
   },
   {

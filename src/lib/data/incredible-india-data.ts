@@ -115,7 +115,7 @@ export const ZONES_DATA: ZoneData[] = [
             zoneSlug: 'north',
             zoneName: 'North India',
             tagline: 'Gateway to Solang Valley & High Altitude Himalayan Passes',
-            image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=800',
+            image: 'https://images.unsplash.com/photo-1605649487212-47bdab064df7?q=80&w=800',
             facts: [
               'Starting point of the legendary Manali-Leh Highway across Rohtang Pass.',
               'Home to the 500-year-old wooden Hadimba Devi Temple set in dense cedar forests.'
@@ -452,7 +452,7 @@ export const ZONES_DATA: ZoneData[] = [
         zoneSlug: 'north-east',
         zoneName: 'North-East India',
         capital: 'Shillong',
-        heroImage: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=800',
+        heroImage: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=800',
         description: 'Abode of Clouds — Famed for bio-engineered living root bridges and crystal rivers.',
         cities: [
           {
@@ -463,7 +463,7 @@ export const ZONES_DATA: ZoneData[] = [
             zoneSlug: 'north-east',
             zoneName: 'North-East India',
             tagline: 'Asia’s Cleanest Village & Bio-Engineered Root Bridges',
-            image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=800',
+            image: 'https://images.unsplash.com/photo-1506461883276-594a12b11db3?q=80&w=800',
             facts: [
               'Ficus elastica tree roots are trained across rivers over 150 years to form indestructible living bridges.',
               'Mawlynnong eco-village was awarded Asia\'s Cleanest Village by Discover India.'
@@ -547,18 +547,18 @@ export const ZONES_DATA: ZoneData[] = [
         zoneName: 'Union Territories',
         capital: 'Puducherry',
         isUT: true,
-        heroImage: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=800',
-        description: 'French Riviera of the East — Cobblestone streets, mustard-yellow villas, and quiet beaches.',
+        heroImage: 'https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?q=80&w=800',
+        description: 'French Riviera of the East — Pastel mustard villas, ocean promenades, and Auroville.',
         cities: [
           {
-            citySlug: 'puducherry-town',
-            cityName: 'Puducherry Town',
+            citySlug: 'pondicherry',
+            cityName: 'Pondicherry',
             stateSlug: 'puducherry',
             stateName: 'Puducherry',
             zoneSlug: 'union-territories',
             zoneName: 'Union Territories',
-            tagline: 'French Quarter Avenues & Auroville International City',
-            image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=800',
+            tagline: 'French Colonial Promenade & Auroville Eco-Township',
+            image: 'https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?q=80&w=800',
             facts: [
               'Preserves authentic French colonial architecture with street names written in French.',
               'Home to Auroville experimental township and Sri Aurobindo Ashram.'

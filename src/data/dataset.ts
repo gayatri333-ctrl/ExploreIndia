@@ -86,7 +86,7 @@ export const CITIES_DATA: DestinationCity[] = [
       'Starting point of the legendary Manali-Leh mountain highway.',
       'Home to the 500-year-old wooden Hadimba Temple built in 1553 AD.'
     ],
-    image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1605649487212-47bdab064df7?q=80&w=800',
     tagline: 'Solang Adventure & High Mountain Passes'
   },
 
@@ -200,7 +200,7 @@ export const CITIES_DATA: DestinationCity[] = [
       'Ficus elastica tree roots are trained over 150 years to form indestructible living river bridges.',
       'Mawlynnong eco-village was awarded Asia\'s Cleanest Village.'
     ],
-    image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1506461883276-594a12b11db3?q=80&w=800',
     tagline: 'Living Root Bridges & Crystal Rivers'
   }
 ];
