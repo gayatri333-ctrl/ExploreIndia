@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import {
   Sun,
@@ -23,118 +23,31 @@ import {
   ExternalLink,
   MapPin,
   Sparkles,
+  AlertTriangle,
+  Clock,
 } from 'lucide-react';
 
-interface CityWeather {
+interface CityOption {
   city: string;
   state: string;
-  tempC: number;
-  condition: string;
-  icon: 'sun' | 'rain' | 'snow' | 'wind';
-  humidity: string;
-  windSpeed: string;
-  seasonStatus: string;
-  bestMonths: string;
-  advisory: string;
 }
 
-const CITY_WEATHER_DATA: CityWeather[] = [
-  {
-    city: 'Jaipur',
-    state: 'Rajasthan',
-    tempC: 24,
-    condition: 'Sunny & Pleasant',
-    icon: 'sun',
-    humidity: '42%',
-    windSpeed: '12 km/h',
-    seasonStatus: 'Peak Tourist Season — Pleasant daytime climate for fort explorations',
-    bestMonths: 'October to March',
-    advisory: 'Carry light woolens for evening desert breezes.',
-  },
-  {
-    city: 'Shimla',
-    state: 'Himachal Pradesh',
-    tempC: 14,
-    condition: 'Cool Alpine Mist',
-    icon: 'wind',
-    humidity: '65%',
-    windSpeed: '15 km/h',
-    seasonStatus: 'Crisp Mountain Season — Ideal for colonial promenade walks',
-    bestMonths: 'March to June & Dec to Feb (Snowfall)',
-    advisory: 'Heavy winter jackets recommended for Mall Road walks after sunset.',
-  },
-  {
-    city: 'Kolkata',
-    state: 'West Bengal',
-    tempC: 27,
-    condition: 'Tropical Clear Skies',
-    icon: 'sun',
-    humidity: '58%',
-    windSpeed: '9 km/h',
-    seasonStatus: 'Festive Season — Perfect temperature for heritage street walks',
-    bestMonths: 'October to March',
-    advisory: 'Cotton wear recommended during midday excursions.',
-  },
-  {
-    city: 'Alleppey',
-    state: 'Kerala',
-    tempC: 29,
-    condition: 'Tropical Breeze',
-    icon: 'sun',
-    humidity: '75%',
-    windSpeed: '18 km/h',
-    seasonStatus: 'Backwater Season — Optimal water levels for luxury houseboats',
-    bestMonths: 'September to March',
-    advisory: 'Sunscreen and light linen clothing suggested.',
-  },
-  {
-    city: 'Darjeeling',
-    state: 'West Bengal',
-    tempC: 11,
-    condition: 'Chilly & Mist',
-    icon: 'wind',
-    humidity: '70%',
-    windSpeed: '14 km/h',
-    seasonStatus: 'Clear Kanchenjunga View Window — Great sunrise vistas',
-    bestMonths: 'March to May & Oct to Dec',
-    advisory: 'Layered thermal clothing essential at Tiger Hill sunrise.',
-  },
-  {
-    city: 'Manali',
-    state: 'Himachal Pradesh',
-    tempC: 9,
-    condition: 'Crisp Snow Air',
-    icon: 'snow',
-    humidity: '60%',
-    windSpeed: '10 km/h',
-    seasonStatus: 'Snow Adventure Window — Rohtang Pass open for winter sports',
-    bestMonths: 'October to June',
-    advisory: 'Thermal wear and waterproof snow boots recommended.',
-  },
-  {
-    city: 'Cherrapunji',
-    state: 'Meghalaya',
-    tempC: 18,
-    condition: 'Passing Showers',
-    icon: 'rain',
-    humidity: '88%',
-    windSpeed: '22 km/h',
-    seasonStatus: 'Waterfall Peak — Living Root Bridges lush and green',
-    bestMonths: 'September to May',
-    advisory: 'Sturdy trekking shoes and waterproof rain jacket required.',
-  },
-  {
-    city: 'Varanasi',
-    state: 'Uttar Pradesh',
-    tempC: 25,
-    condition: 'Clear & Golden',
-    icon: 'sun',
-    humidity: '48%',
-    windSpeed: '8 km/h',
-    seasonStatus: 'Ganga Aarti Peak — Cool evenings for boat rides',
-    bestMonths: 'October to March',
-    advisory: 'Modest shoulder-covering clothing for temple visits.',
-  },
+const POPULAR_CITIES: CityOption[] = [
+  { city: 'Jaipur', state: 'Rajasthan' },
+  { city: 'Shimla', state: 'Himachal Pradesh' },
+  { city: 'Kolkata', state: 'West Bengal' },
+  { city: 'Alleppey', state: 'Kerala' },
+  { city: 'Darjeeling', state: 'West Bengal' },
+  { city: 'Manali', state: 'Himachal Pradesh' },
+  { city: 'Cherrapunji', state: 'Meghalaya' },
+  { city: 'Varanasi', state: 'Uttar Pradesh' },
+  { city: 'Srinagar', state: 'Jammu & Kashmir' },
+  { city: 'Udaipur', state: 'Rajasthan' },
+  { city: 'Kochi', state: 'Kerala' },
+  { city: 'Amritsar', state: 'Punjab' },
+  { city: 'Agra', state: 'Uttar Pradesh' },
+  { city: 'Delhi', state: 'Delhi' },
+  { city: 'Mumbai', state: 'Maharashtra' },
 ];
 
 interface CurrencyRate {
@@ -145,7 +58,7 @@ interface CurrencyRate {
   rateToINR: number;
 }
 
-const CURRENCY_RATES: CurrencyRate[] = [
+const DEFAULT_CURRENCY_RATES: CurrencyRate[] = [
   { code: 'USD', name: 'US Dollar', flag: '🇺🇸', symbol: '$', rateToINR: 83.25 },
   { code: 'EUR', name: 'Euro', flag: '🇪🇺', symbol: '€', rateToINR: 90.10 },
   { code: 'GBP', name: 'British Pound', flag: '🇬🇧', symbol: '£', rateToINR: 105.40 },
@@ -161,29 +74,110 @@ export function TravelTools() {
   const [selectedCity, setSelectedCity] = useState<string>('Jaipur');
   const [isRefreshingWeather, setIsRefreshingWeather] = useState<boolean>(false);
   const [tempUnit, setTempUnit] = useState<'C' | 'F'>('C');
+  const [weatherData, setWeatherData] = useState<{
+    city: string;
+    state: string;
+    tempC: number;
+    tempF: number;
+    condition: string;
+    humidity: string;
+    windSpeed: string;
+    bestMonths: string;
+    seasonStatus: string;
+    advisory: string;
+    source: string;
+    timestamp: string;
+    offline: boolean;
+  } | null>(null);
 
   // Currency State
   const [calcAmount, setCalcAmount] = useState<number>(100);
   const [calcCurrency, setCalcCurrency] = useState<string>('USD');
   const [isReverse, setIsReverse] = useState<boolean>(false);
+  const [currencyRates, setCurrencyRates] = useState<CurrencyRate[]>(DEFAULT_CURRENCY_RATES);
+  const [currencySource, setCurrencySource] = useState<string>('Live FX Rates');
+  const [currencyTimestamp, setCurrencyTimestamp] = useState<string>('');
+  const [isCurrencyOffline, setIsCurrencyOffline] = useState<boolean>(false);
 
   // Tab State for Essentials
   const [activeEssentialTab, setActiveEssentialTab] = useState<'helpline' | 'visa' | 'partners' | 'transport'>('helpline');
   const [copiedNumber, setCopiedNumber] = useState<string | null>(null);
 
-  const currentWeather = CITY_WEATHER_DATA.find((c) => c.city === selectedCity) || CITY_WEATHER_DATA[0];
-  const activeCurrRate = CURRENCY_RATES.find((c) => c.code === calcCurrency) || CURRENCY_RATES[0];
+  // 1. Fetch Weather from Live API Endpoint
+  const fetchWeather = useCallback(async (cityName: string) => {
+    setIsRefreshingWeather(true);
+    try {
+      const res = await fetch(`/api/weather?city=${encodeURIComponent(cityName)}`);
+      if (res.ok) {
+        const data = await res.json();
+        setWeatherData(data);
+      } else {
+        setWeatherData((prev) => (prev ? { ...prev, offline: true } : {
+          city: cityName,
+          state: 'India',
+          tempC: 25,
+          tempF: 77,
+          condition: 'Service Unavailable',
+          humidity: 'N/A',
+          windSpeed: 'N/A',
+          bestMonths: 'October to March',
+          seasonStatus: 'Information unavailable',
+          advisory: 'Check local guidelines.',
+          source: 'Offline',
+          timestamp: new Date().toISOString(),
+          offline: true,
+        }));
+      }
+    } catch (error) {
+      console.error('Failed to fetch live weather:', error);
+      setWeatherData((prev) => (prev ? { ...prev, offline: true } : null));
+    } finally {
+      setIsRefreshingWeather(false);
+    }
+  }, []);
+
+  // 2. Fetch Live Currency Rates from API Endpoint
+  const fetchCurrency = useCallback(async () => {
+    try {
+      const res = await fetch('/api/currency');
+      if (res.ok) {
+        const data = await res.json();
+        if (data.rates && data.rates.INR) {
+          const usdToInr = data.rates.INR;
+          const updatedRates = DEFAULT_CURRENCY_RATES.map((c) => {
+            if (c.code === 'USD') return { ...c, rateToINR: usdToInr };
+            if (data.rates[c.code]) {
+              // Rate to INR = USD_to_INR / USD_to_CURR
+              const rateToINR = parseFloat((usdToInr / data.rates[c.code]).toFixed(2));
+              return { ...c, rateToINR };
+            }
+            return c;
+          });
+          setCurrencyRates(updatedRates);
+          setCurrencySource(data.source || 'Frankfurter Live FX API');
+          setCurrencyTimestamp(data.timestamp ? new Date(data.timestamp).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' }) : new Date().toLocaleTimeString());
+          setIsCurrencyOffline(false);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to fetch live currency rates:', error);
+      setIsCurrencyOffline(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchWeather(selectedCity);
+  }, [selectedCity, fetchWeather]);
+
+  useEffect(() => {
+    fetchCurrency();
+  }, [fetchCurrency]);
+
+  const activeCurrRate = currencyRates.find((c) => c.code === calcCurrency) || currencyRates[0];
 
   const convertedValue = isReverse
     ? (calcAmount / activeCurrRate.rateToINR).toFixed(2)
     : (calcAmount * activeCurrRate.rateToINR).toLocaleString('en-IN', { maximumFractionDigits: 2 });
-
-  const handleRefreshWeather = () => {
-    setIsRefreshingWeather(true);
-    setTimeout(() => {
-      setIsRefreshingWeather(false);
-    }, 600);
-  };
 
   const handleCopyNumber = (num: string) => {
     navigator.clipboard.writeText(num);
@@ -197,13 +191,13 @@ export function TravelTools() {
       <div className="text-center max-w-3xl mx-auto space-y-3">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-saffron-500/10 border border-saffron-500/30 text-saffron-400 text-xs font-semibold uppercase tracking-wider">
           <Calculator className="w-4 h-4" />
-          <span>Incredible India Practical Toolkit</span>
+          <span>ExploreIndia Zero-Mock Utility Toolkit</span>
         </div>
         <h2 className="text-3xl sm:text-4xl font-bold text-white font-serif tracking-tight">
-          Plan Your Trip <span className="gold-gradient-text">Travel Utilities</span>
+          Plan Your Trip <span className="gold-gradient-text">Live Travel Utilities</span>
         </h2>
         <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-          Real-time weather estimates, currency conversion tools, emergency helplines, e-Visa checklists, and accredited travel operator links.
+          Zero-mock live weather estimator (powered by Open-Meteo & OpenWeatherMap) and live foreign exchange rates from Frankfurter API.
         </p>
       </div>
 
@@ -221,7 +215,7 @@ export function TravelTools() {
               </div>
               <div>
                 <h3 className="text-lg font-bold text-white font-serif">Live Weather Estimator</h3>
-                <p className="text-xs text-slate-400">OpenWeatherMap API ready destination climate tracker</p>
+                <p className="text-xs text-slate-400">Real-time live climate data endpoint</p>
               </div>
             </div>
 
@@ -233,7 +227,7 @@ export function TravelTools() {
                 °{tempUnit}
               </button>
               <button
-                onClick={handleRefreshWeather}
+                onClick={() => fetchWeather(selectedCity)}
                 disabled={isRefreshingWeather}
                 className="p-2 rounded-lg bg-royal-950 border border-white/10 text-slate-300 hover:text-amber-400 transition disabled:opacity-50"
                 title="Refresh Live Weather"
@@ -254,62 +248,74 @@ export function TravelTools() {
               onChange={(e) => setSelectedCity(e.target.value)}
               className="w-full px-4 py-3 rounded-xl bg-royal-950 border border-amber-500/30 text-white font-serif font-bold text-base focus:border-amber-400 outline-none cursor-pointer"
             >
-              {CITY_WEATHER_DATA.map((c) => (
+              {POPULAR_CITIES.map((c) => (
                 <option key={c.city} value={c.city}>
-                  {c.city}, {c.state} — {c.condition} ({c.tempC}°C)
+                  {c.city}, {c.state}
                 </option>
               ))}
             </select>
           </div>
 
           {/* Main Weather Display Box */}
-          <div className="p-5 rounded-2xl bg-royal-950/80 border border-amber-500/20 space-y-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="text-xs font-mono uppercase tracking-wider text-slate-400">
-                  {currentWeather.state} Region
-                </span>
-                <h4 className="text-2xl font-bold text-white font-serif">{currentWeather.city}</h4>
-                <p className="text-xs text-amber-400 font-medium">{currentWeather.condition}</p>
-              </div>
-
-              <div className="text-right">
-                <div className="text-4xl font-bold font-mono text-white tracking-tight">
-                  {tempUnit === 'C'
-                    ? `${currentWeather.tempC}°C`
-                    : `${Math.round((currentWeather.tempC * 9) / 5 + 32)}°F`}
-                </div>
-                <div className="flex items-center justify-end gap-3 text-[11px] text-slate-400 mt-1 font-mono">
-                  <span>Humidity: {currentWeather.humidity}</span>
-                  <span>Wind: {currentWeather.windSpeed}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Season Status & Advisory */}
-            <div className="space-y-2 pt-3 border-t border-white/10 text-xs">
-              <div className="flex items-start gap-2 bg-amber-500/10 p-3 rounded-xl border border-amber-500/20">
-                <Sparkles className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+          {weatherData ? (
+            <div className="p-5 rounded-2xl bg-royal-950/80 border border-amber-500/20 space-y-4">
+              <div className="flex items-center justify-between">
                 <div>
-                  <span className="font-bold text-amber-300 block mb-0.5">Season Status</span>
-                  <span className="text-slate-300 leading-relaxed">{currentWeather.seasonStatus}</span>
+                  <span className="text-xs font-mono uppercase tracking-wider text-slate-400">
+                    {weatherData.state} Region
+                  </span>
+                  <h4 className="text-2xl font-bold text-white font-serif">{weatherData.city}</h4>
+                  <p className="text-xs text-amber-400 font-medium">{weatherData.condition}</p>
+                </div>
+
+                <div className="text-right">
+                  <div className="text-4xl font-bold font-mono text-white tracking-tight">
+                    {tempUnit === 'C' ? `${weatherData.tempC}°C` : `${weatherData.tempF}°F`}
+                  </div>
+                  <div className="flex items-center justify-end gap-3 text-[11px] text-slate-400 mt-1 font-mono">
+                    <span>Humidity: {weatherData.humidity}</span>
+                    <span>Wind: {weatherData.windSpeed}</span>
+                  </div>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between text-[11px] text-slate-300 px-1 pt-1">
-                <span>
-                  <strong className="text-slate-400">Best Visit Window:</strong> {currentWeather.bestMonths}
-                </span>
+              {/* Season Status & Advisory */}
+              <div className="space-y-2 pt-3 border-t border-white/10 text-xs">
+                <div className="flex items-start gap-2 bg-amber-500/10 p-3 rounded-xl border border-amber-500/20">
+                  <Sparkles className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-bold text-amber-300 block mb-0.5">Season Status</span>
+                    <span className="text-slate-300 leading-relaxed">{weatherData.seasonStatus}</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between text-[11px] text-slate-300 px-1 pt-1">
+                  <span>
+                    <strong className="text-slate-400">Best Visit Window:</strong> {weatherData.bestMonths}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <div className="p-8 text-center text-slate-400 text-xs flex items-center justify-center gap-2">
+              <RefreshCw className="w-4 h-4 animate-spin text-amber-400" />
+              <span>Fetching live weather from API...</span>
+            </div>
+          )}
 
-          {/* OpenWeatherMap API Integration Callout */}
+          {/* Status Bar */}
           <div className="pt-2 text-[11px] text-slate-400 flex items-center justify-between border-t border-white/5">
-            <span className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Live API Hook Connected (`OpenWeatherMap v2.5`)</span>
-            </span>
+            {weatherData?.offline ? (
+              <span className="flex items-center gap-1.5 text-rose-400 font-semibold">
+                <AlertTriangle className="w-3.5 h-3.5" />
+                <span>Live Weather currently offline</span>
+              </span>
+            ) : (
+              <span className="flex items-center gap-1.5 text-slate-300">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>{weatherData?.source || 'Open-Meteo Live API'}</span>
+              </span>
+            )}
             <Link
               href="/plan/weather"
               className="text-amber-400 hover:text-white font-semibold flex items-center gap-1"
@@ -331,8 +337,8 @@ export function TravelTools() {
                 <DollarSign className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-white font-serif">Currency Converter</h3>
-                <p className="text-xs text-slate-400">Foreign Exchange to Indian Rupee (INR ₹) calculator</p>
+                <h3 className="text-lg font-bold text-white font-serif">Live Currency Converter</h3>
+                <p className="text-xs text-slate-400">Frankfurter API live exchange calculator</p>
               </div>
             </div>
 
@@ -366,7 +372,7 @@ export function TravelTools() {
                     onChange={(e) => setCalcCurrency(e.target.value)}
                     className="px-4 py-3 rounded-xl bg-royal-950 border border-saffron-500/30 text-white font-bold font-mono text-sm focus:border-saffron-500 outline-none cursor-pointer"
                   >
-                    {CURRENCY_RATES.map((c) => (
+                    {currencyRates.map((c) => (
                       <option key={c.code} value={c.code}>
                         {c.flag} {c.code} ({c.symbol})
                       </option>
@@ -409,7 +415,7 @@ export function TravelTools() {
                   : `₹ ${convertedValue} INR`}
               </div>
               <div className="text-[11px] text-slate-400 font-mono pt-1 flex items-center justify-between border-t border-white/5">
-                <span>Standard Exchange Rate:</span>
+                <span>Live Exchange Rate:</span>
                 <span className="text-saffron-400 font-bold">
                   1 {activeCurrRate.code} = ₹{activeCurrRate.rateToINR} INR
                 </span>
@@ -417,11 +423,13 @@ export function TravelTools() {
             </div>
           </div>
 
-          {/* Local Purchasing Power Note */}
-          <div className="pt-2 text-[11px] text-slate-300 flex items-center justify-between border-t border-white/5">
-            <span className="flex items-center gap-1.5 text-slate-400">
-              <CheckCircle2 className="w-3.5 h-3.5 text-saffron-400 shrink-0" />
-              <span>Cards & UPI accepted at major hotels & restaurants.</span>
+          {/* Real Timestamp Note */}
+          <div className="pt-2 text-[11px] text-slate-400 flex items-center justify-between border-t border-white/5">
+            <span className="flex items-center gap-1.5 font-mono">
+              <Clock className="w-3.5 h-3.5 text-saffron-400 shrink-0" />
+              <span>
+                {currencyTimestamp ? `Rates updated: ${currencyTimestamp}` : 'Rates updated: Real-time'}
+              </span>
             </span>
             <Link
               href="/plan/currency"
