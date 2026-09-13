@@ -31,6 +31,13 @@ export interface DestinationCity {
   quickFacts: string[];
   image?: string;
   tagline?: string;
+  localCuisine?: string[];
+  idealDuration?: string;
+  howToReach?: {
+    byAir?: string;
+    byTrain?: string;
+    byRoad?: string;
+  };
 }
 
 export interface AttractionPOI {

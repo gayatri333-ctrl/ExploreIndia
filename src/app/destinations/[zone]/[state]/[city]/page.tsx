@@ -55,7 +55,7 @@ export default function IncredibleIndiaCityPage({ params }: CityPageProps) {
 
   const heroImage = storeCity?.image || incCityObj?.image || 'https://images.unsplash.com/photo-1597074866923-dc0589150358?q=80&w=1200';
   const tagline = storeCity?.tagline || incCityObj?.tagline || 'Historical Heritage & Cultural Destination';
-  const overview = storeCity?.overview || incCityObj?.tagline || 'Discover royal fortresses, ancient temples, vibrant street bazaars, and traditional hospitality.';
+  const overview = storeCity?.overview || incCityObj?.tagline || `Discover the ancient history, majestic architecture, sacred spiritual traditions, and vibrant culture of ${cityName}.`;
   const bestTimeToVisit = storeCity?.bestTimeToVisit || incCityObj?.bestSeason || 'October to March';
 
   const facts = storeCity?.quickFacts && storeCity.quickFacts.length > 0
@@ -67,34 +67,85 @@ export default function IncredibleIndiaCityPage({ params }: CityPageProps) {
         `Vibrant local markets, traditional handcrafts, and authentic regional culinary delicacies.`,
       ];
 
-  // Default attractions if none found
+  // Authentic local cuisine resolution
+  const localCuisine = storeCity?.localCuisine && storeCity.localCuisine.length > 0
+    ? storeCity.localCuisine
+    : params.city.toLowerCase() === 'varanasi'
+    ? ['Kachori Sabzi', 'Banarasi Tamatar Chaat', 'Banarasi Paan', 'Malaiyyo', 'Banarasi Lassi', 'Thandai']
+    : params.city.toLowerCase() === 'jaipur' || params.city.toLowerCase() === 'udaipur' || params.city.toLowerCase() === 'jaisalmer' || stateName.toLowerCase().includes('rajasthan')
+    ? ['Dal Baati Churma', 'Ker Sangri', 'Laal Maas', 'Ghevar & Malpua', 'Pyaz Kachori']
+    : params.city.toLowerCase() === 'srinagar' || stateName.toLowerCase().includes('kashmir')
+    ? ['Kashmiri Wazwan', 'Rogan Josh', 'Dum Aloo', 'Modur Pulao', 'Kahwa Tea']
+    : params.city.toLowerCase() === 'kochi' || params.city.toLowerCase() === 'alleppey' || params.city.toLowerCase() === 'munnar' || stateName.toLowerCase().includes('kerala')
+    ? ['Kerala Fish Curry', 'Appam with Stew', 'Karimeen Pollichathu', 'Malabar Parotta', 'Puttu & Kadala']
+    : params.city.toLowerCase() === 'kolkata' || params.city.toLowerCase() === 'darjeeling' || stateName.toLowerCase().includes('bengal')
+    ? ['Kolkata Kathi Roll', 'Rasgulla', 'Kosha Mangsho', 'Mishti Doi', 'Luchi Alur Dom']
+    : params.city.toLowerCase() === 'agra'
+    ? ['Agra Petha', 'Bedai & Jalebi', 'Mughlai Biryani', 'Shahi Paneer', 'Mughlai Paratha']
+    : params.city.toLowerCase() === 'amritsar'
+    ? ['Amritsari Kulcha', 'Makki Di Rotti & Sarson Da Saag', 'Amritsari Fish', 'Lassi', 'Pinni']
+    : ['Authentic Regional Thali', 'Local Handcrafted Street Snacks', 'Traditional Sweets', 'Artisanal Herbal Teas'];
+
+  const idealDuration = storeCity?.idealDuration || '2 - 3 Days';
+
+  // Default attractions if none found in dataset
+  const defaultCityAttractionsMap: Record<string, Array<{ name: string; category: 'Heritage' | 'Spiritual' | 'Nature' | 'Adventure'; image: string; fact: string }>> = {
+    varanasi: [
+      { name: 'Kashi Vishwanath Temple', category: 'Spiritual', image: 'https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=800', fact: 'One of the twelve sacred Jyotirlinga shrines dedicated to Lord Shiva, rebuilt by Ahilyabai Holkar in 1780.' },
+      { name: 'Dashashwamedh Ghat & Evening Aarti', category: 'Spiritual', image: 'https://images.unsplash.com/photo-1570535310866-9b5dbd09439f?q=80&w=800', fact: 'The most vibrant riverfront ghat in Varanasi, world-famous for its synchronized evening brass lamp worship ritual.' },
+      { name: 'Sarnath Ancient Buddhist Ruins', category: 'Heritage', image: 'https://images.unsplash.com/photo-1597074866923-dc0589150358?q=80&w=800', fact: 'The sacred deer park where Gautama Buddha delivered his first sermon after attaining enlightenment.' },
+      { name: 'Assi Ghat & Subah-e-Banaras', category: 'Spiritual', image: 'https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=800', fact: 'Southernmost riverfront ghat hosting early morning classical Indian music and yoga rituals.' },
+    ],
+    agra: [
+      { name: 'Taj Mahal', category: 'Heritage', image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?q=80&w=800', fact: 'UNESCO World Heritage wonder crafted from white Makrana marble by Mughal Emperor Shah Jahan.' },
+      { name: 'Agra Fort', category: 'Heritage', image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?q=80&w=800', fact: 'Imposing red sandstone Mughal royal citadel housing the Jahangiri Mahal and Diwan-i-Khas.' },
+    ],
+    srinagar: [
+      { name: 'Dal Lake & Floating Market', category: 'Nature', image: 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?q=80&w=800', fact: 'Iconic alpine lake famous for wooden shikara boats, carved cedar houseboats, and floating flower markets.' },
+      { name: 'Shalimar Bagh Mughal Garden', category: 'Heritage', image: 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?q=80&w=800', fact: 'Terraced royal Mughal garden built in 1619 by Emperor Jahangir for his Empress Nur Jahan.' },
+    ],
+  };
+
+  const cityDefaults = defaultCityAttractionsMap[params.city.toLowerCase()];
+
   const attractions = cityAttractions.length > 0
     ? cityAttractions
+    : cityDefaults
+    ? cityDefaults.map((a, idx) => ({
+        id: `${params.city}-${idx}`,
+        cityId: params.city,
+        name: a.name,
+        category: a.category,
+        images: [a.image],
+        didYouKnowFacts: [a.fact],
+        historicalSignificance: `Major historical and cultural landmark in ${cityName}, ${stateName}.`,
+        mapCoords: { lat: 25.3176, lng: 82.9739 },
+      }))
     : [
         {
-          id: `${params.city}-fort-landmark`,
+          id: `${params.city}-landmark-1`,
           cityId: params.city,
-          name: `${cityName} Heritage Fort & Palace`,
+          name: `${cityName} Old Town & Heritage Promenade`,
           category: 'Heritage' as const,
           images: [heroImage],
           didYouKnowFacts: [
-            `Built with ancient regional sandstone architecture overlooking ${cityName} valley.`,
-            `Hosts royal heritage archives and intricate carved stone balconies.`,
+            `Preserves centuries-old regional architecture, artisan workshops, and bustling bazaars.`,
+            `Key cultural hub hosting annual folk celebrations and traditional festivals in ${stateName}.`,
           ],
-          historicalSignificance: `Iconic royal fortress founded during medieval dynasty rule in ${stateName}.`,
+          historicalSignificance: `Historic town square and heritage promenade of ${cityName}.`,
           mapCoords: { lat: 26.9124, lng: 75.7873 },
         },
         {
-          id: `${params.city}-temple-spiritual`,
+          id: `${params.city}-landmark-2`,
           cityId: params.city,
-          name: `${cityName} Sacred Temple Complex`,
+          name: `${cityName} Cultural Sanctuary`,
           category: 'Spiritual' as const,
           images: ['https://images.unsplash.com/photo-1570535310866-9b5dbd09439f?q=80&w=800'],
           didYouKnowFacts: [
-            `Famous for daily evening aarti ceremonies along riverfront ghats.`,
-            `Attracts thousands of pilgrims during annual cultural festivals.`,
+            `Famous for daily evening prayers and regional cultural gatherings.`,
+            `Attracts visitors and travelers from across India for its serene environment.`,
           ],
-          historicalSignificance: `Ancient spiritual temple dedicated to regional patron deities.`,
+          historicalSignificance: `Spiritual center dedicated to preserving regional traditions.`,
           mapCoords: { lat: 26.9239, lng: 75.8267 },
         },
       ];
@@ -104,13 +155,13 @@ export default function IncredibleIndiaCityPage({ params }: CityPageProps) {
     ? cityFestivals
     : [
         {
-          id: `durga-puja-${params.city}`,
+          id: `festival-${params.city}`,
           name: `${cityName} Heritage & Cultural Carnival`,
           cityId: params.city,
           dates: 'October 15 - October 24, 2026',
           category: 'Cultural Festival',
-          description: `Vibrant street music, folk dance performances, illuminated heritage buildings, and regional food bazaars.`,
-          image: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=800',
+          description: `Vibrant street music, folk dance performances, illuminated heritage buildings, and regional food bazaars in ${cityName}.`,
+          image: heroImage,
         },
       ];
 
@@ -125,8 +176,8 @@ export default function IncredibleIndiaCityPage({ params }: CityPageProps) {
     heroImage,
     overview,
     bestTimeToVisit,
-    idealDuration: '2 - 4 Days',
-    localCuisine: ['Dal Baati Churma', 'Ker Sangri', 'Laal Maas', 'Ghevar & Malpua'],
+    idealDuration,
+    localCuisine,
     facts,
     attractions,
     festivals,
